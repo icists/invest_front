@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import TextField from "../components/TextField";
+import Button from "../components/Button";
 
 const Main = styled.main({
   display: "flex",
@@ -16,8 +16,7 @@ const Main = styled.main({
 function LoginPage() {
   return (
     <Main>
-      <TextField placeholder="이름" />
-      <TextField placeholder="비밀번호" isPassword />
+      <Button>Google로 로그인</Button>
     </Main>
   );
 }
