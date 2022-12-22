@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 
 import { User } from "firebase/auth";
 import { useSignInWithGoogle, useAuthState } from "react-firebase-hooks/auth";
-import { auth, fetch } from "../firebase";
+import { auth, findUser } from "../firebase";
 
 import Button from "../components/Button";
 
@@ -28,16 +28,9 @@ function LoginPage() {
 
   useEffect(() => {
     async function checkUser(user: User) {
-      const usersData = await fetch("/users");
+      const result = await findUser(user.uid);
 
-      let exists = false;
-      usersData.forEach((userData) => {
-        if (userData.key !== null && userData.key === user?.uid) {
-          exists = true;
-        }
-      });
-
-      navigate(exists ? "/" : "/register");
+      navigate(result ? "/" : "/register");
     }
 
     if (user) {

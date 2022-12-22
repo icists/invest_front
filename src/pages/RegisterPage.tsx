@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, set } from "../firebase";
+import { auth, registerUser } from "../firebase";
 
 import Button from "../components/Button";
 import Header from "../components/Header";
@@ -60,7 +60,7 @@ function RegisterPage() {
       team: parsedTeamNumber,
       mail: user.email,
     };
-    set("/users/" + user.uid, userData);
+    registerUser(user.uid, userData);
   }
 
   return (

@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import * as db from "firebase/database";
+import { UserData } from "./schemes";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMZh9vXL5Ga8T-ZAw9WpNBGOd_EF7jWKU",
@@ -19,18 +20,21 @@ export const auth = getAuth(app);
 
 const database = db.getDatabase(app);
 
-export async function fetch(path: string) {
-  const dbRef = db.ref(database, path);
-  return db.get(dbRef);
+export async function findUser(uid: string): Promise<UserData | null> {
+  const usersRef = db.ref(database, "/users");
+  const snapshot = await db.get(usersRef);
+
+  let result: UserData | null = null;
+  snapshot.forEach((user) => {
+    if (user.key === uid) {
+      result = user.val() as UserData;
+    }
+  });
+
+  return result;
 }
 
-export function set(path: string, data: object) {
-  const dbRef = db.ref(database, path);
-  db.set(dbRef, data);
+export async function registerUser(uid: string, data: UserData) {
+  const userRef = db.ref(database, "/users/" + uid);
+  db.set(userRef, data);
 }
-/*
-export async function signInGoogle() {
-  const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider);
-}
-*/
