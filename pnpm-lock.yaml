@@ -16,6 +16,7 @@ specifiers:
   prettier: 2.8.1
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-firebase-hooks: ^5.1.1
   typescript: ^4.9.3
   vite: ^4.0.0
 
@@ -26,6 +27,7 @@ dependencies:
   firebase: 9.15.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-firebase-hooks: 5.1.1_v6fjscufgdj3brau76e76lehmq
 
 devDependencies:
   '@types/react': 18.0.26
@@ -2807,6 +2809,16 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-firebase-hooks/5.1.1_v6fjscufgdj3brau76e76lehmq:
+    resolution: {integrity: sha512-y2UpWs82xs+39q5Rc/wq316ca52QsC0n8m801V+yM4IC4hbfOL4yQPVSh7w+ydstdvjN9F+lvs1WrO2VYxpmdA==}
+    peerDependencies:
+      firebase: '>= 9.0.0'
+      react: '>= 16.8.0'
+    dependencies:
+      firebase: 9.15.0
+      react: 18.2.0
     dev: false
 
   /react-is/16.13.1:

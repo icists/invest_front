@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
 
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
+
 import Button from "../components/Button";
 
 const Main = styled.main({
@@ -14,9 +17,16 @@ const Main = styled.main({
 });
 
 function LoginPage() {
+  const [signInGoogle] = useSignInWithGoogle(auth);
+
+  const onLoginClick = async () => {
+    const result = await signInGoogle();
+    console.log(result);
+  };
+
   return (
     <Main>
-      <Button>Google로 로그인</Button>
+      <Button onClick={onLoginClick}>Google로 로그인</Button>
     </Main>
   );
 }
