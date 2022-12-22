@@ -21,7 +21,7 @@ body {
   margin: 0;
 }
 
-body, #root, .App {
+body, #root {
   height: 100vh;
   min-height: 100vh;
 }
