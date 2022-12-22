@@ -5,6 +5,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
@@ -13,8 +14,8 @@ const router = createBrowserRouter([
     element: <PrivateRoute />,
     children: [
       {
-        path: "",
-        element: <div>hello</div>,
+        path: "register",
+        element: <RegisterPage />,
       },
     ],
   },

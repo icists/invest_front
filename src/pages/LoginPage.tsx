@@ -1,11 +1,11 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styled from "@emotion/styled";
 
-import { useLocation, useNavigate } from "react-router-dom";
-
+import { User } from "firebase/auth";
 import { useSignInWithGoogle, useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
+import { auth, fetch } from "../firebase";
 
 import Button from "../components/Button";
 
@@ -21,27 +21,37 @@ const Main = styled.main({
 });
 
 function LoginPage() {
-  const location = useLocation();
   const navigate = useNavigate();
 
   const [signInGoogle] = useSignInWithGoogle(auth);
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    if (user) {
-      const { from } = location.state || { from: { pathname: "/" } };
-      navigate(from, { replace: true });
-    }
-  }, [user, location, navigate]);
+    async function checkUser(user: User) {
+      const usersData = await fetch("/users");
 
-  const onLoginClick = async () => {
-    const result = await signInGoogle();
-    console.log(result);
-  };
+      let exists = false;
+      usersData.forEach((userData) => {
+        if (userData.key !== null && userData.key === user?.uid) {
+          exists = true;
+        }
+      });
+
+      if (!exists) {
+        navigate("/register");
+      }
+    }
+
+    if (user) {
+      checkUser(user);
+    }
+  }, [user, navigate]);
 
   return (
     <Main>
-      <Button onClick={onLoginClick}>Google로 로그인</Button>
+      <Button onClick={async () => await signInGoogle()}>
+        Google로 로그인
+      </Button>
     </Main>
   );
 }
