@@ -18,9 +18,15 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
 const database = db.getDatabase(app);
+
 export async function fetch(path: string) {
   const dbRef = db.ref(database, path);
   return db.get(dbRef);
+}
+
+export function set(path: string, data: object) {
+  const dbRef = db.ref(database, path);
+  db.set(dbRef, data);
 }
 /*
 export async function signInGoogle() {

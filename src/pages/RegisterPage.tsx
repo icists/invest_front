@@ -1,10 +1,14 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 
 import styled from "@emotion/styled";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, set } from "../firebase";
 
 import Button from "../components/Button";
 import Header from "../components/Header";
 import TextField from "../components/TextField";
+import { UserData } from "../schemes";
 
 const Main = styled.main({
   display: "flex",
@@ -41,8 +45,23 @@ const ConfirmButton = styled(Button)({
 });
 
 function RegisterPage() {
+  const [user] = useAuthState(auth);
+
   const [name, setName] = useState("");
   const [teamNumber, setTeamNumber] = useState("0");
+
+  function confirm() {
+    const trimmedName = name.trim();
+    const parsedTeamNumber = parseInt(teamNumber);
+    if (!user || trimmedName.length < 2 || isNaN(parsedTeamNumber)) return;
+
+    const userData: UserData = {
+      name: trimmedName,
+      team: parsedTeamNumber,
+      mail: user.email,
+    };
+    set("/users/" + user.uid, userData);
+  }
 
   return (
     <Main>
@@ -68,7 +87,7 @@ function RegisterPage() {
         />
       </InputBox>
 
-      <ConfirmButton>확인</ConfirmButton>
+      <ConfirmButton onClick={confirm}>확인</ConfirmButton>
     </Main>
   );
 }
