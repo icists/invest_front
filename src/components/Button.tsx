@@ -12,16 +12,21 @@ const ButtonElem = styled.button({
   fontFamily: "inherit",
   fontSize: "1.3rem",
 
-  padding: "0.5rem 0",
+  padding: "1rem 0",
 });
 
 type ButtonProps = {
+  className?: string;
   children?: React.ReactNode;
   onClick?: () => void;
 };
 
-function Button({ children, onClick }: ButtonProps) {
-  return <ButtonElem onClick={onClick}> {children} </ButtonElem>;
+function Button({ className, children, onClick }: ButtonProps) {
+  return (
+    <ButtonElem className={className} onClick={onClick}>
+      {children}
+    </ButtonElem>
+  );
 }
 
 export default Button;

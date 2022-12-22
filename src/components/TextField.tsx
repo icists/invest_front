@@ -8,7 +8,8 @@ const Input = styled.input({
   borderRadius: 5,
 
   fontSize: "1.3rem",
-  padding: "1.5rem 1.2rem",
+  fontFamily: "inherit",
+  padding: "1.2rem 1.2rem",
 
   backgroundColor: colors.lightGray,
   color: colors.black,
@@ -19,13 +20,19 @@ const Input = styled.input({
 });
 
 type TextFieldProps = {
+  className?: string;
+
   placeholder?: string;
   isPassword?: boolean;
 };
 
-function TextField({ placeholder, isPassword }: TextFieldProps) {
+function TextField({ className, placeholder, isPassword }: TextFieldProps) {
   return (
-    <Input type={isPassword ? "password" : "text"} placeholder={placeholder} />
+    <Input
+      className={className}
+      type={isPassword ? "password" : "text"}
+      placeholder={placeholder}
+    />
   );
 }
 
