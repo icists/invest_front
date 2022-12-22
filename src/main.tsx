@@ -5,11 +5,18 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello, world</div>,
+    element: <PrivateRoute />,
+    children: [
+      {
+        path: "",
+        element: <div>hello</div>,
+      },
+    ],
   },
   {
     path: "/login",
