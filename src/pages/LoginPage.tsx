@@ -1,6 +1,10 @@
+import { useEffect } from "react";
+
 import styled from "@emotion/styled";
 
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { useSignInWithGoogle, useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 
 import Button from "../components/Button";
@@ -17,7 +21,18 @@ const Main = styled.main({
 });
 
 function LoginPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [signInGoogle] = useSignInWithGoogle(auth);
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    if (user) {
+      const { from } = location.state || { from: { pathname: "/" } };
+      navigate(from, { replace: true });
+    }
+  }, [user, location, navigate]);
 
   const onLoginClick = async () => {
     const result = await signInGoogle();
