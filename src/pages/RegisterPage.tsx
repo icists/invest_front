@@ -1,7 +1,6 @@
-import styled from "@emotion/styled";
+import { useState, useCallback } from "react";
 
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
+import styled from "@emotion/styled";
 
 import Button from "../components/Button";
 import Header from "../components/Header";
@@ -42,6 +41,9 @@ const ConfirmButton = styled(Button)({
 });
 
 function RegisterPage() {
+  const [name, setName] = useState("");
+  const [teamNumber, setTeamNumber] = useState("0");
+
   return (
     <Main>
       <Title as="h1">
@@ -50,12 +52,20 @@ function RegisterPage() {
 
       <InputBox>
         <Label as="h2">이름</Label>
-        <TextField placeholder="실명을 입력해주세요." />
+        <TextField
+          placeholder="실명을 입력해주세요."
+          onChange={setName}
+          value={name}
+        />
       </InputBox>
 
       <InputBox>
         <Label as="h2">소속 팀</Label>
-        <TextField placeholder="팀 번호를 입력해주세요." />
+        <TextField
+          placeholder="팀 번호를 입력해주세요."
+          onChange={setTeamNumber}
+          value={teamNumber}
+        />
       </InputBox>
 
       <ConfirmButton>확인</ConfirmButton>

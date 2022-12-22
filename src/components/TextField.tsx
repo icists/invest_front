@@ -24,14 +24,25 @@ type TextFieldProps = {
 
   placeholder?: string;
   isPassword?: boolean;
+
+  onChange?: (value: string) => void;
+  value: string;
 };
 
-function TextField({ className, placeholder, isPassword }: TextFieldProps) {
+function TextField({
+  className,
+  placeholder,
+  isPassword,
+  onChange,
+  value,
+}: TextFieldProps) {
   return (
     <Input
       className={className}
       type={isPassword ? "password" : "text"}
       placeholder={placeholder}
+      onChange={(e) => onChange && onChange(e.target.value)}
+      value={value}
     />
   );
 }
