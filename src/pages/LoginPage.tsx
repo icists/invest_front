@@ -37,9 +37,7 @@ function LoginPage() {
         }
       });
 
-      if (!exists) {
-        navigate("/register");
-      }
+      navigate(exists ? "/" : "/register");
     }
 
     if (user) {

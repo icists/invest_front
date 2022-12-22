@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 import { auth } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
