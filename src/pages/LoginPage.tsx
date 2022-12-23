@@ -45,7 +45,7 @@ const LoginButton = styled(Button)({
   margin: "auto 0 0 0",
 });
 
-function RegisterPage() {
+function LoginPage() {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
 
   const navigate = useNavigate();
@@ -101,4 +101,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default LoginPage;

@@ -30,16 +30,14 @@ function PrivateRoute() {
 
   if (user) {
     // logged in
-    if (userData) {
-      return (
-        <GlobalStateContextProvider value={{ user: userData, round: 0 }}>
-          <Outlet />
-        </GlobalStateContextProvider>
-      );
-    }
+    return (
+      <GlobalStateContextProvider value={{ user: userData, round: 0 }}>
+        <Outlet />
+      </GlobalStateContextProvider>
+    );
   } else {
     // not logged in
-    return <Navigate to="/register" />;
+    return <Navigate to="/login" />;
   }
 }
 
