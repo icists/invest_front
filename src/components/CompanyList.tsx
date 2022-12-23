@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import { useGlobalState } from "../context";
+import { useCompanies, useRoundData } from "../firebase";
 
 import { colors } from "../styles";
 
@@ -75,24 +77,23 @@ type CompanyListProps = {
   className?: string;
 };
 
-type CompanyData = {
-  name: string;
-  logo: string;
-  valuation: number;
-  investAmount: number | null;
-  change: number;
-};
-
 function CompanyList({ className }: CompanyListProps) {
-  const companiesData: CompanyData[] = [
-    {
-      name: "비바리퍼블리카",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/3/30/Toss-logo.svg",
-      valuation: 21474832,
-      investAmount: 10000,
-      change: 3.14,
-    },
-  ];
+  const [companies] = useCompanies();
+
+  const { round } = useGlobalState();
+  const [roundData] = useRoundData(round);
+
+  if (!companies || !roundData) return null;
+
+  const companiesData = Object.entries(companies).map(
+    ([uid, { name, logo }]) => ({
+      name,
+      logo,
+      valuation: roundData.valuation[uid],
+      investAmount: roundData.investAmount[uid],
+      change: 31.4,
+    })
+  );
 
   return (
     <List className={className}>
@@ -110,7 +111,8 @@ function CompanyList({ className }: CompanyListProps) {
                 : "투자하지 않음"}
             </InvestAmount>
             <Change>
-              {data.change >= 0 ? "+" : "-"}{data.change.toPrecision(3)}%
+              {data.change >= 0 ? "+" : "-"}
+              {data.change.toPrecision(3)}%
             </Change>
           </Container>
         </Item>

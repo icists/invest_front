@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "@emotion/styled";
 
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, registerUser } from "../firebase";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 
 import Button from "../components/Button";
 import Header from "../components/Header";
@@ -41,21 +41,26 @@ const InputBox = styled.div({
   width: "100%",
 });
 
-const ConfirmButton = styled(Button)({
+const LoginButton = styled(Button)({
   margin: "auto 0 0 0",
 });
 
 function RegisterPage() {
-  const [user] = useAuthState(auth);
-  const navigate = useNavigate();
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
 
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [teamNumber, setTeamNumber] = useState("0");
 
   async function confirm() {
     const trimmedName = name.trim();
     const parsedTeamNumber = parseInt(teamNumber);
-    if (!user || trimmedName.length < 2 || isNaN(parsedTeamNumber)) return;
+    if (trimmedName.length < 2 || isNaN(parsedTeamNumber)) return;
+
+    const userCredential = await signInWithGoogle();
+    if (!userCredential) return;
+
+    const user = userCredential.user;
 
     const userData: UserData = {
       name: trimmedName,
@@ -91,7 +96,7 @@ function RegisterPage() {
         />
       </InputBox>
 
-      <ConfirmButton onClick={confirm}>확인</ConfirmButton>
+      <LoginButton onClick={confirm}>Google로 로그인</LoginButton>
     </Main>
   );
 }

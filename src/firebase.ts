@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import * as db from "firebase/database";
 import { useObjectVal } from "react-firebase-hooks/database";
 
-import { UserData, Status } from "./schemes";
+import { UserData, Status, RoundData, Company, CompanyUID } from "./schemes";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMZh9vXL5Ga8T-ZAw9WpNBGOd_EF7jWKU",
@@ -47,4 +47,22 @@ export async function registerUser(uid: string, data: UserData) {
 export function useStatus(): [Status | undefined, boolean, Error | undefined] {
   const statusRef = db.ref(database, "/status");
   return useObjectVal<Status>(statusRef);
+}
+
+export function useCompanies(): [
+  Record<CompanyUID, Company> | undefined,
+  boolean,
+  Error | undefined
+] {
+  const companiesRef = db.ref(database, "/companies");
+  return useObjectVal(companiesRef);
+}
+
+export function useRoundData(
+  round: number | null
+): [RoundData | undefined, boolean, Error | undefined] {
+  if (round === null) return useObjectVal(null);
+
+  const roundRef = db.ref(database, "/rounds/" + round);
+  return useObjectVal(roundRef);
 }

@@ -4,7 +4,6 @@ import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import InvestPage from "./pages/InvestPage";
 import PrivateRoute from "./PrivateRoute";
@@ -15,18 +14,14 @@ const router = createBrowserRouter([
     element: <PrivateRoute />,
     children: [
       {
-        path: "register",
-        element: <RegisterPage />,
-      },
-      {
-        path: "/",
+        path: "",
         element: <InvestPage />,
       },
     ],
   },
   {
-    path: "/login",
-    element: <LoginPage />,
+    path: "/register",
+    element: <RegisterPage />,
   },
 ]);
 
