@@ -3,3 +3,7 @@ export type UserData = {
   team: number;
   mail: string | null;
 };
+
+export type Status = {
+  currentRound: number;
+};

@@ -1,7 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import * as db from "firebase/database";
-import { UserData } from "./schemes";
+import { useObjectVal } from "react-firebase-hooks/database";
+
+import { UserData, Status } from "./schemes";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMZh9vXL5Ga8T-ZAw9WpNBGOd_EF7jWKU",
@@ -37,4 +39,9 @@ export async function findUser(uid: string): Promise<UserData | null> {
 export async function registerUser(uid: string, data: UserData) {
   const userRef = db.ref(database, "/users/" + uid);
   db.set(userRef, data);
+}
+
+export function useStatus(): [Status | undefined, boolean, Error | undefined] {
+  const statusRef = db.ref(database, "/status");
+  return useObjectVal<Status>(statusRef);
 }
