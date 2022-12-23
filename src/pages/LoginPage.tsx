@@ -29,7 +29,6 @@ function LoginPage() {
   useEffect(() => {
     async function checkUser(user: User) {
       const result = await findUser(user.uid);
-
       navigate(result ? "/" : "/register");
     }
 
