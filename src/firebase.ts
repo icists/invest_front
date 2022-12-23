@@ -39,6 +39,9 @@ export async function findUser(uid: string): Promise<UserData | null> {
 export async function registerUser(uid: string, data: UserData) {
   const userRef = db.ref(database, "/users/" + uid);
   db.set(userRef, data);
+
+  const memberRef = db.ref(database, "/teams/" + data.team + "/members/" + uid);
+  db.set(memberRef, true);
 }
 
 export function useStatus(): [Status | undefined, boolean, Error | undefined] {
