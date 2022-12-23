@@ -1,16 +1,23 @@
 import styled from "@emotion/styled";
-import Header from "../components/Header";
+
 import { colors } from "../styles";
+
+import Header from "../components/Header";
+import CompanyList from "../components/CompanyList";
 
 const Main = styled.main({
   display: "flex",
   flexDirection: "column",
 
   height: "100%",
-  maxWidth: 350,
+  maxWidth: 340,
 
   margin: "0 auto",
   padding: "1.5rem 0",
+});
+
+const HeaderContainer = styled.div({
+  margin: "0 0 2rem 0",
 });
 
 const Title = styled(Header)({
@@ -25,8 +32,12 @@ const RoundStatus = styled.small({
 function InvestPage() {
   return (
     <Main>
-      <Title as="h1">투자 종목</Title>
-      <RoundStatus>Round 0</RoundStatus>
+      <HeaderContainer>
+        <Title as="h1">투자 종목</Title>
+        <RoundStatus>Round 0</RoundStatus>
+      </HeaderContainer>
+
+      <CompanyList />
     </Main>
   );
 }

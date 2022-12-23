@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@babel/core": "^7.20.5",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "firebase": "^9.15.0",
