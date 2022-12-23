@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styled from "@emotion/styled";
 
@@ -46,11 +47,12 @@ const ConfirmButton = styled(Button)({
 
 function RegisterPage() {
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [teamNumber, setTeamNumber] = useState("0");
 
-  function confirm() {
+  async function confirm() {
     const trimmedName = name.trim();
     const parsedTeamNumber = parseInt(teamNumber);
     if (!user || trimmedName.length < 2 || isNaN(parsedTeamNumber)) return;
@@ -60,7 +62,9 @@ function RegisterPage() {
       team: parsedTeamNumber,
       mail: user.email,
     };
-    registerUser(user.uid, userData);
+
+    await registerUser(user.uid, userData);
+    navigate("/");
   }
 
   return (
