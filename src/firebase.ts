@@ -54,10 +54,8 @@ export function useCompanies(): [
 }
 
 export function useRoundData(
-  round: number | null
+  round: number
 ): [RoundData | undefined, boolean, Error | undefined] {
-  if (round === null) return useObjectVal(null);
-
   const roundRef = db.ref(database, "/rounds/" + round);
   return useObjectVal(roundRef);
 }

@@ -75,12 +75,11 @@ const Change = styled.div({
 
 type CompanyListProps = {
   className?: string;
+  round: number;
 };
 
-function CompanyList({ className }: CompanyListProps) {
+function CompanyList({ className, round }: CompanyListProps) {
   const [companies] = useCompanies();
-
-  const { round } = useGlobalState();
   const [roundData] = useRoundData(round);
 
   if (!companies || !roundData) return null;

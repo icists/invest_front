@@ -42,7 +42,7 @@ function InvestPage() {
         )}
       </HeaderContainer>
 
-      {/* <CompanyList />*/}
+      {currentRound !== null && <CompanyList round={currentRound} />}
     </Main>
   );
 }
