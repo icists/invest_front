@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import * as db from "firebase/database";
 import { useObjectVal } from "react-firebase-hooks/database";
 
-import { UserData, Status, RoundData, Company, CompanyUID } from "./schemes";
+import { UserData, RoundData, Company, CompanyUID } from "./schemes";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMZh9vXL5Ga8T-ZAw9WpNBGOd_EF7jWKU",
@@ -42,11 +42,6 @@ export async function registerUser(uid: string, data: UserData) {
 
   const memberRef = db.ref(database, "/teams/" + data.team + "/members/" + uid);
   db.set(memberRef, true);
-}
-
-export function useStatus(): [Status | undefined, boolean, Error | undefined] {
-  const statusRef = db.ref(database, "/status");
-  return useObjectVal<Status>(statusRef);
 }
 
 export function useCompanies(): [

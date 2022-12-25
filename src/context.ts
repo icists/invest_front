@@ -4,10 +4,10 @@ import { UserData } from "./schemes";
 
 const GlobalStateContext = createContext<{
   user: UserData | null;
-  round: number | null;
+  currentRound: number | null;
 }>({
   user: null,
-  round: null,
+  currentRound: null,
 });
 
 export const GlobalStateContextProvider = GlobalStateContext.Provider;

@@ -4,7 +4,7 @@ import { colors } from "../styles";
 
 import Header from "../components/Header";
 import CompanyList from "../components/CompanyList";
-import { useStatus } from "../firebase";
+import { useGlobalState } from "../context";
 
 const Main = styled.main({
   display: "flex",
@@ -31,16 +31,18 @@ const RoundStatus = styled.small({
 });
 
 function InvestPage() {
-  const [status] = useStatus();
+  const { currentRound } = useGlobalState();
 
   return (
     <Main>
       <HeaderContainer>
         <Title as="h1">투자 종목</Title>
-        <RoundStatus>{status && "Round " + status.currentRound}</RoundStatus>
+        {currentRound !== null && (
+          <RoundStatus>{"Round " + currentRound}</RoundStatus>
+        )}
       </HeaderContainer>
 
-      <CompanyList />
+      {/* <CompanyList />*/}
     </Main>
   );
 }
