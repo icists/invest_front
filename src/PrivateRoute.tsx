@@ -31,7 +31,7 @@ function PrivateRoute() {
   if (user) {
     // logged in
     return (
-      <GlobalStateContextProvider value={{ user: userData, currentRound: 0 }}>
+      <GlobalStateContextProvider value={{ user: userData, currentRound: 1 }}>
         <Outlet />
       </GlobalStateContextProvider>
     );

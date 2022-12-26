@@ -51,6 +51,7 @@ const Valuation = styled.div({
   "&::before": {
     content: "'₩'",
   },
+  justifySelf: "end",
 });
 
 const InvestAmount = styled.div({
@@ -109,10 +110,12 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
                 ? `투자액 ${data.investAmount.toLocaleString("en")}원`
                 : "투자하지 않음"}
             </InvestAmount>
-            <Change>
-              {data.change >= 0 ? "+" : "-"}
-              {data.change.toPrecision(3)}%
-            </Change>
+            {data.change !== null && (
+              <Change>
+                {data.change >= 0 ? "+" : "-"}
+                {data.change.toPrecision(3)}%
+              </Change>
+            )}
           </Container>
         </Item>
       ))}
