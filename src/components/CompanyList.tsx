@@ -73,6 +73,14 @@ const Change = styled.div({
   alignSelf: "end",
 });
 
+type CompanyData = {
+  name: string;
+  logo: string;
+  valuation: number;
+  investAmount: number;
+  change: number | null;
+};
+
 type CompanyListProps = {
   className?: string;
   round: number;
@@ -85,7 +93,7 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
 
   if (!companies || !roundData) return null;
 
-  const companiesData = Object.entries(companies).map(
+  const companiesData: CompanyData[] = Object.entries(companies).map(
     ([companyID, { name, logo }]) => {
       const valuation = roundData[round].valuation[companyID];
 
