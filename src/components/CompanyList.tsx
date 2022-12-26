@@ -13,6 +13,13 @@ const List = styled.ul({
 const Item = styled.li({
   display: "flex",
   alignItems: "center",
+  padding: "1rem 0.5rem",
+
+  cursor: "pointer",
+  borderRadius: 5,
+  "&:hover": {
+    backgroundColor: colors.lightGray,
+  },
 });
 
 const LogoContainer = styled.div({
@@ -112,7 +119,7 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
         name,
         logo,
         valuation,
-        investAmount: roundData[round].investAmount[companyID][teamID],
+        investAmount: roundData[round].investAmount[teamID][companyID],
         change,
       };
     }
@@ -142,7 +149,6 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
           </Container>
         </Item>
       ))}
-      <Item></Item>
     </List>
   );
 }

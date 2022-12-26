@@ -16,9 +16,10 @@ const Main = styled.main({
   flexDirection: "column",
 
   height: "100%",
-  maxWidth: 340,
-  padding: "2rem 0",
+  width: "90%",
+  maxWidth: 600,
 
+  padding: "2rem 0",
   margin: "0 auto",
 });
 

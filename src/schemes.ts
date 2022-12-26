@@ -20,13 +20,5 @@ export type RoundData = {
 export type Company = {
   name: string;
   logo: string;
+  description: string;
 };
-
-/*
-export type CurrentCompanyInfo = {
-  compnay: Company;
-  valuation: number;
-  investAmount: number | null;
-  change: number;
-};
-*/

@@ -11,14 +11,16 @@ const Main = styled.main({
   flexDirection: "column",
 
   height: "100%",
-  maxWidth: 340,
+  width: "95%",
+  maxWidth: 600,
 
   margin: "0 auto",
   padding: "1.5rem 0",
 });
 
 const HeaderContainer = styled.div({
-  margin: "0 0 2rem 0",
+  margin: "0 0 1.5rem 0",
+  padding: "0 0 0 0.5rem",
 });
 
 const Title = styled(Header)({
