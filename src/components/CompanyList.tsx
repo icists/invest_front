@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { HTMLProps } from "react";
 import { useCompanies, useRoundData } from "../firebase";
 
 import { colors } from "../styles";
@@ -61,17 +62,21 @@ const InvestAmount = styled.div({
   alignSelf: "end",
 });
 
-const Change = styled.div({
-  backgroundColor: colors.key,
-  color: "white",
-  borderRadius: 5,
+const Change = styled.div<{ minus: boolean } & HTMLProps<HTMLDivElement>>(
+  {
+    color: "white",
+    borderRadius: 5,
 
-  padding: "0.1rem 0.3rem",
-  fontSize: "0.9rem",
+    padding: "0.1rem 0.3rem",
+    fontSize: "0.9rem",
 
-  justifySelf: "end",
-  alignSelf: "end",
-});
+    justifySelf: "end",
+    alignSelf: "end",
+  },
+  (props: { minus: boolean } & HTMLProps<HTMLDivElement>) => ({
+    backgroundColor: props.minus ? colors.red : colors.key,
+  })
+);
 
 type CompanyData = {
   name: string;
@@ -129,8 +134,8 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
                 : "투자하지 않음"}
             </InvestAmount>
             {data.change !== null && (
-              <Change>
-                {data.change >= 0 ? "+" : "-"}
+              <Change minus={data.change < 0}>
+                {data.change >= 0 ? "+" : ""}
                 {data.change.toPrecision(3)}%
               </Change>
             )}
