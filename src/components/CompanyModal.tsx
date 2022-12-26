@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 const Container = styled.div<{ visible: boolean }>(
   {
-    position: "absolute",
+    position: "fixed",
     width: "100vw",
     maxWidth: 600,
     minHeight: "80vh",
@@ -12,7 +12,7 @@ const Container = styled.div<{ visible: boolean }>(
     backgroundColor: "white",
     borderRadius: "20px 20px 0 0",
 
-    transition: "transform 0.5s",
+    transition: "transform 0.3s",
   },
   (props) => ({
     transform: `translate(-50%, ${props.visible ? "0" : "100%"})`,
@@ -21,13 +21,13 @@ const Container = styled.div<{ visible: boolean }>(
 
 const Overlay = styled.div<{ visible: boolean }>(
   {
-    backgroundColor: "black",
-
-    position: "absolute",
+    position: "fixed",
     width: "100vw",
     height: "100vh",
     top: 0,
     left: 0,
+
+    backgroundColor: "black",
 
     transition: "opacity 0.3s",
   },
