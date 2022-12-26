@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { useGlobalState } from "../context";
 import { useCompanies, useRoundData } from "../firebase";
 
 import { colors } from "../styles";
@@ -76,20 +75,21 @@ const Change = styled.div({
 type CompanyListProps = {
   className?: string;
   round: number;
+  teamID: number;
 };
 
-function CompanyList({ className, round }: CompanyListProps) {
+function CompanyList({ className, round, teamID }: CompanyListProps) {
   const [companies] = useCompanies();
   const [roundData] = useRoundData(round);
 
   if (!companies || !roundData) return null;
 
   const companiesData = Object.entries(companies).map(
-    ([uid, { name, logo }]) => ({
+    ([companyID, { name, logo }]) => ({
       name,
       logo,
-      valuation: roundData.valuation[uid],
-      investAmount: roundData.investAmount[uid],
+      valuation: roundData.valuation[companyID],
+      investAmount: roundData.investAmount[companyID][teamID],
       change: 31.4,
     })
   );
