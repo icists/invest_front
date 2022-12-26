@@ -6,7 +6,7 @@ const Container = styled.div<{ visible: boolean }>(
     width: "100vw",
     maxWidth: 600,
     minHeight: "80vh",
-    left: 0,
+    left: "50%",
     bottom: 0,
 
     backgroundColor: "white",
@@ -15,7 +15,7 @@ const Container = styled.div<{ visible: boolean }>(
     transition: "transform 0.5s",
   },
   (props) => ({
-    transform: `translateY(${props.visible ? "0" : "100%"})`,
+    transform: `translate(-50%, ${props.visible ? "0" : "100%"})`,
   })
 );
 

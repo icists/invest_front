@@ -136,31 +136,34 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
   );
 
   return (
-    <List className={className}>
-      {companiesData.map((data) => (
-        <Item key={data.name} onClick={() => handleClickItem(data)}>
-          <LogoContainer>
-            <Logo src={data.logo} />
-          </LogoContainer>
-          <Container>
-            <CompanyTitle>{data.name}</CompanyTitle>
-            <Valuation>{data.valuation.toLocaleString("en")}</Valuation>
-            <InvestAmount>
-              {data.investAmount
-                ? `투자액 ${data.investAmount.toLocaleString("en")}원`
-                : "투자하지 않음"}
-            </InvestAmount>
-            {data.change !== null && (
-              <Change minus={data.change < 0}>
-                {data.change >= 0 ? "+" : ""}
-                {data.change.toPrecision(3)}%
-              </Change>
-            )}
-          </Container>
-        </Item>
-      ))}
+    <>
+      <List className={className}>
+        {companiesData.map((data) => (
+          <Item key={data.name} onClick={() => handleClickItem(data)}>
+            <LogoContainer>
+              <Logo src={data.logo} />
+            </LogoContainer>
+            <Container>
+              <CompanyTitle>{data.name}</CompanyTitle>
+              <Valuation>{data.valuation.toLocaleString("en")}</Valuation>
+              <InvestAmount>
+                {data.investAmount
+                  ? `투자액 ${data.investAmount.toLocaleString("en")}원`
+                  : "투자하지 않음"}
+              </InvestAmount>
+              {data.change !== null && (
+                <Change minus={data.change < 0}>
+                  {data.change >= 0 ? "+" : ""}
+                  {data.change.toPrecision(3)}%
+                </Change>
+              )}
+            </Container>
+          </Item>
+        ))}
+      </List>
+
       <CompanyModal visible={showModal} onClose={handleCloseModal} />
-    </List>
+    </>
   );
 }
 
