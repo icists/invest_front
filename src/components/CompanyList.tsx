@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { HTMLProps } from "react";
+import { HTMLProps, useState } from "react";
 import { useCompanies, useRoundData } from "../firebase";
 
 import { colors } from "../styles";
+import CompanyModal from "./CompanyModal";
 
 const List = styled.ul({
   padding: 0,
@@ -69,7 +70,7 @@ const InvestAmount = styled.div({
   alignSelf: "end",
 });
 
-const Change = styled.div<{ minus: boolean } & HTMLProps<HTMLDivElement>>(
+const Change = styled.div<{ minus: boolean }>(
   {
     color: "white",
     borderRadius: 5,
@@ -80,7 +81,7 @@ const Change = styled.div<{ minus: boolean } & HTMLProps<HTMLDivElement>>(
     justifySelf: "end",
     alignSelf: "end",
   },
-  (props: { minus: boolean } & HTMLProps<HTMLDivElement>) => ({
+  (props) => ({
     backgroundColor: props.minus ? colors.red : colors.key,
   })
 );
@@ -102,6 +103,15 @@ type CompanyListProps = {
 function CompanyList({ className, round, teamID }: CompanyListProps) {
   const [companies] = useCompanies();
   const [roundData] = useRoundData();
+  const [showModal, setShowModal] = useState(false);
+
+  function handleClickItem(companyData: CompanyData) {
+    setShowModal(!showModal);
+  }
+
+  function handleCloseModal() {
+    setShowModal(false);
+  }
 
   if (!companies || !roundData) return null;
 
@@ -128,7 +138,7 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
   return (
     <List className={className}>
       {companiesData.map((data) => (
-        <Item key={data.name}>
+        <Item key={data.name} onClick={() => handleClickItem(data)}>
           <LogoContainer>
             <Logo src={data.logo} />
           </LogoContainer>
@@ -149,6 +159,7 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
           </Container>
         </Item>
       ))}
+      <CompanyModal visible={showModal} onClose={handleCloseModal} />
     </List>
   );
 }
