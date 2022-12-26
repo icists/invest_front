@@ -1,5 +1,10 @@
 import styled from "@emotion/styled";
 
+import { Company } from "../schemes";
+
+import CompanyLogo from "./CompanyLogo";
+import Header from "./Header";
+
 const Overlay = styled.div<{ visible: boolean }>(
   {
     position: "fixed",
@@ -18,7 +23,7 @@ const Overlay = styled.div<{ visible: boolean }>(
   })
 );
 
-const Container = styled.div<{ visible: boolean }>(
+const Modal = styled.div<{ visible: boolean }>(
   {
     position: "fixed",
     width: "100vw",
@@ -30,8 +35,6 @@ const Container = styled.div<{ visible: boolean }>(
     backgroundColor: "white",
     borderRadius: "20px 20px 0 0",
 
-    display: "flex",
-
     transition: "transform 0.3s",
   },
   (props) => ({
@@ -39,16 +42,42 @@ const Container = styled.div<{ visible: boolean }>(
   })
 );
 
+const Container = styled.div({
+  width: "90%",
+  margin: "0 auto",
+  padding: "1.5rem 0",
+});
+
+const HeaderContainer = styled.div({
+  display: "flex",
+  alignItems: "center",
+  fontSize: "0.8rem",
+});
+
+const CompanyTitle = styled(Header)({
+  padding: "0 0 0 0.7rem",
+});
+
 type CompanyModal = {
-  visible: boolean;
   onClose: () => void;
+  company: Company | null;
+  visible: boolean;
 };
 
-function CompanyModal({ visible, onClose }: CompanyModal) {
+function CompanyModal({ onClose, company, visible }: CompanyModal) {
   return (
     <>
       <Overlay visible={visible} onClick={onClose} />
-      <Container visible={visible}>Hello</Container>
+      <Modal visible={visible}>
+        {company !== null && (
+          <Container>
+            <HeaderContainer>
+              <CompanyLogo src={company.logo} width={54} />
+              <CompanyTitle as="h1">{company.name}</CompanyTitle>
+            </HeaderContainer>
+          </Container>
+        )}
+      </Modal>
     </>
   );
 }

@@ -8,9 +8,7 @@ const LogoContainer = styled.div<{ width: number }>(
     borderRadius: "100%",
 
     flex: "0 0 auto",
-    padding: "0 0.3rem",
-
-    margin: "0 0.7rem 0 0",
+    padding: "0.3rem",
   },
   (props) => ({
     height: props.width,
@@ -32,7 +30,7 @@ type CompanyLogoProps = {
 function CompanyLogo({ src, width }: CompanyLogoProps) {
   return (
     <LogoContainer width={width}>
-      <Logo src={src} />
+      <Logo src={src} key={src} />
     </LogoContainer>
   );
 }

@@ -5,6 +5,7 @@ import { useCompanies, useRoundData } from "../firebase";
 import { colors } from "../styles";
 import CompanyModal from "./CompanyModal";
 import CompanyLogo from "./CompanyLogo";
+import { Company } from "../schemes";
 
 const List = styled.ul({
   padding: 0,
@@ -32,6 +33,8 @@ const Container = styled.div({
 
   width: "100%",
   fontSize: "1.2rem",
+
+  padding: "0 0 0 0.7rem",
 });
 
 const CompanyTitle = styled.div({
@@ -69,8 +72,7 @@ const Change = styled.div<{ minus: boolean }>(
 );
 
 type CompanyData = {
-  name: string;
-  logo: string;
+  company: Company;
   valuation: number;
   investAmount: number;
   change: number | null;
@@ -85,10 +87,13 @@ type CompanyListProps = {
 function CompanyList({ className, round, teamID }: CompanyListProps) {
   const [companies] = useCompanies();
   const [roundData] = useRoundData();
+
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  function handleClickItem(companyData: CompanyData) {
-    setShowModal(!showModal);
+  function handleClickItem({ company }: CompanyData) {
+    setSelectedCompany(company);
+    setShowModal(true);
   }
 
   function handleCloseModal() {
@@ -97,34 +102,31 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
 
   if (!companies || !roundData) return null;
 
-  const companiesData: CompanyData[] = companies.map(
-    ([companyID, { name, logo }]) => {
-      const valuation = roundData[round].valuation[companyID];
+  const companiesData: CompanyData[] = companies.map(([companyID, company]) => {
+    const valuation = roundData[round].valuation[companyID];
 
-      let change = null;
-      if (round !== 1) {
-        const prevValuation = roundData[round - 1].valuation[companyID];
-        change = (valuation / prevValuation - 1) * 100;
-      }
-
-      return {
-        name,
-        logo,
-        valuation,
-        investAmount: roundData[round].investAmount[teamID][companyID],
-        change,
-      };
+    let change = null;
+    if (round !== 1) {
+      const prevValuation = roundData[round - 1].valuation[companyID];
+      change = (valuation / prevValuation - 1) * 100;
     }
-  );
+
+    return {
+      company,
+      valuation,
+      investAmount: roundData[round].investAmount[teamID][companyID],
+      change,
+    };
+  });
 
   return (
     <>
       <List className={className}>
         {companiesData.map((data) => (
-          <Item key={data.name} onClick={() => handleClickItem(data)}>
-            <CompanyLogo src={data.logo} width={56} />
+          <Item key={data.company.name} onClick={() => handleClickItem(data)}>
+            <CompanyLogo src={data.company.logo} width={56} />
             <Container>
-              <CompanyTitle>{data.name}</CompanyTitle>
+              <CompanyTitle>{data.company.name}</CompanyTitle>
               <Valuation>{data.valuation.toLocaleString("en")}</Valuation>
               <InvestAmount>
                 {data.investAmount
@@ -142,7 +144,11 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
         ))}
       </List>
 
-      <CompanyModal visible={showModal} onClose={handleCloseModal} />
+      <CompanyModal
+        company={selectedCompany}
+        visible={showModal}
+        onClose={handleCloseModal}
+      />
     </>
   );
 }
