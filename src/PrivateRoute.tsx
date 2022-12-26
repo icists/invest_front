@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 import { User } from "firebase/auth";
-import { auth, findUser } from "./firebase";
+import { auth, findUser, useCurrentRound } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
 import { GlobalStateContextProvider } from "./context";
@@ -12,6 +12,7 @@ import { UserData } from "./schemes";
 function PrivateRoute() {
   const [user, loading] = useIdToken(auth);
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [round] = useCurrentRound();
 
   useEffect(() => {
     async function checkUser(user: User) {
@@ -31,7 +32,9 @@ function PrivateRoute() {
   if (user) {
     // logged in
     return (
-      <GlobalStateContextProvider value={{ user: userData, currentRound: 1 }}>
+      <GlobalStateContextProvider
+        value={{ user: userData, currentRound: round ?? null }}
+      >
         <Outlet />
       </GlobalStateContextProvider>
     );
