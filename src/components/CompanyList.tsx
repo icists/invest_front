@@ -81,18 +81,28 @@ type CompanyListProps = {
 
 function CompanyList({ className, round, teamID }: CompanyListProps) {
   const [companies] = useCompanies();
-  const [roundData] = useRoundData(round);
+  const [roundData] = useRoundData();
 
   if (!companies || !roundData) return null;
 
   const companiesData = Object.entries(companies).map(
-    ([companyID, { name, logo }]) => ({
-      name,
-      logo,
-      valuation: roundData.valuation[companyID],
-      investAmount: roundData.investAmount[companyID][teamID],
-      change: 31.4,
-    })
+    ([companyID, { name, logo }]) => {
+      const valuation = roundData[round].valuation[companyID];
+
+      let change = null;
+      if (round !== 1) {
+        const prevValuation = roundData[round - 1].valuation[companyID];
+        change = (valuation / prevValuation - 1) * 100;
+      }
+
+      return {
+        name,
+        logo,
+        valuation,
+        investAmount: roundData[round].investAmount[companyID][teamID],
+        change,
+      };
+    }
   );
 
   return (

@@ -62,9 +62,11 @@ export function useCurrentRound(): [
   return useObjectVal(roundRef);
 }
 
-export function useRoundData(
-  round: number
-): [RoundData | undefined, boolean, Error | undefined] {
-  const roundRef = db.ref(database, "/rounds/" + round);
+export function useRoundData(): [
+  Record<number, RoundData> | undefined,
+  boolean,
+  Error | undefined
+] {
+  const roundRef = db.ref(database, "/rounds");
   return useObjectVal(roundRef);
 }
