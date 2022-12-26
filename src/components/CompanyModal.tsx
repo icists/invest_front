@@ -1,24 +1,5 @@
 import styled from "@emotion/styled";
 
-const Container = styled.div<{ visible: boolean }>(
-  {
-    position: "fixed",
-    width: "100vw",
-    maxWidth: 600,
-    minHeight: "80vh",
-    left: "50%",
-    bottom: 0,
-
-    backgroundColor: "white",
-    borderRadius: "20px 20px 0 0",
-
-    transition: "transform 0.3s",
-  },
-  (props) => ({
-    transform: `translate(-50%, ${props.visible ? "0" : "100%"})`,
-  })
-);
-
 const Overlay = styled.div<{ visible: boolean }>(
   {
     position: "fixed",
@@ -34,6 +15,27 @@ const Overlay = styled.div<{ visible: boolean }>(
   (props) => ({
     opacity: props.visible ? 0.7 : 0,
     pointerEvents: props.visible ? "all" : "none",
+  })
+);
+
+const Container = styled.div<{ visible: boolean }>(
+  {
+    position: "fixed",
+    width: "100vw",
+    maxWidth: 600,
+    minHeight: "80vh",
+    left: "50%",
+    bottom: 0,
+
+    backgroundColor: "white",
+    borderRadius: "20px 20px 0 0",
+
+    display: "flex",
+
+    transition: "transform 0.3s",
+  },
+  (props) => ({
+    transform: `translate(-50%, ${props.visible ? "0" : "100%"})`,
   })
 );
 

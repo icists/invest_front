@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import { HTMLProps, useState } from "react";
+import { useState } from "react";
 import { useCompanies, useRoundData } from "../firebase";
 
 import { colors } from "../styles";
 import CompanyModal from "./CompanyModal";
+import CompanyLogo from "./CompanyLogo";
 
 const List = styled.ul({
   padding: 0,
@@ -21,25 +22,6 @@ const Item = styled.li({
   "&:hover": {
     backgroundColor: colors.lightGray,
   },
-});
-
-const LogoContainer = styled.div({
-  backgroundColor: colors.lightGray,
-
-  height: 56,
-  width: 56,
-  borderRadius: "100%",
-
-  flex: "0 0 auto",
-  padding: "0 0.3rem",
-
-  margin: "0 0.7rem 0 0",
-});
-
-const Logo = styled.img({
-  height: "100%",
-  width: "100%",
-  objectFit: "fill",
 });
 
 const Container = styled.div({
@@ -140,9 +122,7 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
       <List className={className}>
         {companiesData.map((data) => (
           <Item key={data.name} onClick={() => handleClickItem(data)}>
-            <LogoContainer>
-              <Logo src={data.logo} />
-            </LogoContainer>
+            <CompanyLogo src={data.logo} width={56} />
             <Container>
               <CompanyTitle>{data.name}</CompanyTitle>
               <Valuation>{data.valuation.toLocaleString("en")}</Valuation>
