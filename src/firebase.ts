@@ -45,12 +45,20 @@ export async function registerUser(uid: string, data: UserData) {
 }
 
 export function useCompanies(): [
-  Record<CompanyUID, Company> | undefined,
+  [CompanyUID, Company][] | undefined,
   boolean,
   Error | undefined
 ] {
   const companiesRef = db.ref(database, "/companies");
-  return useObjectVal(companiesRef);
+  const [record, loading, error] =
+    useObjectVal<Record<CompanyUID, Company>>(companiesRef);
+  return [
+    record
+      ? Object.entries(record as Record<CompanyUID, Company>).sort()
+      : undefined,
+    loading,
+    error,
+  ];
 }
 
 export function useCurrentRound(): [

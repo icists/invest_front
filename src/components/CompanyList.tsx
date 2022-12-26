@@ -105,7 +105,7 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
 
   if (!companies || !roundData) return null;
 
-  const companiesData: CompanyData[] = Object.entries(companies).map(
+  const companiesData: CompanyData[] = companies.map(
     ([companyID, { name, logo }]) => {
       const valuation = roundData[round].valuation[companyID];
 
