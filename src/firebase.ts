@@ -44,23 +44,10 @@ export async function registerUser(uid: string, data: UserData) {
   db.set(memberRef, true);
 }
 
-export function useCompanies(): [
-  [CompanyUID, Company][] | undefined,
-  boolean,
-  Error | undefined
-] {
+export function useCompanies(): Record<CompanyUID, Company> | null {
   const companiesRef = db.ref(database, "/companies");
-  const [record, loading, error] =
-    useObjectVal<Record<CompanyUID, Company>>(companiesRef);
-  return [
-    record
-      ? Object.entries(record as Record<CompanyUID, Company>).sort(
-          ([, a], [, b]) => a.name.localeCompare(b.name)
-        )
-      : undefined,
-    loading,
-    error,
-  ];
+  const [record] = useObjectVal<Record<CompanyUID, Company>>(companiesRef);
+  return record ?? null;
 }
 
 export function useCurrentRound(): number | null {

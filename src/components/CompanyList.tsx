@@ -3,7 +3,8 @@ import { useState } from "react";
 import { useCompanies, useRoundData } from "../firebase";
 
 import { colors } from "../styles";
-import CompanyModal from "./CompanyModal"; import CompanyLogo from "./CompanyLogo";
+import CompanyModal from "./CompanyModal";
+import CompanyLogo from "./CompanyLogo";
 import { Company } from "../schemes";
 
 const List = styled.ul({
@@ -84,7 +85,7 @@ type CompanyListProps = {
 };
 
 function CompanyList({ className, round, teamID }: CompanyListProps) {
-  const [companies] = useCompanies();
+  const companies = useCompanies();
   const roundData = useRoundData();
 
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
@@ -99,24 +100,29 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
     setShowModal(false);
   }
 
-  if (!companies || roundData === null) return null;
+  if (companies === null || roundData === null) return null;
 
-  const companiesData: CompanyData[] = companies.map(([companyID, company]) => {
-    const valuation = roundData[round].valuation[companyID];
+  const companiesList = Object.entries(companies).sort(([, a], [, b]) =>
+    a.name.localeCompare(b.name)
+  );
+  const companiesData: CompanyData[] = companiesList.map(
+    ([companyID, company]) => {
+      const valuation = roundData[round].valuation[companyID];
 
-    let change = null;
-    if (round !== 1) {
-      const prevValuation = roundData[round - 1].valuation[companyID];
-      change = (valuation / prevValuation - 1) * 100;
+      let change = null;
+      if (round !== 1) {
+        const prevValuation = roundData[round - 1].valuation[companyID];
+        change = (valuation / prevValuation - 1) * 100;
+      }
+
+      return {
+        company,
+        valuation,
+        investAmount: roundData[round].investAmount[teamID][companyID],
+        change,
+      };
     }
-
-    return {
-      company,
-      valuation,
-      investAmount: roundData[round].investAmount[teamID][companyID],
-      change,
-    };
-  });
+  );
 
   return (
     <>
