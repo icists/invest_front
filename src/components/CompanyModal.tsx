@@ -58,6 +58,13 @@ const CompanyTitle = styled(Header)({
   padding: "0 0 0 0.7rem",
 });
 
+const ContentTitle = styled(Header)({
+  fontSize: "1.3rem",
+  marginTop: "1.5rem",
+});
+
+const ContentParagraph = styled.p({});
+
 type CompanyModal = {
   onClose: () => void;
   company: Company | null;
@@ -75,6 +82,8 @@ function CompanyModal({ onClose, company, visible }: CompanyModal) {
               <CompanyLogo src={company.logo} width={54} />
               <CompanyTitle as="h1">{company.name}</CompanyTitle>
             </HeaderContainer>
+            <ContentTitle as="h2">기업 정보</ContentTitle>
+            <ContentParagraph>{company.description}</ContentParagraph>
           </Container>
         )}
       </Modal>
