@@ -93,6 +93,21 @@ const InputContainer = styled.div({
   display: "flex",
 });
 
+const InvestTextField = styled(TextField)({
+  height: 45,
+  minWidth: 0,
+  marginRight: "0.5rem",
+
+  flex: 1,
+  padding: "0 1rem",
+});
+
+const InvestButton = styled(Button)({
+  padding: "0 1rem",
+  flex: "0 0 70px",
+  fontSize: "1.2rem",
+});
+
 function CompanyInfo({ company }: { company: Company }) {
   return (
     <>
@@ -119,11 +134,11 @@ function CompanyInvest({
     <>
       <ContentTitle as="h2">투자액</ContentTitle>
       <InputContainer>
-        <TextField
+        <InvestTextField
           value={localInvestAmount}
           onChange={(v) => setLocalInvestAmount(v)}
         />
-        <Button>적용</Button>
+        <InvestButton>적용</InvestButton>
       </InputContainer>
     </>
   );
@@ -140,8 +155,7 @@ function CompanyModal({ onClose, company, visible }: CompanyModalProps) {
   const round = useCurrentRound();
   const roundData = useRoundData();
 
-  if (round === null || user === null || roundData === null)
-    return null;
+  if (round === null || user === null || roundData === null) return null;
 
   return (
     <>
@@ -156,7 +170,11 @@ function CompanyModal({ onClose, company, visible }: CompanyModalProps) {
                 <CompanySubtitle>{company.engName}</CompanySubtitle>
               </TitleContainer>
             </HeaderContainer>
-            {round === 0 ? <CompanyInfo company={company} /> : null}
+            {round === 0 ? (
+              <CompanyInfo company={company} />
+            ) : (
+              <CompanyInvest company={company} investAmount={0} />
+            )}
           </Container>
         )}
       </Modal>

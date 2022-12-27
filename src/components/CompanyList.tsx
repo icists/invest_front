@@ -5,7 +5,7 @@ import { useCompanies, useCurrentRound, useRoundData } from "../firebase";
 import { colors } from "../styles";
 import CompanyModal from "./CompanyModal";
 import CompanyLogo from "./CompanyLogo";
-import { Company } from "../schemes";
+import { Company, CompanyUID } from "../schemes";
 
 const List = styled.ul({
   padding: 0,
@@ -86,11 +86,12 @@ function CompanyList({ className, teamID }: CompanyListProps) {
   const round = useCurrentRound();
   const roundData = useRoundData();
 
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const [selectedCompanyUID, setSelectedCompanyUID] =
+    useState<CompanyUID | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  function handleClickItem(company: Company) {
-    setSelectedCompany(company);
+  function handleClickItem(companyUID: CompanyUID) {
+    setSelectedCompanyUID(companyUID);
     setShowModal(true);
   }
 
@@ -142,7 +143,7 @@ function CompanyList({ className, teamID }: CompanyListProps) {
     <>
       <List className={className}>
         {companiesList.map(([companyID, company]) => (
-          <Item key={company.name} onClick={() => handleClickItem(company)}>
+          <Item key={company.name} onClick={() => handleClickItem(companyID)}>
             <CompanyLogo src={company.logo} width={56} />
             {showDetail ? (
               <DetailedContainer companyID={companyID} company={company} />
@@ -157,7 +158,9 @@ function CompanyList({ className, teamID }: CompanyListProps) {
       </List>
 
       <CompanyModal
-        company={selectedCompany}
+        company={
+          selectedCompanyUID === null ? null : companies[selectedCompanyUID]
+        }
         visible={showModal}
         onClose={handleCloseModal}
       />
