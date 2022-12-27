@@ -54,7 +54,9 @@ export function useCompanies(): [
     useObjectVal<Record<CompanyUID, Company>>(companiesRef);
   return [
     record
-      ? Object.entries(record as Record<CompanyUID, Company>).sort()
+      ? Object.entries(record as Record<CompanyUID, Company>).sort(
+          ([, a], [, b]) => a.name.localeCompare(b.name)
+        )
       : undefined,
     loading,
     error,
