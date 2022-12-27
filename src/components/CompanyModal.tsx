@@ -74,10 +74,16 @@ const CompanySubtitle = styled.small({
 
 const ContentTitle = styled(Header)({
   fontSize: "1.3rem",
-  marginTop: "1.7rem",
+  margin: "1.7rem 0 0.8rem 0",
 });
 
 const ContentParagraph = styled.p({});
+
+const Video = styled.iframe({
+  width: "100%",
+  height: 220,
+  border: "none",
+});
 
 type CompanyModal = {
   onClose: () => void;
@@ -101,6 +107,8 @@ function CompanyModal({ onClose, company, visible }: CompanyModal) {
             </HeaderContainer>
             <ContentTitle as="h2">기업 정보</ContentTitle>
             <ContentParagraph>{company.description}</ContentParagraph>
+            <ContentTitle as="h2">소개 영상</ContentTitle>
+            <Video src={company.video} key={company.video} />
           </Container>
         )}
       </Modal>
