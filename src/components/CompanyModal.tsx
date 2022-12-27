@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 
 import { Company } from "../schemes";
 
+import { colors } from "../styles";
+
 import CompanyLogo from "./CompanyLogo";
 import Header from "./Header";
 
@@ -54,13 +56,25 @@ const HeaderContainer = styled.div({
   fontSize: "0.8rem",
 });
 
+const TitleContainer = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  paddingLeft: "0.7rem",
+});
+
 const CompanyTitle = styled(Header)({
-  padding: "0 0 0 0.7rem",
+  fontSize: "1.5rem",
+  marginBottom: "0.1rem",
+});
+
+const CompanySubtitle = styled.small({
+  fontSize: "1rem",
+  color: colors.darkGray,
 });
 
 const ContentTitle = styled(Header)({
   fontSize: "1.3rem",
-  marginTop: "1.5rem",
+  marginTop: "1.7rem",
 });
 
 const ContentParagraph = styled.p({});
@@ -79,8 +93,11 @@ function CompanyModal({ onClose, company, visible }: CompanyModal) {
         {company !== null && (
           <Container>
             <HeaderContainer>
-              <CompanyLogo src={company.logo} width={54} />
-              <CompanyTitle as="h1">{company.name}</CompanyTitle>
+              <CompanyLogo src={company.logo} width={60} />
+              <TitleContainer>
+                <CompanyTitle as="h1">{company.name}</CompanyTitle>
+                <CompanySubtitle>{company.engName}</CompanySubtitle>
+              </TitleContainer>
             </HeaderContainer>
             <ContentTitle as="h2">기업 정보</ContentTitle>
             <ContentParagraph>{company.description}</ContentParagraph>

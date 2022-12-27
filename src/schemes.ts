@@ -19,6 +19,8 @@ export type RoundData = {
 
 export type Company = {
   name: string;
+  engName: string;
+
   logo: string;
   description: string;
 };
