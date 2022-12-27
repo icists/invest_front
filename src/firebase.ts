@@ -63,13 +63,10 @@ export function useCompanies(): [
   ];
 }
 
-export function useCurrentRound(): [
-  number | undefined,
-  boolean,
-  Error | undefined
-] {
+export function useCurrentRound(): number | null {
   const roundRef = db.ref(database, "/status/currentRound");
-  return useObjectVal(roundRef);
+  const [round] = useObjectVal<number>(roundRef);
+  return round ?? null;
 }
 
 export function useRoundData(): [

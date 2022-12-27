@@ -1,11 +1,16 @@
 import styled from "@emotion/styled";
+import { useState } from "react";
+import { useGlobalState } from "../context";
+import { useCurrentRound, useRoundData } from "../firebase";
 
 import { Company } from "../schemes";
 
 import { colors } from "../styles";
+import Button from "./Button";
 
 import CompanyLogo from "./CompanyLogo";
 import Header from "./Header";
+import TextField from "./TextField";
 
 const Overlay = styled.div<{ visible: boolean }>(
   {
@@ -16,7 +21,6 @@ const Overlay = styled.div<{ visible: boolean }>(
     left: 0,
 
     backgroundColor: "black",
-
     transition: "opacity 0.3s",
   },
   (props) => ({
@@ -85,13 +89,60 @@ const Video = styled.iframe({
   border: "none",
 });
 
-type CompanyModal = {
+const InputContainer = styled.div({
+  display: "flex",
+});
+
+function CompanyInfo({ company }: { company: Company }) {
+  return (
+    <>
+      <ContentTitle as="h2">기업 정보</ContentTitle>
+      <ContentParagraph>{company.description}</ContentParagraph>
+      <ContentTitle as="h2">소개 영상</ContentTitle>
+      <Video src={company.video} key={company.video} allowFullScreen />
+    </>
+  );
+}
+
+function CompanyInvest({
+  company,
+  investAmount,
+}: {
+  company: Company;
+  investAmount: number;
+}) {
+  const [localInvestAmount, setLocalInvestAmount] = useState(
+    investAmount.toString()
+  );
+
+  return (
+    <>
+      <ContentTitle as="h2">투자액</ContentTitle>
+      <InputContainer>
+        <TextField
+          value={localInvestAmount}
+          onChange={(v) => setLocalInvestAmount(v)}
+        />
+        <Button>적용</Button>
+      </InputContainer>
+    </>
+  );
+}
+
+type CompanyModalProps = {
   onClose: () => void;
   company: Company | null;
   visible: boolean;
 };
 
-function CompanyModal({ onClose, company, visible }: CompanyModal) {
+function CompanyModal({ onClose, company, visible }: CompanyModalProps) {
+  const { user } = useGlobalState();
+  const round = useCurrentRound();
+  const [roundData] = useRoundData();
+
+  if (round === null || user === null || roundData === undefined)
+    return null;
+
   return (
     <>
       <Overlay visible={visible} onClick={onClose} />
@@ -105,10 +156,7 @@ function CompanyModal({ onClose, company, visible }: CompanyModal) {
                 <CompanySubtitle>{company.engName}</CompanySubtitle>
               </TitleContainer>
             </HeaderContainer>
-            <ContentTitle as="h2">기업 정보</ContentTitle>
-            <ContentParagraph>{company.description}</ContentParagraph>
-            <ContentTitle as="h2">소개 영상</ContentTitle>
-            <Video src={company.video} key={company.video} allowFullScreen />
+            {round === 0 ? <CompanyInfo company={company} /> : null}
           </Container>
         )}
       </Modal>

@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useCompanies, useRoundData } from "../firebase";
 
 import { colors } from "../styles";
-import CompanyModal from "./CompanyModal";
-import CompanyLogo from "./CompanyLogo";
+import CompanyModal from "./CompanyModal"; import CompanyLogo from "./CompanyLogo";
 import { Company } from "../schemes";
 
 const List = styled.ul({
@@ -48,7 +47,7 @@ const Valuation = styled.div({
   justifySelf: "end",
 });
 
-const InvestAmount = styled.div({
+const CompanySubtitle = styled.div({
   color: colors.darkGray,
   fontSize: "1rem",
 
@@ -128,11 +127,11 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
             <Container>
               <CompanyTitle>{data.company.name}</CompanyTitle>
               <Valuation>{data.valuation.toLocaleString("en")}</Valuation>
-              <InvestAmount>
+              <CompanySubtitle>
                 {data.investAmount
                   ? `투자액 ${data.investAmount.toLocaleString("en")}원`
                   : "투자하지 않음"}
-              </InvestAmount>
+              </CompanySubtitle>
               {data.change !== null && (
                 <Change minus={data.change < 0}>
                   {data.change >= 0 ? "+" : ""}
