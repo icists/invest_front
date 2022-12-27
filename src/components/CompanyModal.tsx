@@ -138,9 +138,9 @@ type CompanyModalProps = {
 function CompanyModal({ onClose, company, visible }: CompanyModalProps) {
   const { user } = useGlobalState();
   const round = useCurrentRound();
-  const [roundData] = useRoundData();
+  const roundData = useRoundData();
 
-  if (round === null || user === null || roundData === undefined)
+  if (round === null || user === null || roundData === null)
     return null;
 
   return (

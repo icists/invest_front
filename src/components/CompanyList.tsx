@@ -85,7 +85,7 @@ type CompanyListProps = {
 
 function CompanyList({ className, round, teamID }: CompanyListProps) {
   const [companies] = useCompanies();
-  const [roundData] = useRoundData();
+  const roundData = useRoundData();
 
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -99,7 +99,7 @@ function CompanyList({ className, round, teamID }: CompanyListProps) {
     setShowModal(false);
   }
 
-  if (!companies || !roundData) return null;
+  if (!companies || roundData === null) return null;
 
   const companiesData: CompanyData[] = companies.map(([companyID, company]) => {
     const valuation = roundData[round].valuation[companyID];
