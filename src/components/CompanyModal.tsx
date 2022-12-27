@@ -1,9 +1,14 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useGlobalState } from "../context";
-import { useCompanies, useCurrentRound, useRoundData } from "../firebase";
+import {
+  invest,
+  useCompanies,
+  useCurrentRound,
+  useRoundData,
+} from "../firebase";
 
-import { Company, CompanyUID } from "../schemes";
+import { Company, CompanyUID, TeamUID } from "../schemes";
 
 import { colors } from "../styles";
 import Button from "./Button";
@@ -120,10 +125,14 @@ function CompanyInfo({ company }: { company: Company }) {
 }
 
 function CompanyInvest({
+  round,
   companyUID,
+  teamUID,
   investAmount,
 }: {
+  round: number;
   companyUID: CompanyUID;
+  teamUID: TeamUID;
   investAmount: number;
 }) {
   const [localInvestAmount, setLocalInvestAmount] = useState("");
@@ -132,15 +141,19 @@ function CompanyInvest({
     setLocalInvestAmount(investAmount.toString());
   }, [investAmount]);
 
+  async function handleClickInvest() {
+    await invest(round, teamUID, companyUID, Number(localInvestAmount));
+  }
+
   return (
     <>
-      <ContentTitle as="h2">투자액</ContentTitle>
+      <ContentTitle as="h2">투자액 (₩)</ContentTitle>
       <InputContainer>
         <InvestTextField
           value={localInvestAmount}
           onChange={(v) => setLocalInvestAmount(v)}
         />
-        <InvestButton>적용</InvestButton>
+        <InvestButton onClick={handleClickInvest}>적용</InvestButton>
       </InputContainer>
     </>
   );
@@ -191,7 +204,9 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
             <CompanyInfo company={company} />
           ) : (
             <CompanyInvest
+              round={round}
               companyUID={companyUID}
+              teamUID={user.team.toString()}
               investAmount={
                 roundData[round].investAmount[user.team][companyUID]
               }

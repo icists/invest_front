@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import * as db from "firebase/database";
 import { useObjectVal } from "react-firebase-hooks/database";
 
-import { UserData, RoundData, Company, CompanyUID } from "./schemes";
+import { UserData, RoundData, Company, CompanyUID, TeamUID } from "./schemes";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMZh9vXL5Ga8T-ZAw9WpNBGOd_EF7jWKU",
@@ -38,10 +38,23 @@ export async function findUser(uid: string): Promise<UserData | null> {
 
 export async function registerUser(uid: string, data: UserData) {
   const userRef = db.ref(database, "/users/" + uid);
-  db.set(userRef, data);
+  await db.set(userRef, data);
 
   const memberRef = db.ref(database, "/teams/" + data.team + "/members/" + uid);
-  db.set(memberRef, true);
+  await db.set(memberRef, true);
+}
+
+export async function invest(
+  round: number,
+  teamUID: TeamUID,
+  companyUID: CompanyUID,
+  amount: number
+) {
+  const amountRef = db.ref(
+    database,
+    `/rounds/${round}/investAmount/${teamUID}/${companyUID}`
+  );
+  await db.set(amountRef, amount);
 }
 
 export function useCompanies(): Record<CompanyUID, Company> | null {
