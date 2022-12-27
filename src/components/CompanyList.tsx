@@ -158,9 +158,7 @@ function CompanyList({ className, teamID }: CompanyListProps) {
       </List>
 
       <CompanyModal
-        company={
-          selectedCompanyUID === null ? null : companies[selectedCompanyUID]
-        }
+        companyUID={selectedCompanyUID}
         visible={showModal}
         onClose={handleCloseModal}
       />

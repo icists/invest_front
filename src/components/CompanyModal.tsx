@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalState } from "../context";
-import { useCurrentRound, useRoundData } from "../firebase";
+import { useCompanies, useCurrentRound, useRoundData } from "../firebase";
 
-import { Company } from "../schemes";
+import { Company, CompanyUID } from "../schemes";
 
 import { colors } from "../styles";
 import Button from "./Button";
@@ -120,15 +120,17 @@ function CompanyInfo({ company }: { company: Company }) {
 }
 
 function CompanyInvest({
-  company,
+  companyUID,
   investAmount,
 }: {
-  company: Company;
+  companyUID: CompanyUID;
   investAmount: number;
 }) {
-  const [localInvestAmount, setLocalInvestAmount] = useState(
-    investAmount.toString()
-  );
+  const [localInvestAmount, setLocalInvestAmount] = useState("");
+
+  useEffect(() => {
+    setLocalInvestAmount(investAmount.toString());
+  }, [investAmount]);
 
   return (
     <>
@@ -146,37 +148,56 @@ function CompanyInvest({
 
 type CompanyModalProps = {
   onClose: () => void;
-  company: Company | null;
+  companyUID: CompanyUID | null;
   visible: boolean;
 };
 
-function CompanyModal({ onClose, company, visible }: CompanyModalProps) {
+function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
   const { user } = useGlobalState();
   const round = useCurrentRound();
   const roundData = useRoundData();
+  const companies = useCompanies();
 
-  if (round === null || user === null || roundData === null) return null;
+  if (
+    round === null ||
+    user === null ||
+    roundData === null ||
+    companies === null
+  )
+    return null;
 
+  if (companyUID === null)
+    return (
+      <>
+        <Overlay visible={visible} onClick={onClose} />
+        <Modal visible={visible} />
+      </>
+    );
+
+  const company = companies[companyUID];
   return (
     <>
       <Overlay visible={visible} onClick={onClose} />
       <Modal visible={visible}>
-        {company !== null && (
-          <Container>
-            <HeaderContainer>
-              <CompanyLogo src={company.logo} width={60} />
-              <TitleContainer>
-                <CompanyTitle as="h1">{company.name}</CompanyTitle>
-                <CompanySubtitle>{company.engName}</CompanySubtitle>
-              </TitleContainer>
-            </HeaderContainer>
-            {round === 0 ? (
-              <CompanyInfo company={company} />
-            ) : (
-              <CompanyInvest company={company} investAmount={0} />
-            )}
-          </Container>
-        )}
+        <Container>
+          <HeaderContainer>
+            <CompanyLogo src={company.logo} width={60} />
+            <TitleContainer>
+              <CompanyTitle as="h1">{company.name}</CompanyTitle>
+              <CompanySubtitle>{company.engName}</CompanySubtitle>
+            </TitleContainer>
+          </HeaderContainer>
+          {round === 0 ? (
+            <CompanyInfo company={company} />
+          ) : (
+            <CompanyInvest
+              companyUID={companyUID}
+              investAmount={
+                roundData[round].investAmount[user.team][companyUID]
+              }
+            />
+          )}
+        </Container>
       </Modal>
     </>
   );
