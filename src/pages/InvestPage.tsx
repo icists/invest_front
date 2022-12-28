@@ -41,14 +41,13 @@ function InvestPage() {
     <Main>
       <HeaderContainer>
         <Title as="h1">투자 종목</Title>
-        {round !== null && (
-          <RoundStatus>{"Round " + round}</RoundStatus>
-        )}
+        {round !== null && <RoundStatus>{"Round " + round}</RoundStatus>}
       </HeaderContainer>
 
-      {round !== null && user !== null && (
-        <CompanyList round={round} teamID={user.team} />
-      )}
+      {round !== null &&
+        user !== null &&
+        <CompanyList teamID={user.team} />
+      }
     </Main>
   );
 }
