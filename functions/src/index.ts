@@ -9,11 +9,11 @@ const db = admin.database();
 
 export const invest = functions.https.onCall(
   async (data: InvestParams, context): Promise<InvestResult> => {
-    if (!context.auth) return false;
+    if (!context.auth) return "auth_fail";
     const userSnapshot = await db.ref(`/users/${context.auth.uid}`).get();
 
     const userData: UserData = userSnapshot.val();
-    if (userData.team !== data.team) return false;
+    if (userData.team !== data.team) return "team_mismatch";
 
     const investAmountRef = db.ref(
       `/rounds/${data.round}/investAmount/${userData.team}/${data.companyUID}`
@@ -25,10 +25,11 @@ export const invest = functions.https.onCall(
     const accountSnapshot = await accountRef.get();
     const account: number = accountSnapshot.val();
 
-    if (data.investAmount > account + currentInvestAmount) return false;
+    if (data.investAmount > account + currentInvestAmount)
+      return "insufficient_cash";
 
     accountRef.set(account + currentInvestAmount - data.investAmount);
     investAmountRef.set(data.investAmount);
-    return true;
+    return "success";
   }
 );

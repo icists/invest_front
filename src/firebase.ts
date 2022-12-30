@@ -53,7 +53,11 @@ export type InvestParams = {
   companyUID: string;
   investAmount: number;
 };
-export type InvestResult = boolean;
+export type InvestResult =
+  | "auth_fail"
+  | "team_mismatch"
+  | "insufficient_cash"
+  | "success";
 export const invest = httpsCallable<InvestParams, InvestResult>(
   functions,
   "invest"
