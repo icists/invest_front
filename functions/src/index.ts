@@ -12,7 +12,7 @@ export const invest = functions.https.onCall(
     if (!context.auth) return "auth_fail";
     const userSnapshot = await db.ref(`/users/${context.auth.uid}`).get();
 
-    if (data.investAmount < 0) return "invalid_param";
+    if (data.investAmount < 0 || !Number.isSafeInteger(data.investAmount)) return "invalid_param";
 
     const userData: UserData = userSnapshot.val();
     if (userData.teamUID !== data.teamUID) return "team_mismatch";

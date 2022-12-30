@@ -5,6 +5,7 @@ import { colors } from "../styles";
 const Input = styled.input<{ isError: boolean }>(
   {
     appearance: "none",
+    border: "none",
     borderRadius: 5,
 
     fontSize: "1.3rem",
@@ -19,7 +20,7 @@ const Input = styled.input<{ isError: boolean }>(
     },
   },
   ({ isError }) => ({
-    border: isError ? `2px solid ${colors.red}` : "none",
+    outline: isError ? `2px solid ${colors.red}` : "none",
   })
 );
 

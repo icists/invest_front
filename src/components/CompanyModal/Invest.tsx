@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import { colors } from "@/styles";
 
 import { CompanyUID, TeamUID } from "@/schemes";
 
@@ -28,6 +29,17 @@ const InvestButton = styled(Button)({
   fontSize: "1.2rem",
 });
 
+const Message = styled.small<{ isError: boolean }>(
+  {
+    display: "block",
+    marginTop: "0.7rem",
+    fontSize: "1.1rem",
+  },
+  ({ isError }) => ({
+    color: isError ? colors.red : colors.green,
+  })
+);
+
 function Invest({
   round,
   companyUID,
@@ -41,17 +53,46 @@ function Invest({
 }) {
   const [localInvestAmount, setLocalInvestAmount] = useState("");
 
+  const [isError, setIsError] = useState(false);
+  const [message, setMessage] = useState("");
+
   useEffect(() => {
     setLocalInvestAmount(investAmount.toString());
   }, [investAmount]);
 
   async function handleClickInvest() {
+    const investAmount = Number(localInvestAmount);
+    if (!Number.isSafeInteger(investAmount)) {
+      setIsError(true);
+      setMessage("정수값을 입력해주세요.");
+      return;
+    } else if (investAmount < 0) {
+      setIsError(true);
+      setMessage("양수를 입력해주세요.");
+      return;
+    }
+
+    setIsError(false);
+    setMessage("");
+
     const investResult = await invest({
       round,
       teamUID,
       companyUID,
-      investAmount: Number(localInvestAmount),
+      investAmount,
     });
+
+    if (investResult.data === "success") {
+      setIsError(false);
+      setMessage("투자가 완료되었습니다.");
+    } else if (investResult.data === "insufficient_cash") {
+      setIsError(true);
+      setMessage("잔고가 부족합니다.");
+    } else {
+      setIsError(true);
+      setMessage(`오류가 발생했습니다. ${investResult.data}`);
+    }
+
     console.log(investResult);
   }
 
@@ -62,10 +103,11 @@ function Invest({
         <InvestTextField
           value={localInvestAmount}
           onChange={(v) => setLocalInvestAmount(v)}
-          isError
+          isError={isError}
         />
         <InvestButton onClick={handleClickInvest}>적용</InvestButton>
       </InputContainer>
+      <Message isError={isError}>{message}</Message>
     </>
   );
 }
