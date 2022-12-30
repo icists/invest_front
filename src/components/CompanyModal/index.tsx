@@ -37,7 +37,7 @@ const Modal = styled.div<{ visible: boolean }>(
   {
     position: "fixed",
     width: "100vw",
-    maxWidth: 600,
+    maxWidth: 500,
     minHeight: "80vh",
     left: "50%",
     bottom: 0,

@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import { useCompanies, useCurrentRound, useRoundData } from "../firebase";
 
+import { formatNum } from "@/utils";
+
 import { colors } from "../styles";
 import CompanyModal from "./CompanyModal";
 import CompanyLogo from "./CompanyLogo";
@@ -127,12 +129,10 @@ function CompanyList({ className, teamID }: CompanyListProps) {
         <CompanyTitle>{company.name}</CompanyTitle>
         <CompanySubtitle>
           {investAmount
-            ? `투자액 ${investAmount.toLocaleString("en")}원`
+            ? `투자액 ${formatNum(investAmount)}원`
             : "투자하지 않음"}
         </CompanySubtitle>
-        {valuation !== null && (
-          <Valuation>{valuation.toLocaleString("en")}</Valuation>
-        )}
+        {valuation !== null && <Valuation>{formatNum(valuation)}</Valuation>}
         {change !== null && (
           <Change minus={change < 0}>
             {change >= 0 ? "+" : ""}
