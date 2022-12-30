@@ -2,22 +2,26 @@ import styled from "@emotion/styled";
 
 import { colors } from "../styles";
 
-const Input = styled.input({
-  appearance: "none",
-  border: "none",
-  borderRadius: 5,
+const Input = styled.input<{ isError: boolean }>(
+  {
+    appearance: "none",
+    borderRadius: 5,
 
-  fontSize: "1.3rem",
-  fontFamily: "inherit",
-  padding: "1.2rem 1.2rem",
+    fontSize: "1.3rem",
+    fontFamily: "inherit",
+    padding: "1.2rem 1.2rem",
 
-  backgroundColor: colors.lightGray,
-  color: colors.black,
+    backgroundColor: colors.lightGray,
+    color: colors.black,
 
-  "&::placeholder": {
-    color: colors.darkGray,
+    "&::placeholder": {
+      color: colors.darkGray,
+    },
   },
-});
+  ({ isError }) => ({
+    border: isError ? `2px solid ${colors.red}` : "none",
+  })
+);
 
 type TextFieldProps = {
   className?: string;
@@ -27,6 +31,8 @@ type TextFieldProps = {
 
   onChange?: (value: string) => void;
   value: string;
+
+  isError?: boolean;
 };
 
 function TextField({
@@ -35,14 +41,16 @@ function TextField({
   isPassword,
   onChange,
   value,
+  isError,
 }: TextFieldProps) {
   return (
     <Input
       className={className}
-      type={isPassword ? "password" : "text"}
+      type={isPassword === true ? "password" : "text"}
       placeholder={placeholder}
       onChange={(e) => onChange && onChange(e.target.value)}
       value={value}
+      isError={isError === true}
     />
   );
 }

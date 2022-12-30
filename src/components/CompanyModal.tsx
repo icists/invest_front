@@ -100,7 +100,7 @@ const InputContainer = styled.div({
 });
 
 const InvestTextField = styled(TextField)({
-  height: 45,
+  height: 50,
   minWidth: 0,
   marginRight: "0.5rem",
 
@@ -159,6 +159,7 @@ function CompanyInvest({
         <InvestTextField
           value={localInvestAmount}
           onChange={(v) => setLocalInvestAmount(v)}
+          isError
         />
         <InvestButton onClick={handleClickInvest}>적용</InvestButton>
       </InputContainer>

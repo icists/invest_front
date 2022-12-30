@@ -56,6 +56,7 @@ export type InvestParams = {
 export type InvestResult =
   | "auth_fail"
   | "team_mismatch"
+  | "invalid_param"
   | "insufficient_cash"
   | "success";
 export const invest = httpsCallable<InvestParams, InvestResult>(
