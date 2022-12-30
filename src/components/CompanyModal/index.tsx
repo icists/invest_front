@@ -2,13 +2,8 @@ import styled from "@emotion/styled";
 import { colors } from "@/styles";
 
 import { useGlobalState } from "@/context";
-import {
-  useCompanies,
-  useCurrentRound,
-  useRoundData,
-} from "@/firebase";
+import { useCompanies, useCurrentRound, useRoundData } from "@/firebase";
 import { CompanyUID } from "@/schemes";
-
 
 import CompanyLogo from "../CompanyLogo";
 import Header from "../Header";
@@ -128,9 +123,10 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
               round={round}
               companyUID={companyUID}
               teamUID={user.teamUID}
-              investAmount={
+              currentInvest={
                 roundData[round].investAmount[user.teamUID][companyUID]
               }
+              visible={visible}
             />
           )}
         </Container>

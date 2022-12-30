@@ -44,29 +44,35 @@ function Invest({
   round,
   companyUID,
   teamUID,
-  investAmount,
+  visible,
+  currentInvest,
 }: {
   round: number;
   companyUID: CompanyUID;
   teamUID: TeamUID;
-  investAmount: number;
+  visible: boolean;
+  currentInvest: number;
 }) {
-  const [localInvestAmount, setLocalInvestAmount] = useState("");
+  const [investAmount, setInvestAmount] = useState("");
 
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    setLocalInvestAmount(investAmount.toString());
-  }, [investAmount]);
+    setIsError(false);
+    setMessage("");
+
+    setInvestAmount(currentInvest.toString());
+  }, [visible, currentInvest]);
 
   async function handleClickInvest() {
-    const investAmount = Number(localInvestAmount);
-    if (!Number.isSafeInteger(investAmount)) {
+    const investAmountNum = Number(investAmount);
+
+    if (!Number.isSafeInteger(investAmountNum)) {
       setIsError(true);
       setMessage("정수값을 입력해주세요.");
       return;
-    } else if (investAmount < 0) {
+    } else if (investAmountNum < 0) {
       setIsError(true);
       setMessage("양수를 입력해주세요.");
       return;
@@ -79,7 +85,7 @@ function Invest({
       round,
       teamUID,
       companyUID,
-      investAmount,
+      investAmount: investAmountNum,
     });
 
     if (investResult.data === "success") {
@@ -101,8 +107,8 @@ function Invest({
       <ContentTitle as="h2">투자액 (₩)</ContentTitle>
       <InputContainer>
         <InvestTextField
-          value={localInvestAmount}
-          onChange={(v) => setLocalInvestAmount(v)}
+          value={investAmount}
+          onChange={setInvestAmount}
           isError={isError}
         />
         <InvestButton onClick={handleClickInvest}>적용</InvestButton>
