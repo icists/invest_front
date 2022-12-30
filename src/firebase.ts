@@ -1,9 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import * as db from "firebase/database";
+import { getFunctions, httpsCallable } from "firebase/functions";
 import { useObjectVal } from "react-firebase-hooks/database";
 
-import { UserData, RoundData, Company, CompanyUID, TeamUID } from "./schemes";
+import { UserData, RoundData, Company, CompanyUID } from "./schemes";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMZh9vXL5Ga8T-ZAw9WpNBGOd_EF7jWKU",
@@ -44,18 +45,19 @@ export async function registerUser(uid: string, data: UserData) {
   await db.set(memberRef, true);
 }
 
-export async function invest(
-  round: number,
-  teamUID: TeamUID,
-  companyUID: CompanyUID,
-  amount: number
-) {
-  const amountRef = db.ref(
-    database,
-    `/rounds/${round}/investAmount/${teamUID}/${companyUID}`
-  );
-  await db.set(amountRef, amount);
-}
+const functions = getFunctions(app);
+
+export type InvestParams = {
+  round: number;
+  team: number;
+  companyUID: string;
+  investAmount: number;
+};
+export type InvestResult = boolean;
+export const invest = httpsCallable<InvestParams, InvestResult>(
+  functions,
+  "invest"
+);
 
 export function useCompanies(): Record<CompanyUID, Company> | null {
   const companiesRef = db.ref(database, "/companies");

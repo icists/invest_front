@@ -1,33 +1,34 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
-import { UserData } from "../../src/schemes";
+import type { UserData } from "../../src/schemes";
+import type { InvestParams, InvestResult } from "../../src/firebase";
+
+admin.initializeApp();
+const db = admin.database();
 
 export const invest = functions.https.onCall(
-  async (data: { team: number; companyUID: string }, context) => {
-    if (!context.auth) return null;
-    const userSnapshot = await admin
-      .database()
-      .ref(`/users/${context.auth.uid}`)
-      .get();
+  async (data: InvestParams, context): Promise<InvestResult> => {
+    if (!context.auth) return false;
+    const userSnapshot = await db.ref(`/users/${context.auth.uid}`).get();
 
     const userData: UserData = userSnapshot.val();
-    if (userData.team !== data.team) return null;
+    if (userData.team !== data.team) return false;
 
-    const roundSnapshot = await admin
-      .database()
-      .ref("/status/currentRound")
-      .get();
-    const round: number = roundSnapshot.val();
+    const investAmountRef = db.ref(
+      `/rounds/${data.round}/investAmount/${userData.team}/${data.companyUID}`
+    );
+    const investAmountSnapshot = await investAmountRef.get();
+    const currentInvestAmount = investAmountSnapshot.val();
 
+    const accountRef = db.ref(`/teams/${userData.team}/account`);
+    const accountSnapshot = await accountRef.get();
+    const account: number = accountSnapshot.val();
 
-    return "Hello";
+    if (data.investAmount > account + currentInvestAmount) return false;
+
+    accountRef.set(account + currentInvestAmount - data.investAmount);
+    investAmountRef.set(data.investAmount);
+    return true;
   }
 );
-// // Start writing functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });

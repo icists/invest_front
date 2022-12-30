@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useGlobalState } from "../context";
+
 import {
   invest,
   useCompanies,
@@ -142,7 +143,13 @@ function CompanyInvest({
   }, [investAmount]);
 
   async function handleClickInvest() {
-    await invest(round, teamUID, companyUID, Number(localInvestAmount));
+    const investResult = await invest({
+      round,
+      team: 0,
+      companyUID,
+      investAmount: Number(localInvestAmount),
+    });
+    console.log(investResult);
   }
 
   return (

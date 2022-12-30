@@ -1,3 +1,4 @@
+export type UserUID = string;
 export type TeamUID = string;
 export type CompanyUID = string;
 
@@ -5,6 +6,11 @@ export type UserData = {
   name: string;
   team: number;
   mail: string | null;
+};
+
+export type Team = {
+  account: number;
+  members: Record<UserUID, boolean>;
 };
 
 export type Status = {
