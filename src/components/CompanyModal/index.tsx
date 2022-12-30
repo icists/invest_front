@@ -1,22 +1,21 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { useGlobalState } from "../context";
 
+import { useGlobalState } from "@/context";
 import {
   invest,
   useCompanies,
   useCurrentRound,
   useRoundData,
-} from "../firebase";
+} from "@/firebase";
+import { Company, CompanyUID, TeamUID } from "@/schemes";
 
-import { Company, CompanyUID, TeamUID } from "../schemes";
+import { colors } from "@/styles";
 
-import { colors } from "../styles";
-import Button from "./Button";
-
-import CompanyLogo from "./CompanyLogo";
-import Header from "./Header";
-import TextField from "./TextField";
+import Button from "../Button";
+import CompanyLogo from "../CompanyLogo";
+import Header from "../Header";
+import TextField from "../TextField";
 
 const Overlay = styled.div<{ visible: boolean }>(
   {
