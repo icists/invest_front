@@ -1,21 +1,20 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { colors } from "@/styles";
 
 import { useGlobalState } from "@/context";
 import {
-  invest,
   useCompanies,
   useCurrentRound,
   useRoundData,
 } from "@/firebase";
-import { Company, CompanyUID, TeamUID } from "@/schemes";
+import { CompanyUID } from "@/schemes";
 
-import { colors } from "@/styles";
 
-import Button from "../Button";
 import CompanyLogo from "../CompanyLogo";
 import Header from "../Header";
-import TextField from "../TextField";
+
+import CompanyInfo from "./Info";
+import CompanyInvest from "./Invest";
 
 const Overlay = styled.div<{ visible: boolean }>(
   {
@@ -80,91 +79,6 @@ const CompanySubtitle = styled.small({
   fontSize: "1rem",
   color: colors.darkGray,
 });
-
-const ContentTitle = styled(Header)({
-  fontSize: "1.3rem",
-  margin: "1.7rem 0 0.8rem 0",
-});
-
-const ContentParagraph = styled.p({});
-
-const Video = styled.iframe({
-  width: "100%",
-  height: 220,
-  border: "none",
-});
-
-const InputContainer = styled.div({
-  display: "flex",
-});
-
-const InvestTextField = styled(TextField)({
-  height: 50,
-  minWidth: 0,
-  marginRight: "0.5rem",
-
-  flex: 1,
-  padding: "0 1rem",
-});
-
-const InvestButton = styled(Button)({
-  padding: "0 1rem",
-  flex: "0 0 70px",
-  fontSize: "1.2rem",
-});
-
-function CompanyInfo({ company }: { company: Company }) {
-  return (
-    <>
-      <ContentTitle as="h2">기업 정보</ContentTitle>
-      <ContentParagraph>{company.description}</ContentParagraph>
-      <ContentTitle as="h2">소개 영상</ContentTitle>
-      <Video src={company.video} key={company.video} allowFullScreen />
-    </>
-  );
-}
-
-function CompanyInvest({
-  round,
-  companyUID,
-  teamUID,
-  investAmount,
-}: {
-  round: number;
-  companyUID: CompanyUID;
-  teamUID: TeamUID;
-  investAmount: number;
-}) {
-  const [localInvestAmount, setLocalInvestAmount] = useState("");
-
-  useEffect(() => {
-    setLocalInvestAmount(investAmount.toString());
-  }, [investAmount]);
-
-  async function handleClickInvest() {
-    const investResult = await invest({
-      round,
-      teamUID,
-      companyUID,
-      investAmount: Number(localInvestAmount),
-    });
-    console.log(investResult);
-  }
-
-  return (
-    <>
-      <ContentTitle as="h2">투자액 (₩)</ContentTitle>
-      <InputContainer>
-        <InvestTextField
-          value={localInvestAmount}
-          onChange={(v) => setLocalInvestAmount(v)}
-          isError
-        />
-        <InvestButton onClick={handleClickInvest}>적용</InvestButton>
-      </InputContainer>
-    </>
-  );
-}
 
 type CompanyModalProps = {
   onClose: () => void;
