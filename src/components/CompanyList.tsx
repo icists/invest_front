@@ -30,6 +30,7 @@ const Container = styled.div<{ detailed: boolean }>(
     display: "grid",
     gridTemplateRows: "1fr 1fr",
     gridTemplateColumns: "2fr 1fr",
+    gridAutoFlow: "column",
 
     width: "100%",
     fontSize: "1.2rem",
@@ -113,22 +114,25 @@ function CompanyList({ className, teamID }: CompanyListProps) {
     companyID: string;
     company: Company;
   }) => {
-    const valuation = roundData[round].valuation[companyID];
+    const valuation =
+      round < 2 ? null : roundData[round - 1].valuation[companyID];
     const change =
-      round === 1
+      valuation === null || round < 3
         ? null
-        : (valuation / roundData[round - 1].valuation[companyID] - 1) * 100;
+        : (valuation / roundData[round - 2].valuation[companyID] - 1) * 100;
     const investAmount = roundData[round].investAmount[teamID][companyID];
 
     return (
       <Container detailed>
         <CompanyTitle>{company.name}</CompanyTitle>
-        <Valuation>{valuation.toLocaleString("en")}</Valuation>
         <CompanySubtitle>
           {investAmount
             ? `투자액 ${investAmount.toLocaleString("en")}원`
             : "투자하지 않음"}
         </CompanySubtitle>
+        {valuation !== null && (
+          <Valuation>{valuation.toLocaleString("en")}</Valuation>
+        )}
         {change !== null && (
           <Change minus={change < 0}>
             {change >= 0 ? "+" : ""}

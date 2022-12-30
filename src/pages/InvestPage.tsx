@@ -13,7 +13,7 @@ const Main = styled.main({
 
   height: "100%",
   width: "95%",
-  maxWidth: 600,
+  maxWidth: 500,
 
   margin: "0 auto",
   padding: "1.5rem 0",
@@ -44,10 +44,7 @@ function InvestPage() {
         {round !== null && <RoundStatus>{"Round " + round}</RoundStatus>}
       </HeaderContainer>
 
-      {round !== null &&
-        user !== null &&
-        <CompanyList teamID={user.team} />
-      }
+      {round !== null && user !== null && <CompanyList teamID={user.team} />}
     </Main>
   );
 }

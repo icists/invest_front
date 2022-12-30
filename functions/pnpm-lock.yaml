@@ -5,7 +5,6 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.12.0
   '@typescript-eslint/parser': ^5.12.0
   eslint: ^8.9.0
-  eslint-config-google: ^0.14.0
   eslint-plugin-import: ^2.25.4
   firebase-admin: ^10.0.2
   firebase-functions: ^4.1.1
@@ -21,7 +20,6 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.47.1_txmweb6yn7coi7nfrp22gpyqmy
   '@typescript-eslint/parser': 5.47.1_lzzuuodtsqwxnvqeq4g4likcqa
   eslint: 8.30.0
-  eslint-config-google: 0.14.0_eslint@8.30.0
   eslint-plugin-import: 2.26.0_smw3o7qjeokkcohbvp7rylsoqq
   firebase-functions-test: 0.2.3_gqii3sygyjt3aqxbqbflboqi3q
   typescript: 4.9.4
@@ -933,15 +931,6 @@ packages:
   /escape-string-regexp/4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
-    dev: true
-
-  /eslint-config-google/0.14.0_eslint@8.30.0:
-    resolution: {integrity: sha512-WsbX4WbjuMvTdeVL6+J3rK1RGhCTqjsFjX7UMSMgZiyxxaNLkoJENbrGExzERFeoTpGw3F3FypTiWAP9ZXzkEw==}
-    engines: {node: '>=0.10.0'}
-    peerDependencies:
-      eslint: '>=5.16.0'
-    dependencies:
-      eslint: 8.30.0
     dev: true
 
   /eslint-import-resolver-node/0.3.6:
