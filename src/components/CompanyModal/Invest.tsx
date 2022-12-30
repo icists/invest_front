@@ -6,7 +6,7 @@ import { CompanyUID, TeamUID } from "@/schemes";
 
 import { invest } from "@/firebase";
 
-import TextField from "../TextField";
+import { NumberField } from "../TextField";
 import Button from "../Button";
 import { ContentTitle } from "./Contents";
 
@@ -14,7 +14,7 @@ const InputContainer = styled.div({
   display: "flex",
 });
 
-const InvestTextField = styled(TextField)({
+const InvestAmountField = styled(NumberField)({
   height: 50,
   minWidth: 0,
   marginRight: "0.5rem",
@@ -53,7 +53,7 @@ function Invest({
   visible: boolean;
   currentInvest: number;
 }) {
-  const [investAmount, setInvestAmount] = useState("");
+  const [investAmount, setInvestAmount] = useState<number | null>(0);
 
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
@@ -62,17 +62,20 @@ function Invest({
     setIsError(false);
     setMessage("");
 
-    setInvestAmount(currentInvest.toString());
-  }, [visible, currentInvest]);
+    setInvestAmount(currentInvest);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
   async function handleClickInvest() {
-    const investAmountNum = Number(investAmount);
-
-    if (!Number.isSafeInteger(investAmountNum)) {
+    if (investAmount === null) {
+      setIsError(true);
+      setMessage("투자액을 입력해주세요.");
+      return;
+    } else if (!Number.isSafeInteger(investAmount)) {
       setIsError(true);
       setMessage("정수값을 입력해주세요.");
       return;
-    } else if (investAmountNum < 0) {
+    } else if (investAmount < 0) {
       setIsError(true);
       setMessage("양수를 입력해주세요.");
       return;
@@ -85,7 +88,7 @@ function Invest({
       round,
       teamUID,
       companyUID,
-      investAmount: investAmountNum,
+      investAmount,
     });
 
     if (investResult.data === "success") {
@@ -106,7 +109,7 @@ function Invest({
     <>
       <ContentTitle as="h2">투자액 (₩)</ContentTitle>
       <InputContainer>
-        <InvestTextField
+        <InvestAmountField
           value={investAmount}
           onChange={setInvestAmount}
           isError={isError}

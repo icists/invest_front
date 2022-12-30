@@ -1,12 +1,16 @@
 import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 
 import { colors } from "../styles";
 
-const Input = styled.input<{ isError: boolean }>(
-  {
+import { NumericFormat } from "react-number-format";
+
+const getInputStyle = ({ isError }: { isError: boolean }) =>
+  css({
     appearance: "none",
     border: "none",
     borderRadius: 5,
+    outline: isError ? `2px solid ${colors.red}` : "none",
 
     fontSize: "1.3rem",
     fontFamily: "inherit",
@@ -18,34 +22,38 @@ const Input = styled.input<{ isError: boolean }>(
     "&::placeholder": {
       color: colors.darkGray,
     },
-  },
-  ({ isError }) => ({
-    outline: isError ? `2px solid ${colors.red}` : "none",
-  })
+  });
+
+const TextInput = styled.input<{ isError: boolean }>({}, (props) =>
+  getInputStyle(props)
 );
 
-type TextFieldProps = {
+const NumberInput = styled(NumericFormat)<{ isError: boolean }>({}, (props) =>
+  getInputStyle(props)
+);
+
+type FieldProps<T> = {
   className?: string;
 
   placeholder?: string;
   isPassword?: boolean;
 
-  onChange?: (value: string) => void;
-  value: string;
+  onChange?: (value: T) => void;
+  value: T;
 
   isError?: boolean;
 };
 
-function TextField({
+export default function TextField({
   className,
   placeholder,
   isPassword,
   onChange,
   value,
   isError,
-}: TextFieldProps) {
+}: FieldProps<string>) {
   return (
-    <Input
+    <TextInput
       className={className}
       type={isPassword === true ? "password" : "text"}
       placeholder={placeholder}
@@ -56,4 +64,25 @@ function TextField({
   );
 }
 
-export default TextField;
+export function NumberField({
+  className,
+  placeholder,
+  isPassword,
+  onChange,
+  value,
+  isError,
+}: FieldProps<number | null>) {
+  return (
+    <NumberInput
+      className={className}
+      type={isPassword === true ? "password" : "text"}
+      placeholder={placeholder}
+      isError={isError === true}
+      value={value ?? undefined}
+      onValueChange={({ floatValue }) => onChange && onChange(floatValue ?? null)}
+      thousandSeparator
+      allowNegative={false}
+      prefix="₩"
+    />
+  );
+}

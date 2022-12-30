@@ -17,6 +17,7 @@ specifiers:
   react: ^18.2.0
   react-dom: ^18.2.0
   react-firebase-hooks: ^5.1.1
+  react-number-format: ^5.1.2
   react-router-dom: ^6.6.0
   typescript: ^4.9.3
   vite: ^4.0.0
@@ -28,6 +29,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-firebase-hooks: 5.1.1_v6fjscufgdj3brau76e76lehmq
+  react-number-format: 5.1.2_biqbaboplfbrettd7655fr4n2y
   react-router-dom: 6.6.0_biqbaboplfbrettd7655fr4n2y
 
 devDependencies:
@@ -2364,7 +2366,6 @@ packages:
   /object-assign/4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /object-inspect/1.12.2:
     resolution: {integrity: sha512-z+cPxW0QGUp0mcqcsgQyLVRDoXFQbXOwBaqyF7VIgI4TWNQsDHrBpUQslRmIfAoYWdYzs6UlKJtB2XJpTaNSpQ==}
@@ -2524,7 +2525,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: true
 
   /protobufjs/6.11.3:
     resolution: {integrity: sha512-xL96WDdCZYdU7Slin569tFX712BxsxslWwAfAhCYjQKGTq7dAU91Lomy6nLLhh/dyGhk/YH4TwTSRxTzhuHyZg==}
@@ -2596,6 +2596,17 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  /react-number-format/5.1.2_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-NXm/MvZVjmPqrFbjAut/prCyBZ+pA+O+C12rDkWZrwS3JXz1J42RC1kpclkdnkx2KDjRCNFLb21FlwGcNBZddw==}
+    peerDependencies:
+      react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^18.0.0
+      react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^18.0.0
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /react-router-dom/6.6.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-qC4jnvpfCPKVle1mKLD75IvZLcbVJyFMlSn16WY9ZiOed3dgSmqhslCf/u3tmSccWOujkdsT/OwGq12bELmvjg==}
