@@ -1,5 +1,7 @@
 import { Company } from "@/schemes";
 
+import { ContentParagraph, ContentTitle, Video } from "./Contents";
+
 function Info({ company }: { company: Company }) {
   return (
     <>
