@@ -1,3 +1,3 @@
 export function formatNum(v: number) {
-  return v.toLocaleString("en");
+  return v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

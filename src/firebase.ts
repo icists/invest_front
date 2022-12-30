@@ -4,7 +4,14 @@ import * as db from "firebase/database";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { useObjectVal } from "react-firebase-hooks/database";
 
-import { UserData, RoundData, Company, CompanyUID } from "./schemes";
+import {
+  UserData,
+  RoundData,
+  Company,
+  CompanyUID,
+  TeamUID,
+  Team,
+} from "./schemes";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMZh9vXL5Ga8T-ZAw9WpNBGOd_EF7jWKU",
@@ -78,6 +85,12 @@ export function useCurrentRound(): number | null {
 
 export function useRoundData(): Record<number, RoundData> | null {
   const roundRef = db.ref(database, "/rounds");
-  const [roundData] = useObjectVal(roundRef);
+  const [roundData] = useObjectVal<Record<number, RoundData>>(roundRef);
   return roundData ?? null;
+}
+
+export function useTeam(teamUID: TeamUID): Team | null {
+  const teamRef = db.ref(database, `/teams/${teamUID}`);
+  const [teamData] = useObjectVal<Team>(teamRef);
+  return teamData ?? null;
 }

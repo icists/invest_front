@@ -4,11 +4,24 @@ import { colors } from "@/styles";
 
 import { CompanyUID, TeamUID } from "@/schemes";
 
-import { invest } from "@/firebase";
+import { invest, useTeam } from "@/firebase";
 
 import { NumberField } from "../TextField";
 import Button from "../Button";
 import { ContentTitle } from "./Contents";
+import { formatNum } from "@/utils";
+
+const Title = styled(ContentTitle)({
+  marginBottom: 0,
+});
+
+const Account = styled.small({
+  margin: "0.5rem 0 1rem 0",
+
+  display: "block",
+  color: colors.darkGray,
+  fontSize: "0.9rem",
+});
 
 const InputContainer = styled.div({
   display: "flex",
@@ -58,12 +71,14 @@ function Invest({
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
 
+  const team = useTeam(teamUID);
+
   useEffect(() => {
     setIsError(false);
     setMessage("");
 
     setInvestAmount(currentInvest);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   async function handleClickInvest() {
@@ -107,7 +122,8 @@ function Invest({
 
   return (
     <>
-      <ContentTitle as="h2">투자액 (₩)</ContentTitle>
+      <Title as="h2">투자액 (₩)</Title>
+      {team !== null && <Account>잔고 {formatNum(team.account)}원</Account>}
       <InputContainer>
         <InvestAmountField
           value={investAmount}
