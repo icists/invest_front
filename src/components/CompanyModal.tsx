@@ -145,7 +145,7 @@ function CompanyInvest({
   async function handleClickInvest() {
     const investResult = await invest({
       round,
-      team: 0,
+      teamUID,
       companyUID,
       investAmount: Number(localInvestAmount),
     });
@@ -213,9 +213,9 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
             <CompanyInvest
               round={round}
               companyUID={companyUID}
-              teamUID={user.team.toString()}
+              teamUID={user.teamUID}
               investAmount={
-                roundData[round].investAmount[user.team][companyUID]
+                roundData[round].investAmount[user.teamUID][companyUID]
               }
             />
           )}

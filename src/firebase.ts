@@ -38,10 +38,10 @@ export async function findUser(uid: string): Promise<UserData | null> {
 }
 
 export async function registerUser(uid: string, data: UserData) {
-  const userRef = db.ref(database, "/users/" + uid);
+  const userRef = db.ref(database, `/users/${uid}`);
   await db.set(userRef, data);
 
-  const memberRef = db.ref(database, "/teams/" + data.team + "/members/" + uid);
+  const memberRef = db.ref(database, `/teams/${data.teamUID}/members/${uid}`);
   await db.set(memberRef, true);
 }
 
@@ -49,7 +49,7 @@ const functions = getFunctions(app);
 
 export type InvestParams = {
   round: number;
-  team: number;
+  teamUID: string;
   companyUID: string;
   investAmount: number;
 };

@@ -5,7 +5,7 @@ import { useCompanies, useCurrentRound, useRoundData } from "../firebase";
 import { colors } from "../styles";
 import CompanyModal from "./CompanyModal";
 import CompanyLogo from "./CompanyLogo";
-import { Company, CompanyUID } from "../schemes";
+import { Company, CompanyUID, TeamUID } from "../schemes";
 
 const List = styled.ul({
   padding: 0,
@@ -79,7 +79,7 @@ const Change = styled.div<{ minus: boolean }>(
 
 type CompanyListProps = {
   className?: string;
-  teamID: number;
+  teamID: TeamUID;
 };
 
 function CompanyList({ className, teamID }: CompanyListProps) {

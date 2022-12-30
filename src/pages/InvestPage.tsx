@@ -44,7 +44,7 @@ function InvestPage() {
         {round !== null && <RoundStatus>{"Round " + round}</RoundStatus>}
       </HeaderContainer>
 
-      {round !== null && user !== null && <CompanyList teamID={user.team} />}
+      {round !== null && user !== null && <CompanyList teamID={user.teamUID} />}
     </Main>
   );
 }

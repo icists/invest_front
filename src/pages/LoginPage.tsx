@@ -55,17 +55,15 @@ function LoginPage() {
 
   async function confirm() {
     const trimmedName = name.trim();
-    const parsedTeamNumber = parseInt(teamNumber);
-    if (trimmedName.length < 2 || isNaN(parsedTeamNumber)) return;
+    if (trimmedName.length < 2) return;
 
     const userCredential = await signInWithGoogle();
     if (!userCredential) return;
 
     const user = userCredential.user;
-
     const userData: UserData = {
       name: trimmedName,
-      team: parsedTeamNumber,
+      teamUID: teamNumber,
       mail: user.email,
     };
 

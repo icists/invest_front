@@ -13,15 +13,15 @@ export const invest = functions.https.onCall(
     const userSnapshot = await db.ref(`/users/${context.auth.uid}`).get();
 
     const userData: UserData = userSnapshot.val();
-    if (userData.team !== data.team) return "team_mismatch";
+    if (userData.teamUID !== data.teamUID) return "team_mismatch";
 
     const investAmountRef = db.ref(
-      `/rounds/${data.round}/investAmount/${userData.team}/${data.companyUID}`
+      `/rounds/${data.round}/investAmount/${userData.teamUID}/${data.companyUID}`
     );
     const investAmountSnapshot = await investAmountRef.get();
     const currentInvestAmount = investAmountSnapshot.val();
 
-    const accountRef = db.ref(`/teams/${userData.team}/account`);
+    const accountRef = db.ref(`/teams/${userData.teamUID}/account`);
     const accountSnapshot = await accountRef.get();
     const account: number = accountSnapshot.val();
 

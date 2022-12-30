@@ -4,7 +4,7 @@ export type CompanyUID = string;
 
 export type UserData = {
   name: string;
-  team: number;
+  teamUID: string;
   mail: string | null;
 };
 
