@@ -71,6 +71,8 @@ function Invest({
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
 
+  const [isPending, setIsPending] = useState(false);
+
   const team = useTeam(teamUID);
 
   useEffect(() => {
@@ -99,12 +101,14 @@ function Invest({
     setIsError(false);
     setMessage("");
 
+    setIsPending(true);
     const investResult = await invest({
       round,
       teamUID,
       companyUID,
       investAmount,
     });
+    setIsPending(false);
 
     if (investResult.data === "success") {
       setIsError(false);
@@ -130,7 +134,9 @@ function Invest({
           onChange={setInvestAmount}
           isError={isError}
         />
-        <InvestButton onClick={handleClickInvest}>적용</InvestButton>
+        <InvestButton onClick={handleClickInvest} isLoading={isPending}>
+          적용
+        </InvestButton>
       </InputContainer>
       <Message isError={isError}>{message}</Message>
     </>
