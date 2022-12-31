@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
+import styled from "@emotion/styled";
+
 import { User } from "firebase/auth";
 import { auth, findUser } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
@@ -11,7 +13,16 @@ import { UserData } from "./schemes";
 
 import NavBar from "./components/NavBar";
 
-function PrivateRoute() {
+const PageContainer = styled.div({
+  maxWidth: 500,
+  margin: "0 auto",
+
+  display: "flex",
+  flexDirection: "column",
+  height: "100vh",
+});
+
+export default function PrivateRoute() {
   const [user, loading] = useIdToken(auth);
   const [userData, setUserData] = useState<UserData | null>(null);
 
@@ -34,8 +45,10 @@ function PrivateRoute() {
     // logged in
     return (
       <GlobalStateContextProvider value={{ user: userData }}>
-        <Outlet />
-        <NavBar />
+        <PageContainer>
+          <Outlet />
+          <NavBar />
+        </PageContainer>
       </GlobalStateContextProvider>
     );
   } else {
@@ -43,5 +56,3 @@ function PrivateRoute() {
     return <Navigate to="/login" />;
   }
 }
-
-export default PrivateRoute;

@@ -7,11 +7,8 @@ import investmentIcon from "@/assets/investment.svg";
 import rulesIcon from "@/assets/rules.svg";
 
 const Nav = styled.nav({
-  position: "absolute",
-  bottom: 0,
-
   width: "100%",
-  height: 70,
+  height: 75,
 
   display: "flex",
   alignItems: "center",
