@@ -4,9 +4,12 @@ import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import PrivateRoute from "./PrivateRoute";
+
 import LoginPage from "./pages/LoginPage";
 import InvestPage from "./pages/InvestPage";
-import PrivateRoute from "./PrivateRoute";
+import AccountPage from "./pages/AccountPage";
+
 
 const router = createBrowserRouter([
   {
@@ -17,6 +20,10 @@ const router = createBrowserRouter([
         path: "",
         element: <InvestPage />,
       },
+      {
+        path: "/account",
+        element: <AccountPage/>
+      }
     ],
   },
   {

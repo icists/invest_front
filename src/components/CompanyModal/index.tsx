@@ -42,6 +42,8 @@ const Modal = styled.div<{ visible: boolean }>(
     backgroundColor: "white",
     borderRadius: "20px 20px 0 0",
 
+    zIndex: 1,
+
     transition: "transform 0.3s",
   },
   (props) => ({

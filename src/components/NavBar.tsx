@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 import balanceIcon from "@/assets/balance.svg";
 import investmentIcon from "@/assets/investment.svg";
@@ -15,10 +15,9 @@ const Nav = styled.nav({
 
   boxShadow: "rgba(0, 0, 0, 0.3) 0px 4px 12px",
   backgroundColor: "white",
-  zIndex: -1,
 });
 
-const Menu = styled.div<{ current: boolean }>(
+const Menu = styled(Link)<{ current: boolean }>(
   {
     flex: 1,
 
@@ -27,6 +26,7 @@ const Menu = styled.div<{ current: boolean }>(
     alignItems: "center",
 
     cursor: "pointer",
+    textDecoration: "none",
   },
   ({ current }) => ({
     filter: current
@@ -52,16 +52,16 @@ export default function NavBar() {
     {
       icon: balanceIcon,
       name: "자산",
-      current: location.pathname === "/account",
+      to: "/account",
     },
-    { icon: investmentIcon, name: "투자", current: location.pathname === "/" },
-    { icon: rulesIcon, name: "규칙", current: location.pathname === "/rules" },
+    { icon: investmentIcon, name: "투자", to: "/" },
+    { icon: rulesIcon, name: "규칙", to: "/rules" },
   ];
 
   return (
     <Nav>
-      {menuList.map(({ icon, name, current }) => (
-        <Menu key={name} current={current}>
+      {menuList.map(({ icon, name, to }) => (
+        <Menu key={name} to={to} current={location.pathname === to}>
           <Icon src={icon} />
           <MenuName>{name}</MenuName>
         </Menu>

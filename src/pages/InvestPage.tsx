@@ -34,7 +34,7 @@ const RoundStatus = styled.small({
   fontSize: "1.2rem",
 });
 
-function InvestPage() {
+export default function InvestPage() {
   const { user } = useGlobalState();
   const round = useCurrentRound();
 
@@ -49,5 +49,3 @@ function InvestPage() {
     </Main>
   );
 }
-
-export default InvestPage;
