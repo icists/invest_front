@@ -3,9 +3,9 @@ import { createContext, useContext } from "react";
 import { UserData } from "./schemes";
 
 const GlobalStateContext = createContext<{
-  user: UserData | null;
+  user: UserData;
 }>({
-  user: null,
+  user: { name: "", teamUID: "", mail: null },
 });
 
 export const GlobalStateContextProvider = GlobalStateContext.Provider;

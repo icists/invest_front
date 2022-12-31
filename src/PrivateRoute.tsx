@@ -41,18 +41,15 @@ export default function PrivateRoute() {
     return null;
   }
 
-  if (user) {
-    // logged in
-    return (
-      <GlobalStateContextProvider value={{ user: userData }}>
-        <PageContainer>
-          <Outlet />
-          <NavBar />
-        </PageContainer>
-      </GlobalStateContextProvider>
-    );
-  } else {
-    // not logged in
-    return <Navigate to="/login" />;
-  }
+  if (user === null || user === undefined) return <Navigate to="/login" />;
+  if (userData === null) return null;
+
+  return (
+    <GlobalStateContextProvider value={{ user: userData }}>
+      <PageContainer>
+        <Outlet />
+        <NavBar />
+      </PageContainer>
+    </GlobalStateContextProvider>
+  );
 }

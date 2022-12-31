@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
+import { useGlobalState } from "@/context";
+import { useTeam } from "@/firebase";
+import { formatNum } from "@/utils";
 
 const Main = styled.main({
   display: "flex",
@@ -36,12 +39,17 @@ const InfoTitle = styled.span({
 const InfoValue = styled.span({});
 
 export default function AccountPage() {
+  const { user } = useGlobalState();
+  const team = useTeam(user.teamUID);
+
+  if (team === null) return <Main></Main>;
+
   return (
     <Main>
       <Title as="h1">자산 현황</Title>
       <InfoContainer>
         <InfoTitle>자본금</InfoTitle>
-        <InfoValue>₩100,000</InfoValue>
+        <InfoValue>₩{formatNum(team.account)}</InfoValue>
       </InfoContainer>
       <InfoContainer>
         <InfoTitle>투자액</InfoTitle>
