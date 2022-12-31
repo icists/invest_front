@@ -14,6 +14,8 @@ const Nav = styled.nav({
   alignItems: "center",
 
   boxShadow: "rgba(0, 0, 0, 0.3) 0px 4px 12px",
+  backgroundColor: "white",
+  zIndex: -1,
 });
 
 const Menu = styled.div<{ current: boolean }>(
