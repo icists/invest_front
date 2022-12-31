@@ -9,6 +9,8 @@ import { GlobalStateContextProvider } from "./context";
 
 import { UserData } from "./schemes";
 
+import NavBar from "./components/NavBar";
+
 function PrivateRoute() {
   const [user, loading] = useIdToken(auth);
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -31,10 +33,9 @@ function PrivateRoute() {
   if (user) {
     // logged in
     return (
-      <GlobalStateContextProvider
-        value={{ user: userData }}
-      >
+      <GlobalStateContextProvider value={{ user: userData }}>
         <Outlet />
+        <NavBar />
       </GlobalStateContextProvider>
     );
   } else {
