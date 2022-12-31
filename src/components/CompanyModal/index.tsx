@@ -119,15 +119,18 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
           {round === 0 ? (
             <CompanyInfo company={company} />
           ) : (
-            <CompanyInvest
-              round={round}
-              companyUID={companyUID}
-              teamUID={user.teamUID}
-              currentInvest={
-                roundData[round].investAmount[user.teamUID][companyUID]
-              }
-              visible={visible}
-            />
+            <>
+              <CompanyInvest
+                round={round}
+                companyUID={companyUID}
+                teamUID={user.teamUID}
+                currentInvest={
+                  roundData[round].investAmount[user.teamUID][companyUID]
+                }
+                visible={visible}
+              />
+              <CompanyInfo company={company} />
+            </>
           )}
         </Container>
       </Modal>
