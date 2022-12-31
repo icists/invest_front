@@ -34,7 +34,7 @@ const RoundStatus = styled.small({
   fontSize: "1.2rem",
 });
 
-export default function InvestPage() {
+function InvestPage() {
   const { user } = useGlobalState();
   const round = useCurrentRound();
 
@@ -45,7 +45,11 @@ export default function InvestPage() {
         {round !== null && <RoundStatus>{"Round " + round}</RoundStatus>}
       </HeaderContainer>
 
-      {round !== null && user !== null && <CompanyList teamID={user.teamUID} />}
+      {round !== null && user !== null && (
+        <CompanyList teamID={user.teamUID} round={round} />
+      )}
     </Main>
   );
 }
+
+export default InvestPage;

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { useCompanies, useCurrentRound, useRoundData } from "../firebase";
+import { useCompanies, useRoundData } from "../firebase";
 
 import { formatNum } from "@/utils";
 
@@ -82,11 +82,11 @@ const Change = styled.div<{ minus: boolean }>(
 type CompanyListProps = {
   className?: string;
   teamID: TeamUID;
+  round: number;
 };
 
-function CompanyList({ className, teamID }: CompanyListProps) {
+function CompanyList({ className, teamID, round }: CompanyListProps) {
   const companies = useCompanies();
-  const round = useCurrentRound();
   const roundData = useRoundData();
 
   const [selectedCompanyUID, setSelectedCompanyUID] =
@@ -98,11 +98,9 @@ function CompanyList({ className, teamID }: CompanyListProps) {
     setShowModal(true);
   }
 
-  function handleCloseModal() {
-    setShowModal(false);
+  if (companies === null || roundData === null) {
+    return null;
   }
-
-  if (companies === null || round === null || roundData === null) return null;
 
   const companiesList = Object.entries(companies).sort(([, a], [, b]) =>
     a.name.localeCompare(b.name)
@@ -164,7 +162,7 @@ function CompanyList({ className, teamID }: CompanyListProps) {
       <CompanyModal
         companyUID={selectedCompanyUID}
         visible={showModal}
-        onClose={handleCloseModal}
+        onClose={() => setShowModal(false)}
       />
     </>
   );
