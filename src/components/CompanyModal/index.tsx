@@ -30,10 +30,12 @@ const Overlay = styled.div<{ visible: boolean }>(
 
 const Modal = styled.div<{ visible: boolean }>(
   {
-    position: "fixed",
     width: "100vw",
     maxWidth: 500,
-    minHeight: "80vh",
+    height: "80vh",
+    overflowY: "scroll",
+
+    position: "fixed",
     left: "50%",
     bottom: 0,
 
