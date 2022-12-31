@@ -111,7 +111,7 @@ function Invest({
       setMessage("투자가 완료되었습니다.");
     } else if (investResult.data === "insufficient_cash") {
       setIsError(true);
-      setMessage("잔고가 부족합니다.");
+      setMessage("자본금이 부족합니다.");
     } else {
       setIsError(true);
       setMessage(`오류가 발생했습니다. ${investResult.data}`);
@@ -123,7 +123,7 @@ function Invest({
   return (
     <>
       <Title as="h2">투자액 (₩)</Title>
-      {team !== null && <Account>잔고 {formatNum(team.account)}원</Account>}
+      {team !== null && <Account>자본금 {formatNum(team.account)}원</Account>}
       <InputContainer>
         <InvestAmountField
           value={investAmount}
