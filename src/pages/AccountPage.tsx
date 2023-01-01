@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
-import { useGlobalState } from "@/context";
+import { useUser } from "@/context";
 import { useCurrentRound, useRoundData, useTeam } from "@/firebase";
 import { formatNum } from "@/utils";
 
@@ -39,7 +39,7 @@ const InfoTitle = styled.span({
 const InfoValue = styled.span({});
 
 export default function AccountPage() {
-  const { user } = useGlobalState();
+  const user = useUser();
   const team = useTeam(user.teamUID);
   const round = useCurrentRound();
   const roundData = useRoundData();

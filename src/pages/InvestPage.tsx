@@ -4,7 +4,7 @@ import { colors } from "../styles";
 
 import Header from "../components/Header";
 import CompanyList from "../components/CompanyList";
-import { useGlobalState } from "../context";
+import { useUser } from "../context";
 import { useCurrentRound } from "../firebase";
 
 const Main = styled.main({
@@ -35,7 +35,7 @@ const RoundStatus = styled.small({
 });
 
 function InvestPage() {
-  const { user } = useGlobalState();
+  const user = useUser();
   const round = useCurrentRound();
 
   return (
@@ -45,9 +45,7 @@ function InvestPage() {
         {round !== null && <RoundStatus>{"Round " + round}</RoundStatus>}
       </HeaderContainer>
 
-      {round !== null && user !== null && (
-        <CompanyList teamID={user.teamUID} round={round} />
-      )}
+      {round !== null && <CompanyList teamID={user.teamUID} round={round} />}
     </Main>
   );
 }

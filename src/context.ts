@@ -2,14 +2,14 @@ import { createContext, useContext } from "react";
 
 import { UserData } from "./schemes";
 
-const GlobalStateContext = createContext<{
-  user: UserData;
-}>({
-  user: { name: "", teamUID: "", mail: null },
+const UserContext = createContext<UserData>({
+  name: "",
+  teamUID: "",
+  mail: null,
 });
 
-export const GlobalStateContextProvider = GlobalStateContext.Provider;
+export const UserContextProvider = UserContext.Provider;
 
-export function useGlobalState() {
-  return useContext(GlobalStateContext);
+export function useUser() {
+  return useContext(UserContext);
 }

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { colors } from "@/styles";
 
-import { useGlobalState } from "@/context";
+import { useUser } from "@/context";
 import { useCompanies, useCurrentRound, useRoundData } from "@/firebase";
 import { CompanyUID } from "@/schemes";
 
@@ -86,18 +86,12 @@ type CompanyModalProps = {
 };
 
 function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
-  const { user } = useGlobalState();
+  const user = useUser();
   const round = useCurrentRound();
   const roundData = useRoundData();
   const companies = useCompanies();
 
-  if (
-    round === null ||
-    user === null ||
-    roundData === null ||
-    companies === null
-  )
-    return null;
+  if (round === null || roundData === null || companies === null) return null;
 
   if (companyUID === null)
     return (

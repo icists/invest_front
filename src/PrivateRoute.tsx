@@ -7,7 +7,7 @@ import { User } from "firebase/auth";
 import { auth, findUser } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
-import { GlobalStateContextProvider } from "./context";
+import { UserContextProvider } from "./context";
 
 import { UserData } from "./schemes";
 
@@ -45,11 +45,11 @@ export default function PrivateRoute() {
   if (userData === null) return null;
 
   return (
-    <GlobalStateContextProvider value={{ user: userData }}>
+    <UserContextProvider value={userData}>
       <PageContainer>
         <Outlet />
         <NavBar />
       </PageContainer>
-    </GlobalStateContextProvider>
+    </UserContextProvider>
   );
 }
