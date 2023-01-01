@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
 import { useGlobalState } from "@/context";
-import { useTeam } from "@/firebase";
+import { useCurrentRound, useRoundData, useTeam } from "@/firebase";
 import { formatNum } from "@/utils";
 
 const Main = styled.main({
@@ -41,8 +41,14 @@ const InfoValue = styled.span({});
 export default function AccountPage() {
   const { user } = useGlobalState();
   const team = useTeam(user.teamUID);
+  const round = useCurrentRound();
+  const roundData = useRoundData();
 
-  if (team === null) return <Main></Main>;
+  if (team === null || round === null || roundData === null)
+    return <Main></Main>;
+
+  const invests = roundData[round].investAmount[user.teamUID];
+  const totalInvest = Object.values(invests).reduce((a, b) => a + b);
 
   return (
     <Main>
@@ -53,7 +59,7 @@ export default function AccountPage() {
       </InfoContainer>
       <InfoContainer>
         <InfoTitle>투자액</InfoTitle>
-        <InfoValue>₩100,000</InfoValue>
+        <InfoValue>₩{formatNum(totalInvest)}</InfoValue>
       </InfoContainer>
     </Main>
   );

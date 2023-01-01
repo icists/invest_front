@@ -19,8 +19,8 @@ export type Status = {
 
 export type RoundData = {
   valuation: Record<CompanyUID, number>;
-  investAmount: Record<CompanyUID, Record<TeamUID, number>>;
-  investResult: Record<CompanyUID, Record<TeamUID, number>>;
+  investAmount: Record<TeamUID, Record<CompanyUID, number>>;
+  investResult: Record<TeamUID, Record<CompanyUID, number>>;
 };
 
 export type Company = {
