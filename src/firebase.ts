@@ -89,9 +89,8 @@ export function useRoundDataDB(): Record<number, RoundData> | null {
   return roundData ?? null;
 }
 
-export function useTeam(teamUID: TeamUID | null): Team | null {
-  const teamRef =
-    teamUID === null ? null : db.ref(database, `/teams/${teamUID}`);
+export function useTeam(teamUID: TeamUID): Team | null {
+  const teamRef = db.ref(database, `/teams/${teamUID}`);
   const [team] = useObjectVal<Team>(teamRef);
   return team ?? null;
 }

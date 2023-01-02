@@ -33,15 +33,39 @@ const PageContainer = styled.div({
   height: "100vh",
 });
 
+type ContextsProps = {
+  userData: UserData;
+  currentRound: number;
+};
+
+function Contexts({ userData, currentRound }: ContextsProps) {
+  const team = useTeam(userData.teamUID);
+  const companies = useCompaniesDB();
+  const roundData = useRoundDataDB();
+
+  if (team === null) return null;
+
+  return (
+    <AuthContextProvider value={{ user: userData, team }}>
+      <CompaniesContextProvider value={companies}>
+        <RoundDataContextProvider
+          value={{ current: currentRound, data: roundData }}
+        >
+          <PageContainer>
+            <Outlet />
+            <NavBar />
+          </PageContainer>
+        </RoundDataContextProvider>
+      </CompaniesContextProvider>
+    </AuthContextProvider>
+  );
+}
+
 export default function PrivateRoute() {
   const [user, loading] = useIdToken(auth);
 
   const [userData, setUserData] = useState<UserData | null>(null);
-
-  const companies = useCompaniesDB();
   const currentRound = useCurrentRoundDB();
-  const roundData = useRoundDataDB();
-  const team = useTeam(userData === null ? null : userData.teamUID);
 
   useEffect(() => {
     async function updateData(user: User) {
@@ -59,20 +83,7 @@ export default function PrivateRoute() {
   }
 
   if (user === null || user === undefined) return <Navigate to="/login" />;
-  if (userData === null || team === null) return null;
+  if (userData === null || currentRound === null) return null;
 
-  return (
-    <AuthContextProvider value={{ user: userData, team }}>
-      <CompaniesContextProvider value={companies}>
-        <RoundDataContextProvider
-          value={{ current: currentRound, data: roundData }}
-        >
-          <PageContainer>
-            <Outlet />
-            <NavBar />
-          </PageContainer>
-        </RoundDataContextProvider>
-      </CompaniesContextProvider>
-    </AuthContextProvider>
-  );
+  return <Contexts userData={userData} currentRound={currentRound} />;
 }
