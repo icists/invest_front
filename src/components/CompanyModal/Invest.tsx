@@ -4,12 +4,13 @@ import { colors } from "@/styles";
 
 import { CompanyUID, TeamUID } from "@/schemes";
 
-import { invest, useTeamDB } from "@/firebase";
+import { invest } from "@/firebase";
 
 import { NumberField } from "../TextField";
 import Button from "../Button";
 import { ContentTitle } from "./Contents";
 import { formatNum } from "@/utils";
+import { useAuthData } from "@/context";
 
 const Title = styled(ContentTitle)({
   marginBottom: 0,
@@ -66,14 +67,14 @@ function Invest({
   visible: boolean;
   currentInvest: number;
 }) {
+  const {team} = useAuthData();
+
   const [investAmount, setInvestAmount] = useState<number | null>(0);
 
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
 
   const [isPending, setIsPending] = useState(false);
-
-  const team = useTeamDB(teamUID);
 
   useEffect(() => {
     setIsError(false);

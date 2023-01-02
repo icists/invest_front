@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
-import { useRoundData, useUser } from "@/context";
-import { useTeamDB } from "@/firebase";
+import { useRoundData, useAuthData } from "@/context";
 import { formatNum } from "@/utils";
 
 const Main = styled.main({
@@ -39,8 +38,7 @@ const InfoTitle = styled.span({
 const InfoValue = styled.span({});
 
 export default function AccountPage() {
-  const user = useUser();
-  const team = useTeamDB(user.teamUID);
+  const {user, team} = useAuthData();
   const { current: round, data: roundData } = useRoundData();
 
   if (team === null || round === null || roundData === null)

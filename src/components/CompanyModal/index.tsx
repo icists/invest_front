@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { colors } from "@/styles";
 
-import { useUser } from "@/context";
+import { useAuthData } from "@/context";
 import { useCompaniesDB, useCurrentRoundDB, useRoundDataDB } from "@/firebase";
 import { CompanyUID } from "@/schemes";
 
@@ -86,7 +86,7 @@ type CompanyModalProps = {
 };
 
 function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
-  const user = useUser();
+  const { user } = useAuthData();
   const round = useCurrentRoundDB();
   const roundData = useRoundDataDB();
   const companies = useCompaniesDB();

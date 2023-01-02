@@ -7,7 +7,7 @@ import { colors } from "../styles";
 import CompanyModal from "./CompanyModal";
 import CompanyLogo from "./CompanyLogo";
 import { Company, CompanyUID } from "../schemes";
-import { useCompanies, useRoundData, useUser } from "@/context";
+import { useCompanies, useRoundData, useAuthData } from "@/context";
 
 const List = styled.ul({
   padding: 0,
@@ -84,7 +84,7 @@ type CompanyListProps = {
 };
 
 function CompanyList({ className }: CompanyListProps) {
-  const user = useUser();
+  const { user } = useAuthData();
   const companies = useCompanies();
   const { current: round, data: roundData } = useRoundData();
 

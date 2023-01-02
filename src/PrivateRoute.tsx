@@ -10,17 +10,17 @@ import {
   useCompaniesDB,
   useRoundDataDB,
   useCurrentRoundDB,
-  useTeamDB,
+  findTeam,
 } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
 import {
   CompaniesContextProvider,
   RoundDataContextProvider,
-  UserContextProvider,
+  AuthContextProvider,
 } from "./context";
 
-import { UserData } from "./schemes";
+import { Team, UserData } from "./schemes";
 
 import NavBar from "./components/NavBar";
 
@@ -35,20 +35,25 @@ const PageContainer = styled.div({
 
 export default function PrivateRoute() {
   const [user, loading] = useIdToken(auth);
+
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [team, setTeam] = useState<Team | null>(null);
 
   const companies = useCompaniesDB();
   const currentRound = useCurrentRoundDB();
   const roundData = useRoundDataDB();
 
   useEffect(() => {
-    async function checkUser(user: User) {
-      const result = await findUser(user.uid);
-      setUserData(result);
+    async function updateData(user: User) {
+      const userData = await findUser(user.uid);
+      const team = await findTeam(userData.teamUID);
+
+      setUserData(userData);
+      setTeam(team);
     }
 
     if (user) {
-      checkUser(user);
+      updateData(user);
     }
   }, [user]);
 
@@ -57,10 +62,10 @@ export default function PrivateRoute() {
   }
 
   if (user === null || user === undefined) return <Navigate to="/login" />;
-  if (userData === null) return null;
+  if (userData === null || team === null) return null;
 
   return (
-    <UserContextProvider value={userData}>
+    <AuthContextProvider value={{ user: userData, team }}>
       <CompaniesContextProvider value={companies}>
         <RoundDataContextProvider
           value={{ current: currentRound, data: roundData }}
@@ -71,6 +76,6 @@ export default function PrivateRoute() {
           </PageContainer>
         </RoundDataContextProvider>
       </CompaniesContextProvider>
-    </UserContextProvider>
+    </AuthContextProvider>
   );
 }

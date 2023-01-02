@@ -9,8 +9,8 @@ import {
   RoundData,
   Company,
   CompanyUID,
-  TeamUID,
   Team,
+  TeamUID,
 } from "./schemes";
 
 const firebaseConfig = {
@@ -30,18 +30,18 @@ export const auth = getAuth(app);
 
 const database = db.getDatabase(app);
 
-export async function findUser(uid: string): Promise<UserData | null> {
+export async function findUser(uid: string): Promise<UserData> {
   const usersRef = db.ref(database, "/users");
   const snapshot = await db.get(usersRef);
 
-  let result: UserData | null = null;
-  snapshot.forEach((user) => {
-    if (user.key === uid) {
-      result = user.val() as UserData;
-    }
-  });
+  return snapshot.val()[uid];
+}
 
-  return result;
+export async function findTeam(teamUID: TeamUID): Promise<Team> {
+  const teamRef = db.ref(database, `/teams/${teamUID}`);
+  const snapshot = await db.get(teamRef);
+
+  return snapshot.val() as Team;
 }
 
 export async function registerUser(uid: string, data: UserData) {
@@ -87,10 +87,4 @@ export function useRoundDataDB(): Record<number, RoundData> | null {
   const roundRef = db.ref(database, "/rounds");
   const [roundData] = useObjectVal<Record<number, RoundData>>(roundRef);
   return roundData ?? null;
-}
-
-export function useTeamDB(teamUID: TeamUID): Team | null {
-  const teamRef = db.ref(database, `/teams/${teamUID}`);
-  const [teamData] = useObjectVal<Team>(teamRef);
-  return teamData ?? null;
 }

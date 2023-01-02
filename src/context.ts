@@ -1,17 +1,20 @@
 import { createContext, useContext } from "react";
 
-import { Company, RoundData, UserData } from "./schemes";
+import { Company, RoundData, Team, UserData } from "./schemes";
 
-const UserContext = createContext<UserData>({
-  name: "",
-  teamUID: "",
-  mail: null,
+const AuthContext = createContext<{ user: UserData; team: Team }>({
+  user: {
+    name: "",
+    teamUID: "",
+    mail: null,
+  },
+  team: { account: 0, members: {} },
 });
 
-export const UserContextProvider = UserContext.Provider;
+export const AuthContextProvider = AuthContext.Provider;
 
-export function useUser() {
-  return useContext(UserContext);
+export function useAuthData() {
+  return useContext(AuthContext);
 }
 
 const CompaniesContext = createContext<Record<string, Company> | null>(null);
