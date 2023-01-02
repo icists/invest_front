@@ -17,6 +17,10 @@ const Main = styled.main({
   overflowY: "scroll",
 });
 
+const Section = styled.div({
+  marginBottom: "2rem",
+});
+
 const Title = styled(Header)({
   paddingLeft: "0.5rem",
   marginBottom: "1.5rem",
@@ -38,7 +42,7 @@ const InfoTitle = styled.span({
 const InfoValue = styled.span({});
 
 export default function AccountPage() {
-  const {user, team} = useAuthData();
+  const { user, team } = useAuthData();
   const { current: round, data: roundData } = useRoundData();
 
   if (team === null || round === null || roundData === null)
@@ -49,15 +53,21 @@ export default function AccountPage() {
 
   return (
     <Main>
-      <Title as="h1">자산 현황</Title>
-      <InfoContainer>
-        <InfoTitle>자본금</InfoTitle>
-        <InfoValue>₩{formatNum(team.account)}</InfoValue>
-      </InfoContainer>
-      <InfoContainer>
-        <InfoTitle>투자액</InfoTitle>
-        <InfoValue>₩{formatNum(totalInvest)}</InfoValue>
-      </InfoContainer>
+      <Section>
+        <Title as="h1">자산 현황</Title>
+        <InfoContainer>
+          <InfoTitle>자본금</InfoTitle>
+          <InfoValue>₩{formatNum(team.account)}</InfoValue>
+        </InfoContainer>
+        <InfoContainer>
+          <InfoTitle>투자액</InfoTitle>
+          <InfoValue>₩{formatNum(totalInvest)}</InfoValue>
+        </InfoContainer>
+      </Section>
+
+      <Section>
+        <Title as="h1">투자 결과</Title>
+      </Section>
     </Main>
   );
 }

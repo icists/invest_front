@@ -30,7 +30,7 @@ const Title = styled(Header)({
 
 const RoundStatus = styled.small({
   color: colors.darkGray,
-  fontSize: "1.2rem",
+  fontSize: "1.3rem",
 });
 
 function InvestPage() {
