@@ -4,10 +4,21 @@ import { Navigate, Outlet } from "react-router-dom";
 import styled from "@emotion/styled";
 
 import { User } from "firebase/auth";
-import { auth, findUser } from "./firebase";
+import {
+  auth,
+  findUser,
+  useCompaniesDB,
+  useRoundDataDB,
+  useCurrentRoundDB,
+  useTeamDB,
+} from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
-import { UserContextProvider } from "./context";
+import {
+  CompaniesContextProvider,
+  RoundDataContextProvider,
+  UserContextProvider,
+} from "./context";
 
 import { UserData } from "./schemes";
 
@@ -25,6 +36,10 @@ const PageContainer = styled.div({
 export default function PrivateRoute() {
   const [user, loading] = useIdToken(auth);
   const [userData, setUserData] = useState<UserData | null>(null);
+
+  const companies = useCompaniesDB();
+  const currentRound = useCurrentRoundDB();
+  const roundData = useRoundDataDB();
 
   useEffect(() => {
     async function checkUser(user: User) {
@@ -46,10 +61,16 @@ export default function PrivateRoute() {
 
   return (
     <UserContextProvider value={userData}>
-      <PageContainer>
-        <Outlet />
-        <NavBar />
-      </PageContainer>
+      <CompaniesContextProvider value={companies}>
+        <RoundDataContextProvider
+          value={{ current: currentRound, data: roundData }}
+        >
+          <PageContainer>
+            <Outlet />
+            <NavBar />
+          </PageContainer>
+        </RoundDataContextProvider>
+      </CompaniesContextProvider>
     </UserContextProvider>
   );
 }

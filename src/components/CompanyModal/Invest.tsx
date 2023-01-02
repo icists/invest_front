@@ -4,7 +4,7 @@ import { colors } from "@/styles";
 
 import { CompanyUID, TeamUID } from "@/schemes";
 
-import { invest, useTeam } from "@/firebase";
+import { invest, useTeamDB } from "@/firebase";
 
 import { NumberField } from "../TextField";
 import Button from "../Button";
@@ -73,7 +73,7 @@ function Invest({
 
   const [isPending, setIsPending] = useState(false);
 
-  const team = useTeam(teamUID);
+  const team = useTeamDB(teamUID);
 
   useEffect(() => {
     setIsError(false);

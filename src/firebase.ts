@@ -71,25 +71,25 @@ export const invest = httpsCallable<InvestParams, InvestResult>(
   "invest"
 );
 
-export function useCompanies(): Record<CompanyUID, Company> | null {
+export function useCompaniesDB(): Record<CompanyUID, Company> | null {
   const companiesRef = db.ref(database, "/companies");
   const [record] = useObjectVal<Record<CompanyUID, Company>>(companiesRef);
   return record ?? null;
 }
 
-export function useCurrentRound(): number | null {
+export function useCurrentRoundDB(): number | null {
   const roundRef = db.ref(database, "/status/currentRound");
   const [round] = useObjectVal<number>(roundRef);
   return round ?? null;
 }
 
-export function useRoundData(): Record<number, RoundData> | null {
+export function useRoundDataDB(): Record<number, RoundData> | null {
   const roundRef = db.ref(database, "/rounds");
   const [roundData] = useObjectVal<Record<number, RoundData>>(roundRef);
   return roundData ?? null;
 }
 
-export function useTeam(teamUID: TeamUID): Team | null {
+export function useTeamDB(teamUID: TeamUID): Team | null {
   const teamRef = db.ref(database, `/teams/${teamUID}`);
   const [teamData] = useObjectVal<Team>(teamRef);
   return teamData ?? null;

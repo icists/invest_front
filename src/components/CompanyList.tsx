@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { useCompanies, useRoundData } from "../firebase";
 
 import { formatNum } from "@/utils";
 
 import { colors } from "../styles";
 import CompanyModal from "./CompanyModal";
 import CompanyLogo from "./CompanyLogo";
-import { Company, CompanyUID, TeamUID } from "../schemes";
+import { Company, CompanyUID } from "../schemes";
+import { useCompanies, useRoundData, useUser } from "@/context";
 
 const List = styled.ul({
   padding: 0,
@@ -81,13 +81,12 @@ const Change = styled.div<{ minus: boolean }>(
 
 type CompanyListProps = {
   className?: string;
-  teamID: TeamUID;
-  round: number;
 };
 
-function CompanyList({ className, teamID, round }: CompanyListProps) {
+function CompanyList({ className }: CompanyListProps) {
+  const user = useUser();
   const companies = useCompanies();
-  const roundData = useRoundData();
+  const { current: round, data: roundData } = useRoundData();
 
   const [selectedCompanyUID, setSelectedCompanyUID] =
     useState<CompanyUID | null>(null);
@@ -98,7 +97,7 @@ function CompanyList({ className, teamID, round }: CompanyListProps) {
     setShowModal(true);
   }
 
-  if (companies === null || roundData === null) {
+  if (round === null || companies === null || roundData === null) {
     return null;
   }
 
@@ -120,7 +119,7 @@ function CompanyList({ className, teamID, round }: CompanyListProps) {
       valuation === null || round < 3
         ? null
         : (valuation / roundData[round - 2].valuation[companyID] - 1) * 100;
-    const investAmount = roundData[round].investAmount[teamID][companyID];
+    const investAmount = roundData[round].investAmount[user.teamUID][companyID];
 
     return (
       <Container detailed>

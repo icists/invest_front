@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { colors } from "@/styles";
 
 import { useUser } from "@/context";
-import { useCompanies, useCurrentRound, useRoundData } from "@/firebase";
+import { useCompaniesDB, useCurrentRoundDB, useRoundDataDB } from "@/firebase";
 import { CompanyUID } from "@/schemes";
 
 import CompanyLogo from "../CompanyLogo";
@@ -87,9 +87,9 @@ type CompanyModalProps = {
 
 function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
   const user = useUser();
-  const round = useCurrentRound();
-  const roundData = useRoundData();
-  const companies = useCompanies();
+  const round = useCurrentRoundDB();
+  const roundData = useRoundDataDB();
+  const companies = useCompaniesDB();
 
   if (round === null || roundData === null || companies === null) return null;
 
