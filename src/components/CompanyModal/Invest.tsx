@@ -67,7 +67,7 @@ function Invest({
   visible: boolean;
   currentInvest: number;
 }) {
-  const {team} = useAuthData();
+  const { team } = useAuthData();
 
   const [investAmount, setInvestAmount] = useState<number | null>(0);
 

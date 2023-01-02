@@ -10,7 +10,7 @@ import {
   useCompaniesDB,
   useRoundDataDB,
   useCurrentRoundDB,
-  findTeam,
+  useTeam,
 } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
@@ -20,7 +20,7 @@ import {
   AuthContextProvider,
 } from "./context";
 
-import { Team, UserData } from "./schemes";
+import { UserData } from "./schemes";
 
 import NavBar from "./components/NavBar";
 
@@ -37,19 +37,16 @@ export default function PrivateRoute() {
   const [user, loading] = useIdToken(auth);
 
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [team, setTeam] = useState<Team | null>(null);
 
   const companies = useCompaniesDB();
   const currentRound = useCurrentRoundDB();
   const roundData = useRoundDataDB();
+  const team = useTeam(userData === null ? null : userData.teamUID);
 
   useEffect(() => {
     async function updateData(user: User) {
       const userData = await findUser(user.uid);
-      const team = await findTeam(userData.teamUID);
-
       setUserData(userData);
-      setTeam(team);
     }
 
     if (user) {
