@@ -4,7 +4,7 @@ import { colors } from "@/styles";
 import {
   useAuthData,
   useCompanies,
-  useCurrentRound,
+  useStatus,
   useInvestAmount,
 } from "@/context";
 import { CompanyUID } from "@/schemes";
@@ -91,7 +91,7 @@ type CompanyModalProps = {
 
 function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
   const { user } = useAuthData();
-  const round = useCurrentRound();
+  const { currentRound, investable } = useStatus();
   const companies = useCompanies();
   const investAmount = useInvestAmount();
 
@@ -118,12 +118,10 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
               <CompanySubtitle>{company.engName}</CompanySubtitle>
             </TitleContainer>
           </HeaderContainer>
-          {round === 0 ? (
-            <CompanyInfo company={company} />
-          ) : (
+          {investable ? (
             <>
               <CompanyInvest
-                round={round}
+                round={currentRound}
                 companyUID={companyUID}
                 teamUID={user.teamUID}
                 currentInvest={investAmount[companyUID]}
@@ -131,6 +129,8 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
               />
               <CompanyInfo company={company} />
             </>
+          ) : (
+            <CompanyInfo company={company} />
           )}
         </Container>
       </Modal>

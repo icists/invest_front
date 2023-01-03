@@ -9,7 +9,7 @@ import CompanyLogo from "./CompanyLogo";
 import { Company, CompanyUID } from "../schemes";
 import {
   useCompanies,
-  useCurrentRound,
+  useStatus,
   useInvestAmount,
   useValuation,
 } from "@/context";
@@ -90,7 +90,7 @@ type CompanyListProps = {
 
 function CompanyList({ className }: CompanyListProps) {
   const companies = useCompanies();
-  const round = useCurrentRound();
+  const { investable } = useStatus();
   const investData = useInvestAmount();
   const valuation = useValuation();
 
@@ -103,14 +103,9 @@ function CompanyList({ className }: CompanyListProps) {
     setShowModal(true);
   }
 
-  if (round === null || companies === null) {
-    return null;
-  }
-
   const companiesList = Object.entries(companies).sort(([, a], [, b]) =>
     a.name.localeCompare(b.name)
   );
-  const showDetail = round > 0;
 
   const DetailedContainer = ({
     companyID,
@@ -156,7 +151,7 @@ function CompanyList({ className }: CompanyListProps) {
         {companiesList.map(([companyID, company]) => (
           <Item key={company.name} onClick={() => handleClickItem(companyID)}>
             <CompanyLogo src={company.logo} width={56} />
-            {showDetail ? (
+            {investable ? (
               <DetailedContainer companyID={companyID} company={company} />
             ) : (
               <Container detailed={false}>

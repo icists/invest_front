@@ -4,7 +4,7 @@ import { colors } from "../styles";
 
 import Header from "../components/Header";
 import CompanyList from "../components/CompanyList";
-import { useCurrentRound } from "../context";
+import { useStatus } from "../context";
 
 const Main = styled.main({
   display: "flex",
@@ -34,16 +34,16 @@ const RoundStatus = styled.small({
 });
 
 function InvestPage() {
-  const round = useCurrentRound();
+  const { currentRound } = useStatus();
 
   return (
     <Main>
       <HeaderContainer>
         <Title as="h1">투자 종목</Title>
-        {round !== null && <RoundStatus>{"Round " + round}</RoundStatus>}
+        <RoundStatus>{"Round " + currentRound}</RoundStatus>
       </HeaderContainer>
 
-      {round !== null && <CompanyList />}
+      <CompanyList />
     </Main>
   );
 }

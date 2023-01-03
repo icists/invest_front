@@ -11,6 +11,7 @@ import {
   CompanyUID,
   Team,
   TeamUID,
+  Status,
 } from "./schemes";
 
 const firebaseConfig = {
@@ -77,10 +78,10 @@ export function useCompaniesDB(): Record<CompanyUID, Company> | null {
   return record ?? null;
 }
 
-export function useCurrentRoundDB(): number | null {
-  const roundRef = db.ref(database, "/status/currentRound");
-  const [round] = useObjectVal<number>(roundRef);
-  return round ?? null;
+export function useStatusDB(): Status | null {
+  const statusRef = db.ref(database, "/status");
+  const [status] = useObjectVal<Status>(statusRef);
+  return status ?? null;
 }
 
 export function useRoundDataDB(): Record<number, RoundData> | null {

@@ -8,10 +8,10 @@ import {
   auth,
   findUser,
   useCompaniesDB,
-  useCurrentRoundDB,
   useTeam,
   useInvestAmountDB,
   useValuationDB,
+  useStatusDB,
 } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
@@ -19,11 +19,11 @@ import {
   CompaniesContext,
   AuthContext,
   InvestAmountContext,
-  CurrentRoundContext,
+  StatusContext,
   ValuationContext,
 } from "./context";
 
-import { UserData } from "./schemes";
+import { Status, UserData } from "./schemes";
 
 import NavBar from "./components/NavBar";
 
@@ -38,23 +38,23 @@ const PageContainer = styled.div({
 
 type ContextsProps = {
   userData: UserData;
-  currentRound: number;
+  status: Status;
 };
 
-function Contexts({ userData, currentRound }: ContextsProps) {
+function Contexts({ userData, status }: ContextsProps) {
   const companies = useCompaniesDB();
   const team = useTeam(userData.teamUID);
 
-  const investAmount = useInvestAmountDB(currentRound, userData.teamUID);
+  const investAmount = useInvestAmountDB(status.currentRound, userData.teamUID);
 
-  const currentValuation = useValuationDB(currentRound - 1);
-  const previousValuation = useValuationDB(currentRound - 2);
+  const currentValuation = useValuationDB(status.currentRound - 1);
+  const previousValuation = useValuationDB(status.currentRound - 2);
 
   if (companies === null || team === null) return null;
 
   return (
     <AuthContext.Provider value={{ user: userData, team }}>
-      <CurrentRoundContext.Provider value={currentRound}>
+      <StatusContext.Provider value={status}>
         <CompaniesContext.Provider value={companies}>
           <ValuationContext.Provider
             value={{ current: currentValuation, previous: previousValuation }}
@@ -67,7 +67,7 @@ function Contexts({ userData, currentRound }: ContextsProps) {
             </InvestAmountContext.Provider>
           </ValuationContext.Provider>
         </CompaniesContext.Provider>
-      </CurrentRoundContext.Provider>
+      </StatusContext.Provider>
     </AuthContext.Provider>
   );
 }
@@ -76,7 +76,7 @@ export default function PrivateRoute() {
   const [user, loading] = useIdToken(auth);
 
   const [userData, setUserData] = useState<UserData | null>(null);
-  const currentRound = useCurrentRoundDB();
+  const status = useStatusDB();
 
   useEffect(() => {
     async function updateData(user: User) {
@@ -94,7 +94,7 @@ export default function PrivateRoute() {
   }
 
   if (user === null || user === undefined) return <Navigate to="/login" />;
-  if (userData === null || currentRound === null) return null;
+  if (userData === null || status === null) return null;
 
-  return <Contexts userData={userData} currentRound={currentRound} />;
+  return <Contexts userData={userData} status={status} />;
 }

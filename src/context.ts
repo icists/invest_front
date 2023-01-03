@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-import { Company, CompanyUID, Team, UserData } from "./schemes";
+import { Company, CompanyUID, Status, Team, UserData } from "./schemes";
 
 export const AuthContext = createContext<{ user: UserData; team: Team }>({
   user: {
@@ -14,9 +14,12 @@ export function useAuthData() {
   return useContext(AuthContext);
 }
 
-export const CurrentRoundContext = createContext<number>(0);
-export function useCurrentRound() {
-  return useContext(CurrentRoundContext);
+export const StatusContext = createContext<Status>({
+  currentRound: 0,
+  investable: false,
+});
+export function useStatus() {
+  return useContext(StatusContext);
 }
 
 export const CompaniesContext = createContext<Record<string, Company>>({});
@@ -34,7 +37,7 @@ export function useInvestAmount() {
 export const ValuationContext = createContext<{
   previous: Record<CompanyUID, number> | null;
   current: Record<CompanyUID, number> | null;
-}>({previous: null, current: null});
+}>({ previous: null, current: null });
 export function useValuation() {
   return useContext(ValuationContext);
 }

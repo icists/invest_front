@@ -15,6 +15,7 @@ export type Team = {
 
 export type Status = {
   currentRound: number;
+  investable: boolean;
 };
 
 export type RoundData = {
