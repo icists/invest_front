@@ -51,8 +51,8 @@ export default function NavBar() {
   const menuList = [
     {
       icon: balanceIcon,
-      name: "자산",
-      to: "/account",
+      name: "내 정보",
+      to: "/me",
     },
     { icon: investmentIcon, name: "투자", to: "/" },
     { icon: rulesIcon, name: "규칙", to: "/rules" },

@@ -41,7 +41,7 @@ const InfoTitle = styled.span({
 
 const InfoValue = styled.span({});
 
-export default function AccountPage() {
+export default function MyPage() {
   const { team } = useAuthData();
   const round = useCurrentRound();
   const investData = useInvestAmount();

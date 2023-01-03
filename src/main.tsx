@@ -8,8 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 
 import LoginPage from "./pages/LoginPage";
 import InvestPage from "./pages/InvestPage";
-import AccountPage from "./pages/AccountPage";
-
+import MyPage from "./pages/MyPage";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +20,9 @@ const router = createBrowserRouter([
         element: <InvestPage />,
       },
       {
-        path: "/account",
-        element: <AccountPage/>
-      }
+        path: "/me",
+        element: <MyPage />,
+      },
     ],
   },
   {
