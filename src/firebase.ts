@@ -45,15 +45,17 @@ export async function findTeam(teamUID: TeamUID): Promise<Team> {
   return snapshot.val() as Team;
 }
 
-export async function registerUser(uid: string, data: UserData) {
-  const userRef = db.ref(database, `/users/${uid}`);
-  await db.set(userRef, data);
-
-  const memberRef = db.ref(database, `/teams/${data.teamUID}/members/${uid}`);
-  await db.set(memberRef, true);
-}
-
 const functions = getFunctions(app);
+
+export type RegisterParams = {
+  uid: string;
+  data: UserData;
+};
+export type RegisterResult = void;
+export const registerUser = httpsCallable<RegisterParams, RegisterResult>(
+  functions,
+  "registerUser"
+);
 
 export type InvestParams = {
   round: number;

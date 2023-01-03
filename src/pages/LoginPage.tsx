@@ -67,7 +67,7 @@ function LoginPage() {
       mail: user.email,
     };
 
-    await registerUser(user.uid, userData);
+    await registerUser({ uid: user.uid, data: userData });
     navigate("/");
   }
 
