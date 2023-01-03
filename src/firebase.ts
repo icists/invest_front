@@ -89,6 +89,28 @@ export function useRoundDataDB(): Record<number, RoundData> | null {
   return roundData ?? null;
 }
 
+export function useInvestAmountDB(
+  round: number,
+  teamUID: TeamUID
+): Record<CompanyUID, number> {
+  const investAmountRef = db.ref(
+    database,
+    `/rounds/${round}/investAmount/${teamUID}`
+  );
+  const [investAmount] =
+    useObjectVal<Record<CompanyUID, number>>(investAmountRef);
+  return investAmount ?? {};
+}
+
+export function useValuationDB(
+  round: number
+): Record<CompanyUID, number> | null {
+  const valuationRef = db.ref(database, `/rounds/${round}/valuation`);
+  const [valuationData] =
+    useObjectVal<Record<CompanyUID, number>>(valuationRef);
+  return valuationData ?? null;
+}
+
 export function useTeam(teamUID: TeamUID): Team | null {
   const teamRef = db.ref(database, `/teams/${teamUID}`);
   const [team] = useObjectVal<Team>(teamRef);

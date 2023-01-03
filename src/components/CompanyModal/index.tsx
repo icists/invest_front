@@ -1,8 +1,12 @@
 import styled from "@emotion/styled";
 import { colors } from "@/styles";
 
-import { useAuthData } from "@/context";
-import { useCompaniesDB, useCurrentRoundDB, useRoundDataDB } from "@/firebase";
+import {
+  useAuthData,
+  useCompanies,
+  useCurrentRound,
+  useInvestAmount,
+} from "@/context";
 import { CompanyUID } from "@/schemes";
 
 import CompanyLogo from "../CompanyLogo";
@@ -87,11 +91,11 @@ type CompanyModalProps = {
 
 function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
   const { user } = useAuthData();
-  const round = useCurrentRoundDB();
-  const roundData = useRoundDataDB();
-  const companies = useCompaniesDB();
+  const round = useCurrentRound();
+  const companies = useCompanies();
+  const investAmount = useInvestAmount();
 
-  if (round === null || roundData === null || companies === null) return null;
+  if (investAmount === null || companies === null) return null;
 
   if (companyUID === null)
     return (
@@ -122,9 +126,7 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
                 round={round}
                 companyUID={companyUID}
                 teamUID={user.teamUID}
-                currentInvest={
-                  roundData[round].investAmount[user.teamUID][companyUID]
-                }
+                currentInvest={investAmount[companyUID]}
                 visible={visible}
               />
               <CompanyInfo company={company} />

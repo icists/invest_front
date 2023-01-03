@@ -8,16 +8,19 @@ import {
   auth,
   findUser,
   useCompaniesDB,
-  useRoundDataDB,
   useCurrentRoundDB,
   useTeam,
+  useInvestAmountDB,
+  useValuationDB,
 } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
 import {
-  CompaniesContextProvider,
-  RoundDataContextProvider,
-  AuthContextProvider,
+  CompaniesContext,
+  AuthContext,
+  InvestAmountContext,
+  CurrentRoundContext,
+  ValuationContext,
 } from "./context";
 
 import { UserData } from "./schemes";
@@ -39,25 +42,33 @@ type ContextsProps = {
 };
 
 function Contexts({ userData, currentRound }: ContextsProps) {
-  const team = useTeam(userData.teamUID);
   const companies = useCompaniesDB();
-  const roundData = useRoundDataDB();
+  const team = useTeam(userData.teamUID);
 
-  if (team === null) return null;
+  const investAmount = useInvestAmountDB(currentRound, userData.teamUID);
+
+  const currentValuation = useValuationDB(currentRound - 1);
+  const previousValuation = useValuationDB(currentRound - 2);
+
+  if (companies === null || team === null) return null;
 
   return (
-    <AuthContextProvider value={{ user: userData, team }}>
-      <CompaniesContextProvider value={companies}>
-        <RoundDataContextProvider
-          value={{ current: currentRound, data: roundData }}
-        >
-          <PageContainer>
-            <Outlet />
-            <NavBar />
-          </PageContainer>
-        </RoundDataContextProvider>
-      </CompaniesContextProvider>
-    </AuthContextProvider>
+    <AuthContext.Provider value={{ user: userData, team }}>
+      <CurrentRoundContext.Provider value={currentRound}>
+        <CompaniesContext.Provider value={companies}>
+          <ValuationContext.Provider
+            value={{ current: currentValuation, previous: previousValuation }}
+          >
+            <InvestAmountContext.Provider value={investAmount}>
+              <PageContainer>
+                <Outlet />
+                <NavBar />
+              </PageContainer>
+            </InvestAmountContext.Provider>
+          </ValuationContext.Provider>
+        </CompaniesContext.Provider>
+      </CurrentRoundContext.Provider>
+    </AuthContext.Provider>
   );
 }
 

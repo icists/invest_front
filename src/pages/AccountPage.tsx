@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
-import { useRoundData, useAuthData } from "@/context";
+import { useAuthData, useCurrentRound, useInvestAmount } from "@/context";
 import { formatNum } from "@/utils";
 
 const Main = styled.main({
@@ -42,14 +42,12 @@ const InfoTitle = styled.span({
 const InfoValue = styled.span({});
 
 export default function AccountPage() {
-  const { user, team } = useAuthData();
-  const { current: round, data: roundData } = useRoundData();
+  const { team } = useAuthData();
+  const round = useCurrentRound();
+  const investData = useInvestAmount();
 
-  if (team === null || round === null || roundData === null)
-    return <Main></Main>;
-
-  const invests = roundData[round].investAmount[user.teamUID];
-  const totalInvest = Object.values(invests).reduce((a, b) => a + b);
+  if (team === null || round === null) return <Main></Main>;
+  const totalInvest = Object.values(investData).reduce((a, b) => a + b, 0);
 
   return (
     <Main>

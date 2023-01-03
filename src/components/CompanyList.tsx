@@ -7,7 +7,12 @@ import { colors } from "../styles";
 import CompanyModal from "./CompanyModal";
 import CompanyLogo from "./CompanyLogo";
 import { Company, CompanyUID } from "../schemes";
-import { useCompanies, useRoundData, useAuthData } from "@/context";
+import {
+  useCompanies,
+  useCurrentRound,
+  useInvestAmount,
+  useValuation,
+} from "@/context";
 
 const List = styled.ul({
   padding: 0,
@@ -84,9 +89,10 @@ type CompanyListProps = {
 };
 
 function CompanyList({ className }: CompanyListProps) {
-  const { user } = useAuthData();
   const companies = useCompanies();
-  const { current: round, data: roundData } = useRoundData();
+  const round = useCurrentRound();
+  const investData = useInvestAmount();
+  const valuation = useValuation();
 
   const [selectedCompanyUID, setSelectedCompanyUID] =
     useState<CompanyUID | null>(null);
@@ -97,7 +103,7 @@ function CompanyList({ className }: CompanyListProps) {
     setShowModal(true);
   }
 
-  if (round === null || companies === null || roundData === null) {
+  if (round === null || companies === null) {
     return null;
   }
 
@@ -113,23 +119,27 @@ function CompanyList({ className }: CompanyListProps) {
     companyID: string;
     company: Company;
   }) => {
-    const valuation =
-      round < 2 ? null : roundData[round - 1].valuation[companyID];
+    const currentValuation =
+      valuation.current === null ? null : valuation.current[companyID];
+    const previousValuation =
+      valuation.previous === null ? null : valuation.previous[companyID];
     const change =
-      valuation === null || round < 3
+      currentValuation === null || previousValuation === null
         ? null
-        : (valuation / roundData[round - 2].valuation[companyID] - 1) * 100;
-    const investAmount = roundData[round].investAmount[user.teamUID][companyID];
+        : (currentValuation / previousValuation - 1) * 100;
+    const investAmount = investData[companyID];
 
     return (
       <Container detailed>
         <CompanyTitle>{company.name}</CompanyTitle>
         <CompanySubtitle>
-          {investAmount
-            ? `투자액 ${formatNum(investAmount)}원`
-            : "투자하지 않음"}
+          {investAmount === 0 || investAmount === undefined
+            ? "투자하지 않음"
+            : `투자액 ${formatNum(investAmount)}원`}
         </CompanySubtitle>
-        {valuation !== null && <Valuation>{formatNum(valuation)}</Valuation>}
+        {currentValuation !== null && (
+          <Valuation>{formatNum(currentValuation)}</Valuation>
+        )}
         {change !== null && (
           <Change minus={change < 0}>
             {change >= 0 ? "+" : ""}
