@@ -14,13 +14,14 @@ const Main = styled.main({
   width: "100%",
 
   margin: "0 auto",
-  padding: "1.5rem 1rem",
+  padding: "1.5rem 0",
 
   overflowY: "scroll",
 });
 
 const HeaderContainer = styled.div({
   marginBottom: "1.5rem",
+  padding: "0 0.5rem",
 });
 
 const Title = styled(Header)({

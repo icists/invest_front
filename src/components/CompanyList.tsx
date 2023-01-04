@@ -23,7 +23,7 @@ const List = styled.ul({
 const Item = styled.li({
   display: "flex",
   alignItems: "center",
-  padding: "1rem 0",
+  padding: "1rem 0.5rem",
 
   cursor: "pointer",
   borderRadius: 5,
