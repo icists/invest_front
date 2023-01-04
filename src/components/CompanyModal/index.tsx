@@ -1,12 +1,7 @@
 import styled from "@emotion/styled";
 import { colors } from "@/styles";
 
-import {
-  useAuthData,
-  useCompanies,
-  useStatus,
-  useInvestAmount,
-} from "@/context";
+import { useAuthData, useCompanies, useStatus, useInvestData } from "@/context";
 import { CompanyUID } from "@/schemes";
 
 import CompanyLogo from "../CompanyLogo";
@@ -93,9 +88,7 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
   const { user } = useAuthData();
   const { currentRound, investable } = useStatus();
   const companies = useCompanies();
-  const investAmount = useInvestAmount();
-
-  if (investAmount === null || companies === null) return null;
+  const { amount: investAmount } = useInvestData();
 
   if (companyUID === null)
     return (

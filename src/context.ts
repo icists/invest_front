@@ -27,11 +27,12 @@ export function useCompanies() {
   return useContext(CompaniesContext);
 }
 
-export const InvestAmountContext = createContext<Record<CompanyUID, number>>(
-  {}
-);
-export function useInvestAmount() {
-  return useContext(InvestAmountContext);
+export const InvestDataContext = createContext<{
+  amount: Record<CompanyUID, number>;
+  result: Record<CompanyUID, number>[];
+}>({ amount: {}, result: [] });
+export function useInvestData() {
+  return useContext(InvestDataContext);
 }
 
 export const ValuationContext = createContext<{

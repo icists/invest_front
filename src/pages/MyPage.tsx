@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
-import { useAuthData, useInvestAmount } from "@/context";
+import { useAuthData, useInvestData } from "@/context";
 import { formatNum } from "@/utils";
 import InvestResult from "@/components/InvestResult";
 
@@ -42,9 +42,9 @@ const InfoValue = styled.span({});
 
 export default function MyPage() {
   const { team } = useAuthData();
-  const investData = useInvestAmount();
+  const { amount: investAmount } = useInvestData();
 
-  const totalInvest = Object.values(investData).reduce((a, b) => a + b, 0);
+  const totalInvest = Object.values(investAmount).reduce((a, b) => a + b, 0);
 
   return (
     <Main>

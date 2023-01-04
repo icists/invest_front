@@ -10,7 +10,7 @@ import { Company, CompanyUID } from "../schemes";
 import {
   useCompanies,
   useStatus,
-  useInvestAmount,
+  useInvestData,
   useValuation,
 } from "@/context";
 
@@ -91,7 +91,7 @@ type CompanyListProps = {
 function CompanyList({ className }: CompanyListProps) {
   const companies = useCompanies();
   const { investable } = useStatus();
-  const investData = useInvestAmount();
+  const { amount: investAmount } = useInvestData();
   const valuation = useValuation();
 
   const [selectedCompanyUID, setSelectedCompanyUID] =
@@ -122,15 +122,15 @@ function CompanyList({ className }: CompanyListProps) {
       currentValuation === null || previousValuation === null
         ? null
         : (currentValuation / previousValuation - 1) * 100;
-    const investAmount = investData[companyID];
+    const amount = investAmount[companyID];
 
     return (
       <Container detailed>
         <CompanyTitle>{company.name}</CompanyTitle>
         <CompanySubtitle>
-          {investAmount === 0 || investAmount === undefined
+          {amount === 0 || amount === undefined
             ? "투자하지 않음"
-            : `투자액 ${formatNum(investAmount)}원`}
+            : `투자액 ${formatNum(amount)}원`}
         </CompanySubtitle>
         {currentValuation !== null && (
           <Valuation>{formatNum(currentValuation)}</Valuation>

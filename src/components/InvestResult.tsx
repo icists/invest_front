@@ -3,11 +3,14 @@ import styled from "@emotion/styled";
 
 import Select from "react-select";
 
-import { useCompanies } from "@/context";
-import Header from "./Header";
+import { useCompanies, useStatus } from "@/context";
 
-const Title = styled(Header)({
-  fontWeight: "normal",
+import Header from "./Header";
+import { colors } from "@/styles";
+
+const EmptyMessage = styled.div({
+  fontSize: "1.25rem",
+  color: colors.darkGray,
 });
 
 const List = styled.ul({
@@ -21,10 +24,23 @@ const Item = styled.li({});
 type OptionType = { value: number | null; label: string };
 
 export default function InvestResult() {
-  const options = [0, 1, 2, 3].map((v) => ({ value: v, label: `Round ${v}` }));
+  const { currentRound } = useStatus();
+
+  const options =
+    currentRound > 0
+      ? [...Array(currentRound).keys()].map((v) => ({
+          value: v,
+          label: `Round ${v}`,
+        }))
+      : [];
+
   const [selectedRound, setSelectedRound] = useState<OptionType | null>(
-    options[0]
+    options[currentRound - 1]
   );
+
+  if (currentRound === 0)
+    return <EmptyMessage>(아직 투자 결과가 나오지 않았습니다.)</EmptyMessage>;
+
   return (
     <>
       <Select
@@ -33,6 +49,7 @@ export default function InvestResult() {
         options={options}
         getOptionLabel={(v) => `Round ${v.value}`}
       />
+      <List></List>
     </>
   );
 }

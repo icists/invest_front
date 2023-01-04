@@ -105,6 +105,20 @@ export function useInvestAmountDB(
   return investAmount ?? {};
 }
 
+export function useInvestResultDB(
+  teamUID: TeamUID
+): Record<CompanyUID, number>[] {
+  const result: Record<CompanyUID, number>[] = [];
+  
+  for (let round = 0; round <= 3; round++) {
+    const investResultRef = db.ref(database, `/rounds/${round}/investAmount/${teamUID}`);
+    const [investResult] = useObjectVal<Record<CompanyUID, number>>(investResultRef);
+    result.push(investResult ?? {});
+  }
+
+  return result;
+}
+
 export function useValuationDB(
   round: number
 ): Record<CompanyUID, number> | null {
