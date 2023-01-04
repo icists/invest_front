@@ -71,14 +71,12 @@ function Invest({
 
   const [investAmount, setInvestAmount] = useState<number | null>(0);
 
-  const [isError, setIsError] = useState(false);
-  const [message, setMessage] = useState("");
+  const [[message, isErrorMessage], setMessage] = useState(["", false]);
 
   const [isPending, setIsPending] = useState(false);
 
   useEffect(() => {
-    setIsError(false);
-    setMessage("");
+    setMessage(["", false]);
 
     setInvestAmount(Math.floor(currentInvest / 10000));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,21 +84,17 @@ function Invest({
 
   async function handleClickInvest() {
     if (investAmount === null) {
-      setIsError(true);
-      setMessage("투자액을 입력해주세요.");
+      setMessage(["투자액을 입력해주세요.", true]);
       return;
     } else if (!Number.isSafeInteger(investAmount)) {
-      setIsError(true);
-      setMessage("정수값을 입력해주세요.");
+      setMessage(["정수값을 입력해주세요.", true]);
       return;
     } else if (investAmount < 0) {
-      setIsError(true);
-      setMessage("양수를 입력해주세요.");
+      setMessage(["양수를 입력해주세요.", true]);
       return;
     }
 
-    setIsError(false);
-    setMessage("");
+    setMessage(["", false]);
 
     setIsPending(true);
     const investResult = await invest({
@@ -112,14 +106,11 @@ function Invest({
     setIsPending(false);
 
     if (investResult.data === "success") {
-      setIsError(false);
-      setMessage("투자가 완료되었습니다.");
+      setMessage(["투자가 완료되었습니다.", false]);
     } else if (investResult.data === "insufficient_cash") {
-      setIsError(true);
-      setMessage("자본금이 부족합니다.");
+      setMessage(["자본금이 부족합니다.", true]);
     } else {
-      setIsError(true);
-      setMessage(`오류가 발생했습니다. ${investResult.data}`);
+      setMessage([`오류가 발생했습니다. ${investResult.data}`, true]);
     }
 
     console.log(investResult);
@@ -133,13 +124,13 @@ function Invest({
         <InvestAmountField
           value={investAmount}
           onChange={setInvestAmount}
-          isError={isError}
+          isError={isErrorMessage}
         />
         <InvestButton onClick={handleClickInvest} isLoading={isPending}>
           적용
         </InvestButton>
       </InputContainer>
-      <Message isError={isError}>{message}</Message>
+      <Message isError={isErrorMessage}>{message}</Message>
     </>
   );
 }

@@ -86,7 +86,7 @@ type CompanyModalProps = {
 
 function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
   const { user } = useAuthData();
-  const { currentRound, investable } = useStatus();
+  const { currentRound } = useStatus();
   const companies = useCompanies();
   const investData = useInvestData();
 
@@ -111,20 +111,14 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
               <CompanySubtitle>{company.engName}</CompanySubtitle>
             </TitleContainer>
           </HeaderContainer>
-          {investable ? (
-            <>
-              <CompanyInvest
-                round={currentRound}
-                companyUID={companyUID}
-                teamUID={user.teamUID}
-                currentInvest={investData[currentRound].amount[companyUID] ?? 0}
-                visible={visible}
-              />
-              <CompanyInfo company={company} />
-            </>
-          ) : (
-            <CompanyInfo company={company} />
-          )}
+          <CompanyInvest
+            round={currentRound}
+            companyUID={companyUID}
+            teamUID={user.teamUID}
+            currentInvest={investData[currentRound].amount[companyUID] ?? 0}
+            visible={visible}
+          />
+          <CompanyInfo company={company} />
         </Container>
       </Modal>
     </>

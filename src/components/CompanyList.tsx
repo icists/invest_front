@@ -32,23 +32,18 @@ const Item = styled.li({
   },
 });
 
-const Container = styled.div<{ detailed: boolean }>(
-  {
-    display: "grid",
-    gridTemplateRows: "1fr 1fr",
-    gridTemplateColumns: "2fr 1fr",
-    gridAutoFlow: "column",
+const Container = styled.div({
+  display: "grid",
+  gridTemplateRows: "1fr 1fr",
+  gridTemplateColumns: "2fr 1fr",
+  gridAutoFlow: "column",
+  rowGap: "0.2rem",
 
-    width: "100%",
-    fontSize: "1.2rem",
+  width: "100%",
+  fontSize: "1.2rem",
 
-    paddingLeft: "0.7rem",
-  },
-  ({ detailed }) => ({
-    gridTemplateColumns: detailed ? "2fr 1fr" : "1fr",
-    rowGap: detailed ? "0.2rem" : 0,
-  })
-);
+  paddingLeft: "0.7rem",
+});
 
 const CompanyTitle = styled.div({
   fontWeight: 600,
@@ -86,7 +81,7 @@ type CompanyListProps = {
 };
 
 function CompanyList({ className }: CompanyListProps) {
-  const { currentRound, investable } = useStatus();
+  const { currentRound } = useStatus();
   const investData = useInvestData();
   const valuation = useValuation();
 
@@ -122,7 +117,7 @@ function CompanyList({ className }: CompanyListProps) {
     const amount = investData[currentRound].amount[companyID];
 
     return (
-      <Container detailed>
+      <Container>
         <CompanyTitle>{company.name}</CompanyTitle>
         <CompanySubtitle>
           {amount === 0 || amount === undefined
@@ -148,14 +143,7 @@ function CompanyList({ className }: CompanyListProps) {
         {companiesList.map(([companyID, company]) => (
           <Item key={companyID} onClick={() => handleClickItem(companyID)}>
             <CompanyLogo src={company.logo} width={56} />
-            {investable ? (
-              <DetailedContainer companyID={companyID} company={company} />
-            ) : (
-              <Container detailed={false}>
-                <CompanyTitle>{company.name}</CompanyTitle>
-                <CompanySubtitle>{company.engName}</CompanySubtitle>
-              </Container>
-            )}
+            <DetailedContainer companyID={companyID} company={company} />
           </Item>
         ))}
       </List>
