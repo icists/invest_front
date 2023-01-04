@@ -8,7 +8,7 @@ const LogoContainer = styled.div<{ width: number }>(
     borderRadius: "100%",
 
     flex: "0 0 auto",
-    padding: "0.3rem",
+    padding: "0.5rem",
   },
   (props) => ({
     height: props.width,
@@ -19,7 +19,7 @@ const LogoContainer = styled.div<{ width: number }>(
 const Logo = styled.img({
   height: "100%",
   width: "100%",
-  objectFit: "fill",
+  objectFit: "contain",
 });
 
 type CompanyLogoProps = {

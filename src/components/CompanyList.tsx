@@ -15,15 +15,15 @@ import {
 } from "@/context";
 
 const List = styled.ul({
+  listStyleType: "none",
   padding: 0,
   margin: 0,
-  listStyleType: "none",
 });
 
 const Item = styled.li({
   display: "flex",
   alignItems: "center",
-  padding: "1rem 0.5rem",
+  padding: "1rem 0",
 
   cursor: "pointer",
   borderRadius: 5,

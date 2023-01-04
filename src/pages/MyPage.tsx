@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
-import { useAuthData, useStatus, useInvestAmount } from "@/context";
+import { useAuthData, useInvestAmount } from "@/context";
 import { formatNum } from "@/utils";
+import InvestResult from "@/components/InvestResult";
 
 const Main = styled.main({
   display: "flex",
@@ -12,7 +13,7 @@ const Main = styled.main({
   width: "100%",
 
   margin: "0 auto",
-  padding: "1.5rem 0.5rem",
+  padding: "1.5rem 1rem",
 
   overflowY: "scroll",
 });
@@ -22,12 +23,10 @@ const Section = styled.div({
 });
 
 const Title = styled(Header)({
-  paddingLeft: "0.5rem",
-  marginBottom: "1.5rem",
+  marginBottom: "1rem",
 });
 
 const InfoContainer = styled.div({
-  paddingLeft: "0.5rem",
   marginBottom: "0.5rem",
 
   fontSize: "1.4rem",
@@ -63,6 +62,7 @@ export default function MyPage() {
 
       <Section>
         <Title as="h1">투자 결과</Title>
+        <InvestResult />
       </Section>
     </Main>
   );
