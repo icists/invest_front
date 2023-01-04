@@ -82,7 +82,7 @@ export function NumberField({
       onValueChange={({ floatValue }) => onChange && onChange(floatValue ?? null)}
       thousandSeparator
       allowNegative={false}
-      prefix="₩"
+      suffix="만원"
     />
   );
 }

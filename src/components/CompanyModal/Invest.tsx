@@ -80,7 +80,7 @@ function Invest({
     setIsError(false);
     setMessage("");
 
-    setInvestAmount(currentInvest);
+    setInvestAmount(Math.floor(currentInvest / 10000));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
@@ -107,7 +107,7 @@ function Invest({
       round,
       teamUID,
       companyUID,
-      investAmount,
+      investAmount: investAmount * 10000,
     });
     setIsPending(false);
 
