@@ -13,7 +13,7 @@ const Main = styled.main({
   width: "100%",
 
   margin: "0 auto",
-  padding: "1.5rem 0.5rem",
+  padding: "1.5rem 1rem",
 
   overflowY: "scroll",
 });

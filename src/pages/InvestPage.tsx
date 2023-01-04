@@ -21,7 +21,7 @@ const Main = styled.main({
 
 const HeaderContainer = styled.div({
   marginBottom: "1.5rem",
-  padding: "0 0.5rem",
+  padding: "0 1rem",
 });
 
 const Title = styled(Header)({

@@ -21,7 +21,7 @@ const Account = styled.small({
 
   display: "block",
   color: colors.darkGray,
-  fontSize: "0.9rem",
+  fontSize: "1rem",
 });
 
 const InputContainer = styled.div({
