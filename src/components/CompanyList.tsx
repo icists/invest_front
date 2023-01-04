@@ -89,10 +89,14 @@ type CompanyListProps = {
 };
 
 function CompanyList({ className }: CompanyListProps) {
-  const companies = useCompanies();
-  const { investable } = useStatus();
-  const { amount: investAmount } = useInvestData();
+  const { currentRound, investable } = useStatus();
+  const investData = useInvestData();
   const valuation = useValuation();
+
+  const companies = useCompanies();
+  const companiesList = Object.entries(companies).sort(([, a], [, b]) =>
+    a.name.localeCompare(b.name)
+  );
 
   const [selectedCompanyUID, setSelectedCompanyUID] =
     useState<CompanyUID | null>(null);
@@ -102,10 +106,6 @@ function CompanyList({ className }: CompanyListProps) {
     setSelectedCompanyUID(companyUID);
     setShowModal(true);
   }
-
-  const companiesList = Object.entries(companies).sort(([, a], [, b]) =>
-    a.name.localeCompare(b.name)
-  );
 
   const DetailedContainer = ({
     companyID,
@@ -122,7 +122,7 @@ function CompanyList({ className }: CompanyListProps) {
       currentValuation === null || previousValuation === null
         ? null
         : (currentValuation / previousValuation - 1) * 100;
-    const amount = investAmount[companyID];
+    const amount = investData[currentRound].amount[companyID];
 
     return (
       <Container detailed>
@@ -149,7 +149,7 @@ function CompanyList({ className }: CompanyListProps) {
     <>
       <List className={className}>
         {companiesList.map(([companyID, company]) => (
-          <Item key={company.name} onClick={() => handleClickItem(companyID)}>
+          <Item key={companyID} onClick={() => handleClickItem(companyID)}>
             <CompanyLogo src={company.logo} width={56} />
             {investable ? (
               <DetailedContainer companyID={companyID} company={company} />

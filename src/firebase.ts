@@ -92,31 +92,31 @@ export function useRoundDataDB(): Record<number, RoundData> | null {
   return roundData ?? null;
 }
 
-export function useInvestAmountDB(
-  round: number,
-  teamUID: TeamUID
-): Record<CompanyUID, number> {
-  const investAmountRef = db.ref(
-    database,
-    `/rounds/${round}/investAmount/${teamUID}`
-  );
-  const [investAmount] =
-    useObjectVal<Record<CompanyUID, number>>(investAmountRef);
-  return investAmount ?? {};
-}
+export function useInvestDataDB(teamUID: TeamUID): {
+  amount: Record<CompanyUID, number>;
+  result: Record<CompanyUID, number>;
+}[] {
+  const final = [];
 
-export function useInvestResultDB(
-  teamUID: TeamUID
-): Record<CompanyUID, number>[] {
-  const result: Record<CompanyUID, number>[] = [];
-  
   for (let round = 0; round <= 3; round++) {
-    const investResultRef = db.ref(database, `/rounds/${round}/investAmount/${teamUID}`);
-    const [investResult] = useObjectVal<Record<CompanyUID, number>>(investResultRef);
-    result.push(investResult ?? {});
+    const investAmountRef = db.ref(
+      database,
+      `/rounds/${round}/investAmount/${teamUID}`
+    );
+    const [investAmount] =
+      useObjectVal<Record<CompanyUID, number>>(investAmountRef);
+
+    const investResultRef = db.ref(
+      database,
+      `/rounds/${round}/investResult/${teamUID}`
+    );
+    const [investResult] =
+      useObjectVal<Record<CompanyUID, number>>(investResultRef);
+
+    final.push({ amount: investAmount ?? {}, result: investResult ?? {} });
   }
 
-  return result;
+  return final;
 }
 
 export function useValuationDB(

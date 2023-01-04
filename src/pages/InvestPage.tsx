@@ -20,7 +20,7 @@ const Main = styled.main({
 });
 
 const HeaderContainer = styled.div({
-  marginBottom: "1.5rem",
+  marginBottom: "1rem",
   padding: "0 1rem",
 });
 

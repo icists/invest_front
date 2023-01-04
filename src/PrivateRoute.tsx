@@ -9,10 +9,9 @@ import {
   findUser,
   useCompaniesDB,
   useTeam,
-  useInvestAmountDB,
   useValuationDB,
   useStatusDB,
-  useInvestResultDB,
+  useInvestDataDB,
 } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
@@ -46,8 +45,7 @@ function Contexts({ userData, status }: ContextsProps) {
   const companies = useCompaniesDB();
   const team = useTeam(userData.teamUID);
 
-  const investAmount = useInvestAmountDB(status.currentRound, userData.teamUID);
-  const investResultList = useInvestResultDB(userData.teamUID);
+  const investData = useInvestDataDB(userData.teamUID);
 
   const currentValuation = useValuationDB(status.currentRound - 1);
   const previousValuation = useValuationDB(status.currentRound - 2);
@@ -61,9 +59,7 @@ function Contexts({ userData, status }: ContextsProps) {
           <ValuationContext.Provider
             value={{ current: currentValuation, previous: previousValuation }}
           >
-            <InvestDataContext.Provider
-              value={{ amount: investAmount, result: investResultList }}
-            >
+            <InvestDataContext.Provider value={investData}>
               <PageContainer>
                 <Outlet />
                 <NavBar />

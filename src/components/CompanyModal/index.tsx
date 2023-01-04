@@ -88,7 +88,7 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
   const { user } = useAuthData();
   const { currentRound, investable } = useStatus();
   const companies = useCompanies();
-  const { amount: investAmount } = useInvestData();
+  const investData = useInvestData();
 
   if (companyUID === null)
     return (
@@ -117,7 +117,7 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
                 round={currentRound}
                 companyUID={companyUID}
                 teamUID={user.teamUID}
-                currentInvest={investAmount[companyUID]}
+                currentInvest={investData[currentRound].amount[companyUID]}
                 visible={visible}
               />
               <CompanyInfo company={company} />

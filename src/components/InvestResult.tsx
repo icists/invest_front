@@ -1,12 +1,12 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
+import { colors } from "@/styles";
 
 import Select from "react-select";
 
-import { useCompanies, useStatus } from "@/context";
+import { useCompanies, useInvestData, useStatus } from "@/context";
 
-import Header from "./Header";
-import { colors } from "@/styles";
+import CompanyLogo from "./CompanyLogo";
 
 const EmptyMessage = styled.div({
   fontSize: "1.25rem",
@@ -19,12 +19,37 @@ const List = styled.ul({
   margin: 0,
 });
 
-const Item = styled.li({});
+const Item = styled.li({
+  display: "flex",
+  alignItems: "center",
 
-type OptionType = { value: number | null; label: string };
+  margin: "1rem 0",
+});
+
+const Container = styled.div({
+  marginLeft: "0.5rem",
+});
+
+const CompanyTitle = styled.div({
+  color: colors.darkGray,
+  fontSize: "1.1rem",
+  marginBottom: "0.2rem",
+});
+
+const ResultText = styled.div({
+  fontSize: "1.2rem",
+});
+
+type OptionType = { value: number; label: string };
 
 export default function InvestResult() {
   const { currentRound } = useStatus();
+  const investData = useInvestData();
+
+  const companies = useCompanies();
+  const companiesList = Object.entries(companies).sort(([, a], [, b]) =>
+    a.name.localeCompare(b.name)
+  );
 
   const options =
     currentRound > 0
@@ -49,7 +74,22 @@ export default function InvestResult() {
         options={options}
         getOptionLabel={(v) => `Round ${v.value}`}
       />
-      <List></List>
+      {selectedRound !== null && (
+        <List>
+          {companiesList.map(([companyUID, company]) => (
+            <Item key={companyUID}>
+              <CompanyLogo src={company.logo} width={56} />
+              <Container>
+                <CompanyTitle>{company.name}</CompanyTitle>
+                <ResultText>
+                  투자액 {investData[selectedRound.value].amount[companyUID]}{" "}
+                  {investData[selectedRound.value].result[companyUID]}
+                </ResultText>
+              </Container>
+            </Item>
+          ))}
+        </List>
+      )}
     </>
   );
 }
