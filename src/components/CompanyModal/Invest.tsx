@@ -127,8 +127,8 @@ function Invest({
 
   return (
     <>
-      <Title as="h2">투자액 (₩)</Title>
-      <Account>자본금 {formatNum(team.account)}원</Account>
+      <Title as="h2">투자액</Title>
+      <Account>자본금 {formatNum(team.account)}</Account>
       <InputContainer>
         <InvestAmountField
           value={investAmount}

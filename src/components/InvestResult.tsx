@@ -7,6 +7,7 @@ import Select from "react-select";
 import { useCompanies, useInvestData, useStatus } from "@/context";
 
 import CompanyLogo from "./CompanyLogo";
+import { formatNum } from "@/utils";
 
 const EmptyMessage = styled.div({
   fontSize: "1.25rem",
@@ -24,21 +25,37 @@ const Item = styled.li({
   alignItems: "center",
 
   margin: "1rem 0",
+  width: "100%",
 });
 
 const Container = styled.div({
   marginLeft: "0.5rem",
+  width: "100%",
 });
 
 const CompanyTitle = styled.div({
   color: colors.darkGray,
-  fontSize: "1.1rem",
+  fontSize: "1rem",
   marginBottom: "0.2rem",
 });
 
-const ResultText = styled.div({
-  fontSize: "1.2rem",
+const ChangeContainer = styled.div({
+  fontSize: "1.1rem",
+  width: "100%",
+  display: "flex",
 });
+
+const AbsoluteChange = styled.span({
+  display: "inline-block",
+  marginRight: "0.3rem",
+});
+
+const PercentageChange = styled.span<{ isNegative: boolean }>(
+  {
+    fontWeight: "bold",
+  },
+  ({ isNegative }) => ({ color: isNegative ? colors.red : colors.green })
+);
 
 type OptionType = { value: number; label: string };
 
@@ -76,18 +93,31 @@ export default function InvestResult() {
       />
       {selectedRound !== null && (
         <List>
-          {companiesList.map(([companyUID, company]) => (
-            <Item key={companyUID}>
-              <CompanyLogo src={company.logo} width={56} />
-              <Container>
-                <CompanyTitle>{company.name}</CompanyTitle>
-                <ResultText>
-                  투자액 {investData[selectedRound.value].amount[companyUID]}{" "}
-                  {investData[selectedRound.value].result[companyUID]}
-                </ResultText>
-              </Container>
-            </Item>
-          ))}
+          {companiesList.map(([companyUID, company]) => {
+            const investAmount =
+              investData[selectedRound.value].amount[companyUID];
+            const investResult =
+              investData[selectedRound.value].result[companyUID];
+            const change = (investResult / investAmount - 1) * 100;
+
+            if (investAmount < 10000) return null;
+            return (
+              <Item key={companyUID}>
+                <CompanyLogo src={company.logo} width={56} />
+                <Container>
+                  <CompanyTitle>{company.name}</CompanyTitle>
+                  <ChangeContainer>
+                    <AbsoluteChange>
+                      {formatNum(investAmount)} → {formatNum(investResult)}
+                    </AbsoluteChange>
+                    <PercentageChange isNegative={change < 0}>
+                      ({change > 0 ? "+" : ""}{change.toPrecision(3)}%)
+                    </PercentageChange>
+                  </ChangeContainer>
+                </Container>
+              </Item>
+            );
+          })}
         </List>
       )}
     </>

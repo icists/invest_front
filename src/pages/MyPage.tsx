@@ -34,7 +34,7 @@ const InfoContainer = styled.div({
 
 const InfoTitle = styled.span({
   display: "inline-block",
-  marginRight: "1rem",
+  marginRight: "0.75rem",
   fontWeight: "bold",
 });
 
@@ -56,11 +56,11 @@ export default function MyPage() {
         <Title as="h1">자산 현황</Title>
         <InfoContainer>
           <InfoTitle>자본금</InfoTitle>
-          <InfoValue>₩{formatNum(team.account)}</InfoValue>
+          <InfoValue>{formatNum(team.account)}</InfoValue>
         </InfoContainer>
         <InfoContainer>
           <InfoTitle>투자액</InfoTitle>
-          <InfoValue>₩{formatNum(totalInvest)}</InfoValue>
+          <InfoValue>{formatNum(totalInvest)}</InfoValue>
         </InfoContainer>
       </Section>
 

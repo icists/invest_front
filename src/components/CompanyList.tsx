@@ -55,9 +55,6 @@ const CompanyTitle = styled.div({
 });
 
 const Valuation = styled.div({
-  "&::before": {
-    content: "'₩'",
-  },
   justifySelf: "end",
 });
 
@@ -130,7 +127,7 @@ function CompanyList({ className }: CompanyListProps) {
         <CompanySubtitle>
           {amount === 0 || amount === undefined
             ? "투자하지 않음"
-            : `투자액 ${formatNum(amount)}원`}
+            : `투자액 ${formatNum(amount)}`}
         </CompanySubtitle>
         {currentValuation !== null && (
           <Valuation>{formatNum(currentValuation)}</Valuation>

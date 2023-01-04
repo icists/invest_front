@@ -1,3 +1,5 @@
 export function formatNum(v: number) {
-  return v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  v = Math.floor(v / 10000);
+  const delimited = v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return delimited + "만원";
 }
