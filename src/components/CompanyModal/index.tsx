@@ -117,7 +117,7 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
                 round={currentRound}
                 companyUID={companyUID}
                 teamUID={user.teamUID}
-                currentInvest={investData[currentRound].amount[companyUID]}
+                currentInvest={investData[currentRound].amount[companyUID] ?? 0}
                 visible={visible}
               />
               <CompanyInfo company={company} />
