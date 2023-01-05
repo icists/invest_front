@@ -13,7 +13,7 @@ admin.initializeApp();
 const db = admin.database();
 
 export const registerUser = functions.https.onCall(
-  async ({uid, data}: RegisterParams): Promise<RegisterResult> => {
+  async ({ uid, data }: RegisterParams): Promise<RegisterResult> => {
     await db.ref(`/users/${uid}`).set(data);
     await db.ref(`/teams/${data.teamUID}/members/${uid}`).set(true);
   }
@@ -22,6 +22,11 @@ export const registerUser = functions.https.onCall(
 export const invest = functions.https.onCall(
   async (data: InvestParams, context): Promise<InvestResult> => {
     if (!context.auth) return "auth_fail";
+
+    const investableSnapshot = await db.ref("/status/investable").get();
+    if ((investableSnapshot.val() as boolean) === false)
+      return "not_investable";
+
     const userSnapshot = await db.ref(`/users/${context.auth.uid}`).get();
 
     if (data.investAmount < 0 || !Number.isSafeInteger(data.investAmount))
