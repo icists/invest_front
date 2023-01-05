@@ -29,7 +29,7 @@ const Title = styled(Header)({
 const InfoContainer = styled.div({
   marginBottom: "0.5rem",
 
-  fontSize: "1.4rem",
+  fontSize: "1.3rem",
 });
 
 const InfoTitle = styled.span({
@@ -55,11 +55,11 @@ export default function MyPage() {
       <Section>
         <Title as="h1">자산 현황</Title>
         <InfoContainer>
-          <InfoTitle>자본금</InfoTitle>
+          <InfoTitle>총 자본금</InfoTitle>
           <InfoValue>{formatNum(team.account)}</InfoValue>
         </InfoContainer>
         <InfoContainer>
-          <InfoTitle>투자액</InfoTitle>
+          <InfoTitle>총 투자액</InfoTitle>
           <InfoValue>{formatNum(totalInvest)}</InfoValue>
         </InfoContainer>
       </Section>

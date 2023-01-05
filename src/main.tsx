@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import LoginPage from "./pages/LoginPage";
 import InvestPage from "./pages/InvestPage";
 import MyPage from "./pages/MyPage";
+import EventPage from "./pages/EventPage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/me",
         element: <MyPage />,
+      },
+      {
+        path: "/event",
+        element: <EventPage />,
       },
     ],
   },

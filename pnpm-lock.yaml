@@ -13,6 +13,7 @@ specifiers:
   eslint-plugin-react: ^7.31.11
   eslint-plugin-react-hooks: ^4.6.0
   firebase: ^9.15.0
+  num-to-korean: ^0.5.2
   prettier: 2.8.1
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -28,6 +29,7 @@ dependencies:
   '@emotion/react': 11.10.5_kzbn2opkn2327fwg5yzwzya5o4
   '@emotion/styled': 11.10.5_qvatmowesywn4ye42qoh247szu
   firebase: 9.15.0
+  num-to-korean: 0.5.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-firebase-hooks: 5.1.1_v6fjscufgdj3brau76e76lehmq
@@ -2392,6 +2394,10 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+    dev: false
+
+  /num-to-korean/0.5.2:
+    resolution: {integrity: sha512-/C+Bxuc//dr5VsKNnvm1tD1GLW5rDXfkprVqHQzIZmByPlZvyqwd5JQvH+tMZRtDsX6soKH8E3McTuhoSZTwwQ==}
     dev: false
 
   /object-assign/4.1.1:

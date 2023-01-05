@@ -5,6 +5,7 @@ import { useLocation, Link } from "react-router-dom";
 import balanceIcon from "@/assets/balance.svg";
 import investmentIcon from "@/assets/investment.svg";
 import rulesIcon from "@/assets/rules.svg";
+import eventIcon from "@/assets/event.svg";
 
 const Nav = styled.nav({
   width: "100%",
@@ -27,7 +28,9 @@ const Menu = styled(Link)<{ current: boolean }>(
 
     cursor: "pointer",
     textDecoration: "none",
+    color: "black",
   },
+
   ({ current }) => ({
     filter: current
       ? "invert(55%) sepia(75%) saturate(2193%) hue-rotate(123deg) brightness(94%) contrast(86%)"
@@ -56,13 +59,14 @@ export default function NavBar() {
     },
     { icon: investmentIcon, name: "투자", to: "/" },
     { icon: rulesIcon, name: "규칙", to: "/rules" },
+    { icon: eventIcon, name: "이벤트", to: "/event" },
   ];
 
   return (
     <Nav>
       {menuList.map(({ icon, name, to }) => (
         <Menu key={name} to={to} current={location.pathname === to}>
-          <Icon src={icon} />
+          <Icon src={icon}/>
           <MenuName>{name}</MenuName>
         </Menu>
       ))}
