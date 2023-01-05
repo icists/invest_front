@@ -6,49 +6,9 @@ import { CompanyUID } from "@/schemes";
 
 import CompanyLogo from "../CompanyLogo";
 import Header from "../Header";
-
 import CompanyInfo from "./Info";
 import CompanyInvest from "./Invest";
-
-const Overlay = styled.div<{ visible: boolean }>(
-  {
-    position: "fixed",
-    width: "100vw",
-    height: "100vh",
-    top: 0,
-    left: 0,
-
-    backgroundColor: "black",
-    transition: "opacity 0.3s",
-  },
-  (props) => ({
-    opacity: props.visible ? 0.7 : 0,
-    pointerEvents: props.visible ? "all" : "none",
-  })
-);
-
-const Modal = styled.div<{ visible: boolean }>(
-  {
-    width: "100vw",
-    maxWidth: 500,
-    height: "80vh",
-    overflowY: "scroll",
-
-    position: "fixed",
-    left: "50%",
-    bottom: 0,
-
-    backgroundColor: "white",
-    borderRadius: "20px 20px 0 0",
-
-    zIndex: 1,
-
-    transition: "transform 0.3s",
-  },
-  (props) => ({
-    transform: `translate(-50%, ${props.visible ? "0" : "100%"})`,
-  })
-);
+import Modal from "../Modal";
 
 const Container = styled.div({
   width: "90%",
@@ -90,25 +50,15 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
   const companies = useCompanies();
   const investData = useInvestData();
 
-  if (companyUID === null)
-    return (
-      <>
-        <Overlay visible={visible} onClick={onClose} />
-        <Modal visible={visible} />
-      </>
-    );
-
-  const company = companies[companyUID];
   return (
-    <>
-      <Overlay visible={visible} onClick={onClose} />
-      <Modal visible={visible}>
+    <Modal visible={visible} onClose={onClose}>
+      {companyUID !== null && (
         <Container>
           <HeaderContainer>
-            <CompanyLogo src={company.logo} width={60} />
+            <CompanyLogo src={companies[companyUID].logo} width={60} />
             <TitleContainer>
-              <CompanyTitle as="h1">{company.name}</CompanyTitle>
-              <CompanySubtitle>{company.engName}</CompanySubtitle>
+              <CompanyTitle as="h1">{companies[companyUID].name}</CompanyTitle>
+              <CompanySubtitle>{companies[companyUID].engName}</CompanySubtitle>
             </TitleContainer>
           </HeaderContainer>
           {investable && (
@@ -120,10 +70,10 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
               visible={visible}
             />
           )}
-          <CompanyInfo company={company} />
+          <CompanyInfo company={companies[companyUID]} />
         </Container>
-      </Modal>
-    </>
+      )}
+    </Modal>
   );
 }
 
