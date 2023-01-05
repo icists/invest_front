@@ -109,8 +109,10 @@ function Invest({
       setMessage(["투자가 완료되었습니다.", false]);
     } else if (investResult.data === "insufficient_cash") {
       setMessage(["자본금이 부족합니다.", true]);
+    } else if (investResult.data === "not_investable") {
+      setMessage(["현재는 투자 시간이 아닙니다.", true]);
     } else {
-      setMessage([`오류가 발생했습니다. ${investResult.data}`, true]);
+      setMessage([`오류가 발생했습니다. (${investResult.data}) 스태프에게 문의해주세요.`, true]);
     }
 
     console.log(investResult);
