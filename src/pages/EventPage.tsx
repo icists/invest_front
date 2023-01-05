@@ -1,11 +1,15 @@
+import { useState } from "react";
+
 import styled from "@emotion/styled";
 import { colors } from "@/styles";
 
 import Button from "@/components/Button";
 import Header from "@/components/Header";
+import Modal from "@/components/Modal";
 
 import BingoLogo from "@/assets/events/bingo-logo.png";
 import CompletionLogo from "@/assets/events/completion-logo.png";
+import Bingo from "@/components/events/Bingo";
 
 const Main = styled.main({
   display: "flex",
@@ -35,15 +39,21 @@ const EventLogo = styled.img({
 });
 
 export default function EventPage() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <Main>
       <Title as="h1">이벤트</Title>
-      <EventButton>
+      <EventButton onClick={() => setShowModal(true)}>
         <EventLogo src={BingoLogo} />
       </EventButton>
       <EventButton>
         <EventLogo src={CompletionLogo} />
       </EventButton>
+
+      <Modal visible={showModal} onClose={() => setShowModal(false)}>
+        <Bingo />
+      </Modal>
     </Main>
   );
 }
