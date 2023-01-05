@@ -17,7 +17,7 @@ const Main = styled.main({
 
   height: "100%",
   width: "90%",
-  maxWidth: 600,
+  maxWidth: 500,
 
   padding: "2rem 0",
   margin: "0 auto",
@@ -51,14 +51,19 @@ function LoginPage() {
 
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [teamNumber, setTeamNumber] = useState("0");
 
   async function confirm() {
     const trimmedName = name.trim();
     if (trimmedName.length < 2) return;
 
+    setIsLoading(true);
     const userCredential = await signInWithGoogle();
-    if (!userCredential) return;
+    if (!userCredential) {
+      setIsLoading(false);
+      return;
+    }
 
     const user = userCredential.user;
     const userData: UserData = {
@@ -95,7 +100,9 @@ function LoginPage() {
         />
       </InputBox>
 
-      <LoginButton onClick={confirm}>Google로 로그인</LoginButton>
+      <LoginButton onClick={confirm} isLoading={isLoading}>
+        {isLoading ? "처리 중..." : "Google로 로그인"}
+      </LoginButton>
     </Main>
   );
 }
