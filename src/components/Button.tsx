@@ -19,7 +19,7 @@ const ButtonElem = styled.button<{ isLoading: boolean }>(
     transition: "background-color 0.3s",
   },
   ({ isLoading }) => ({
-    backgroundColor: isLoading ? colors.darkGray : colors.key,
+    backgroundColor: isLoading ? colors.gray : colors.key,
   })
 );
 
