@@ -17,7 +17,11 @@ const Stamp = styled.img<{ top: number; left: number }>(
   ({ top, left }) => ({ top, left })
 );
 
-export default function Bingo() {
+type BingoProps = {
+  visible: boolean;
+};
+
+export default function Bingo({ visible }: BingoProps) {
   const backgroundRef = useRef<HTMLImageElement | null>(null);
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
@@ -31,11 +35,12 @@ export default function Bingo() {
 
   useEffect(() => {
     handleResize();
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [visible]);
 
   const stamps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 

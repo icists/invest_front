@@ -20,7 +20,7 @@ const Box = styled.div<{ visible: boolean }>(
   {
     width: "100vw",
     maxWidth: 500,
-    height: "80vh",
+    height: "85vh",
     overflowY: "scroll",
 
     position: "fixed",

@@ -52,7 +52,7 @@ export default function EventPage() {
       </EventButton>
 
       <Modal visible={showModal} onClose={() => setShowModal(false)}>
-        <Bingo />
+        <Bingo visible={showModal} />
       </Modal>
     </Main>
   );
