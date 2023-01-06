@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import { useAuthData, useInvestData, useStatus } from "@/context";
 import { formatNum } from "@/utils";
 import InvestResult from "@/components/InvestResult";
+import { colors } from "@/styles";
 
 const Main = styled.main({
   display: "flex",
@@ -18,27 +19,48 @@ const Main = styled.main({
   overflowY: "scroll",
 });
 
-const Section = styled.div({
+const Section = styled.section({
   marginBottom: "2rem",
+});
+
+const GridContainer = styled.div({
+  display: "inline-flex",
+  flexDirection: "column",
+});
+
+const AccountGrid = styled.div({
+  display: "inline-grid",
+  gridTemplateColumns: "50px 110px auto",
+  rowGap: "0.5rem",
+
+  fontSize: "1.2rem",
+  justifyItems: "left",
+
+  "&:first-child": {
+    borderBottom: `1px solid ${colors.gray}`,
+    paddingBottom: "0.3rem",
+    marginBottom: "0.4rem",
+  },
 });
 
 const Title = styled(Header)({
   marginBottom: "1rem",
+  fontSize: "2rem",
 });
 
-const InfoContainer = styled.div({
-  marginBottom: "0.5rem",
-
-  fontSize: "1.3rem",
+const Minus = styled.div({
+  justifySelf: "center",
 });
 
 const InfoTitle = styled.span({
   display: "inline-block",
-  marginRight: "0.75rem",
   fontWeight: "bold",
+  marginRight: "1rem",
 });
 
-const InfoValue = styled.span({});
+const InfoValue = styled.span({
+  justifySelf: "right",
+});
 
 export default function MyPage() {
   const { team } = useAuthData();
@@ -53,15 +75,22 @@ export default function MyPage() {
   return (
     <Main>
       <Section>
-        <Title as="h1">자산 현황</Title>
-        <InfoContainer>
-          <InfoTitle>총 자본금</InfoTitle>
-          <InfoValue>{formatNum(team.account)}</InfoValue>
-        </InfoContainer>
-        <InfoContainer>
-          <InfoTitle>총 투자액</InfoTitle>
-          <InfoValue>{formatNum(totalInvest)}</InfoValue>
-        </InfoContainer>
+        <Title as="h1">팀 현황</Title>
+        <GridContainer>
+          <AccountGrid>
+            <span />
+            <InfoTitle>총 자산</InfoTitle>
+            <InfoValue>{formatNum(team.account + totalInvest)}</InfoValue>
+            <Minus>﹣</Minus>
+            <InfoTitle>투자한 금액</InfoTitle>
+            <InfoValue>{formatNum(totalInvest)}</InfoValue>
+          </AccountGrid>
+          <AccountGrid>
+            <span />
+            <InfoTitle>남은 자산</InfoTitle>
+            <InfoValue>{formatNum(team.account)}</InfoValue>
+          </AccountGrid>
+        </GridContainer>
       </Section>
 
       <Section>

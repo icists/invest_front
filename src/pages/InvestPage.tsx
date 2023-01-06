@@ -77,8 +77,8 @@ function InvestPage() {
           <RoundTitle>, 스타트업 첫 만남</RoundTitle>
         </RoundStatus>
         <Indicator on={investable}>
-          <Circle on={investable} />{" "}
-          {investable ? " 현재 투자 가능" : " 투자 시간이 아닙니다"}
+          <Circle on={investable} />
+          {investable ? "투자가 가능한 시간입니다." : "투자 시간이 아닙니다."}
         </Indicator>
       </HeaderContainer>
 
