@@ -58,7 +58,7 @@ export default function NavBar() {
       to: "/me",
     },
     { icon: investmentIcon, name: "투자", to: "/" },
-    { icon: rulesIcon, name: "규칙", to: "/rules" },
+    // { icon: rulesIcon, name: "규칙", to: "/rules" },
     { icon: eventIcon, name: "이벤트", to: "/event" },
   ];
 
