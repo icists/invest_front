@@ -1,11 +1,9 @@
-import styled from "@emotion/styled";
-
 import { useLocation, Link } from "react-router-dom";
 
-import balanceIcon from "@/assets/balance.svg";
-import investmentIcon from "@/assets/investment.svg";
-import rulesIcon from "@/assets/rules.svg";
-import eventIcon from "@/assets/event.svg";
+import styled from "@emotion/styled";
+import { colors } from "@/styles";
+
+import { balanceIcon, investmentIcon, eventIcon } from "./icons";
 
 const Nav = styled.nav({
   width: "100%",
@@ -32,13 +30,12 @@ const Menu = styled(Link)<{ current: boolean }>(
   },
 
   ({ current }) => ({
-    filter: current
-      ? "invert(55%) sepia(75%) saturate(2193%) hue-rotate(123deg) brightness(94%) contrast(86%)"
-      : "invert(90%) sepia(6%) saturate(227%) hue-rotate(169deg) brightness(96%) contrast(88%)",
+    color: current ? colors.green : colors.gray,
+    fill: current ? colors.green : colors.gray,
   })
 );
 
-const Icon = styled.img({
+const Icon = styled.div({
   width: 25,
   height: 25,
 });
@@ -66,7 +63,7 @@ export default function NavBar() {
     <Nav>
       {menuList.map(({ icon, name, to }) => (
         <Menu key={name} to={to} current={location.pathname === to}>
-          <Icon src={icon}/>
+          <Icon>{icon}</Icon>
           <MenuName>{name}</MenuName>
         </Menu>
       ))}
