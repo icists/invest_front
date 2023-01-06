@@ -33,7 +33,7 @@ const PageContainer = styled.div({
 
   display: "flex",
   flexDirection: "column",
-  height: "100vh",
+  height: "var(--vh)",
 });
 
 type ContextsProps = {
@@ -88,6 +88,21 @@ export default function PrivateRoute() {
       updateData(user);
     }
   }, [user]);
+
+  const setVh = () => {
+    document.documentElement.style.setProperty(
+      "--vh",
+      `${window.innerHeight}px`
+    );
+  };
+
+  useEffect(() => {
+    setVh();
+    window.addEventListener("resize", setVh);
+    return () => {
+      window.removeEventListener("resize", setVh);
+    };
+  }, []);
 
   if (loading) {
     return null;

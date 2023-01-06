@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 
 const Overlay = styled.div<{ visible: boolean }>(
-  { position: "fixed",
+  {
+    position: "fixed",
     width: "100vw",
     height: "100vh",
     top: 0,
@@ -20,7 +21,7 @@ const Box = styled.div<{ visible: boolean }>(
   {
     width: "100vw",
     maxWidth: 500,
-    height: "85vh",
+    height: "80vh",
     overflowY: "scroll",
 
     position: "fixed",

@@ -13,6 +13,8 @@
   -webkit-text-size-adjust: 100%;
 
   color: #212529;
+
+   --vh: 100%;
 }
 
 * {
@@ -23,6 +25,3 @@ body {
   margin: 0;
 }
 
-body, #root {
-  min-height: 100vh;
-}
