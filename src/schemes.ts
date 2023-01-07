@@ -6,6 +6,7 @@ export type UserData = {
   name: string;
   teamUID: string;
   mail: string | null;
+  uniqueNumber: number;
 };
 
 export type Team = {

@@ -9,7 +9,9 @@ import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import TextField from "../components/TextField";
+
 import { UserData } from "../schemes";
+import participants from "@/assets/participants.json";
 
 const Main = styled.main({
   display: "flex",
@@ -52,11 +54,16 @@ function LoginPage() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [teamNumber, setTeamNumber] = useState("0");
 
   async function confirm() {
     const trimmedName = name.trim();
     if (trimmedName.length < 2) return;
+
+    const result = participants.find((v) => v.name === trimmedName);
+    if (result === undefined) {
+      console.log("no such user");
+      return;
+    }
 
     setIsLoading(true);
     const userCredential = await signInWithGoogle();
@@ -68,8 +75,9 @@ function LoginPage() {
     const user = userCredential.user;
     const userData: UserData = {
       name: trimmedName,
-      teamUID: teamNumber,
+      teamUID: result.team.toString(),
       mail: user.email,
+      uniqueNumber: result.uniqueNumber,
     };
 
     await registerUser({ uid: user.uid, data: userData });
@@ -88,15 +96,6 @@ function LoginPage() {
           placeholder="실명을 입력해주세요."
           onChange={setName}
           value={name}
-        />
-      </InputBox>
-
-      <InputBox>
-        <Label as="h2">소속 팀</Label>
-        <TextField
-          placeholder="팀 번호를 입력해주세요."
-          onChange={setTeamNumber}
-          value={teamNumber}
         />
       </InputBox>
 

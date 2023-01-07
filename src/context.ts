@@ -7,6 +7,7 @@ export const AuthContext = createContext<{ user: UserData; team: Team }>({
     name: "",
     teamUID: "",
     mail: null,
+    uniqueNumber: 0,
   },
   team: { members: {} },
 });
