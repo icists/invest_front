@@ -67,7 +67,7 @@ function Invest({
   visible: boolean;
   currentInvest: number;
 }) {
-  const account = useAccount();
+  const { account, totalInvest } = useAccount();
 
   const [investAmount, setInvestAmount] = useState<number | null>(0);
   const [[message, isErrorMessage], setMessage] = useState(["", false]);
@@ -122,7 +122,7 @@ function Invest({
   return (
     <>
       <Title as="h2">투자</Title>
-      <Account>남은 자본금 {formatNum(account)}</Account>
+      <Account>남은 자본금 {formatNum(account - totalInvest)}</Account>
       <InputContainer>
         <InvestAmountField
           value={investAmount}

@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
-import type { UserData } from "../../src/schemes";
+import type { CompanyUID, UserData } from "../../src/schemes";
 import type {
   InvestParams,
   InvestResult,
@@ -36,10 +36,16 @@ export const invest = functions.https.onCall(
     if (userData.teamUID !== data.teamUID) return "team_mismatch";
 
     const investAmountRef = db.ref(
-      `/rounds/${data.round}/investAmount/${userData.teamUID}/${data.companyUID}`
+      `/rounds/${data.round}/investAmount/${userData.teamUID}`
     );
     const investAmountSnapshot = await investAmountRef.get();
-    const currentInvestAmount = investAmountSnapshot.val();
+    const currentInvestAmount: Record<CompanyUID, number> =
+      investAmountSnapshot.val() ?? {};
+    currentInvestAmount[data.companyUID] = data.investAmount;
+    const totalSpending = Object.values(currentInvestAmount).reduce(
+      (a, b) => a + b,
+      0
+    );
 
     const accountRef = db.ref(
       `/rounds/${data.round}/account/${userData.teamUID}`
@@ -47,11 +53,9 @@ export const invest = functions.https.onCall(
     const accountSnapshot = await accountRef.get();
     const account: number = accountSnapshot.val();
 
-    if (data.investAmount > account + currentInvestAmount)
-      return "insufficient_cash";
+    if (totalSpending > account) return "insufficient_cash";
 
-    accountRef.set(account + currentInvestAmount - data.investAmount);
-    investAmountRef.set(data.investAmount);
+    await investAmountRef.child(data.companyUID).set(data.investAmount);
     return "success";
   }
 );

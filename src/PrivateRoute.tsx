@@ -48,9 +48,13 @@ type ContextsProps = {
 function Contexts({ userData, status }: ContextsProps) {
   const companies = useCompaniesDB();
   const team = useTeamDB(userData.teamUID);
-  const account = useAccountDB(status.currentRound, userData.teamUID);
 
   const investData = useInvestDataDB(userData.teamUID);
+  const totalInvest = Object.values(
+    investData[status.currentRound].amount
+  ).reduce((a, b) => a + b, 0);
+
+  const account = useAccountDB(status.currentRound, userData.teamUID);
 
   const currentValuation = useValuationDB(status.currentRound - 1);
   const previousValuation = useValuationDB(status.currentRound - 2);
@@ -58,18 +62,13 @@ function Contexts({ userData, status }: ContextsProps) {
   const bingo = useEventDB(userData.uniqueNumber, "bingo");
   const completion = useEventDB(userData.uniqueNumber, "completion");
 
-  if (
-    companies === null ||
-    team === null ||
-    account === null
-  )
-    return null;
+  if (companies === null || team === null || account === null) return null;
 
   return (
     <AuthContext.Provider value={{ user: userData, team }}>
       <StatusContext.Provider value={status}>
         <CompaniesContext.Provider value={companies}>
-          <AccountContext.Provider value={account}>
+          <AccountContext.Provider value={{ account, totalInvest }}>
             <ValuationContext.Provider
               value={{ current: currentValuation, previous: previousValuation }}
             >

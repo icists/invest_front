@@ -35,7 +35,10 @@ export function useCompanies() {
   return useContext(CompaniesContext);
 }
 
-export const AccountContext = createContext<number>(0);
+export const AccountContext = createContext<{
+  account: number;
+  totalInvest: number;
+}>({ account: 0, totalInvest: 0 });
 export function useAccount() {
   return useContext(AccountContext);
 }
