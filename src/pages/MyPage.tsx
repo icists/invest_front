@@ -36,9 +36,9 @@ const SmallTitle = styled(Header)({
 
 const InfoContainer = styled.div({
   display: "grid",
-  gridTemplateColumns: "80px 1fr",
+  gridTemplateColumns: "60px 1fr",
   rowGap: "0.75rem",
-  padding: "1rem 0",
+  padding: "1rem",
 
   borderRadius: 5,
   backgroundColor: colors.lightGray,
@@ -52,8 +52,8 @@ const InfoContainer = styled.div({
 
 const InfoTitle = styled.span({
   fontWeight: "bold",
-  marginRight: "1rem",
-  justifySelf: "right",
+  marginRight: "0.5rem",
+  justifySelf: "left",
 });
 
 const InfoValue = styled.span({
