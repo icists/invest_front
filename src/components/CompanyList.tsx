@@ -7,12 +7,7 @@ import { colors } from "../styles";
 import CompanyModal from "./CompanyModal";
 import CompanyLogo from "./CompanyLogo";
 import { Company, CompanyUID } from "../schemes";
-import {
-  useCompanies,
-  useStatus,
-  useInvestData,
-  useValuation,
-} from "@/context";
+import { useCompanies, useStatus, useInvestData } from "@/context";
 
 const List = styled.ul({
   listStyleType: "none",
@@ -35,7 +30,6 @@ const Item = styled.li({
 const Container = styled.div({
   display: "grid",
   gridTemplateRows: "1fr 1fr",
-  gridTemplateColumns: "2fr 1fr",
   gridAutoFlow: "column",
   rowGap: "0.2rem",
 
@@ -49,32 +43,12 @@ const CompanyTitle = styled.div({
   fontWeight: 600,
 });
 
-const Valuation = styled.div({
-  justifySelf: "end",
-});
-
 const CompanySubtitle = styled.div({
   color: colors.darkGray,
   fontSize: "1rem",
 
   alignSelf: "end",
 });
-
-const Change = styled.div<{ minus: boolean }>(
-  {
-    color: "white",
-    borderRadius: 5,
-
-    padding: "0.1rem 0.3rem",
-    fontSize: "0.9rem",
-
-    justifySelf: "end",
-    alignSelf: "end",
-  },
-  (props) => ({
-    backgroundColor: props.minus ? colors.red : colors.key,
-  })
-);
 
 type CompanyListProps = {
   className?: string;
@@ -83,7 +57,6 @@ type CompanyListProps = {
 function CompanyList({ className }: CompanyListProps) {
   const { currentRound } = useStatus();
   const investData = useInvestData();
-  const valuation = useValuation();
 
   const companies = useCompanies();
   const companiesList = Object.entries(companies).sort(([, a], [, b]) =>
@@ -106,14 +79,6 @@ function CompanyList({ className }: CompanyListProps) {
     companyID: string;
     company: Company;
   }) => {
-    const currentValuation =
-      valuation.current === null ? null : valuation.current[companyID];
-    const previousValuation =
-      valuation.previous === null ? null : valuation.previous[companyID];
-    const change =
-      currentValuation === null || previousValuation === null
-        ? null
-        : (currentValuation / previousValuation - 1) * 100;
     const amount = investData[currentRound].amount[companyID];
 
     return (
@@ -124,15 +89,6 @@ function CompanyList({ className }: CompanyListProps) {
             ? "투자하지 않음"
             : `투자액 ${formatNum(amount)}`}
         </CompanySubtitle>
-        {currentValuation !== null && (
-          <Valuation>{formatNum(currentValuation)}</Valuation>
-        )}
-        {change !== null && (
-          <Change minus={change < 0}>
-            {change >= 0 ? "+" : ""}
-            {change.toPrecision(3)}%
-          </Change>
-        )}
       </Container>
     );
   };

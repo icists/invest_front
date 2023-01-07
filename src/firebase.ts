@@ -121,15 +121,6 @@ export function useInvestDataDB(teamUID: TeamUID): {
   return final;
 }
 
-export function useValuationDB(
-  round: number
-): Record<CompanyUID, number> | null {
-  const valuationRef = db.ref(database, `/rounds/${round}/valuation`);
-  const [valuationData] =
-    useObjectVal<Record<CompanyUID, number>>(valuationRef);
-  return valuationData ?? null;
-}
-
 export function useTeamDB(teamUID: TeamUID): Team | null {
   const teamRef = db.ref(database, `/teams/${teamUID}`);
   const [team] = useObjectVal<Team>(teamRef);

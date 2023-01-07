@@ -53,14 +53,6 @@ export function useInvestData() {
   return useContext(InvestDataContext);
 }
 
-export const ValuationContext = createContext<{
-  previous: Record<CompanyUID, number> | null;
-  current: Record<CompanyUID, number> | null;
-}>({ previous: null, current: null });
-export function useValuation() {
-  return useContext(ValuationContext);
-}
-
 export const EventContext = createContext<{
   bingo: EventStatus;
   completion: EventStatus;

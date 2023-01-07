@@ -9,7 +9,6 @@ import {
   findUser,
   useCompaniesDB,
   useTeamDB,
-  useValuationDB,
   useStatusDB,
   useInvestDataDB,
   useAccountDB,
@@ -22,7 +21,6 @@ import {
   AuthContext,
   InvestDataContext,
   StatusContext,
-  ValuationContext,
   AccountContext,
   EventContext,
 } from "./context";
@@ -56,9 +54,6 @@ function Contexts({ userData, status }: ContextsProps) {
 
   const account = useAccountDB(status.currentRound, userData.teamUID);
 
-  const currentValuation = useValuationDB(status.currentRound - 1);
-  const previousValuation = useValuationDB(status.currentRound - 2);
-
   const bingo = useEventDB(userData.uniqueNumber, "bingo");
   const completion = useEventDB(userData.uniqueNumber, "completion");
 
@@ -69,18 +64,14 @@ function Contexts({ userData, status }: ContextsProps) {
       <StatusContext.Provider value={status}>
         <CompaniesContext.Provider value={companies}>
           <AccountContext.Provider value={{ account, totalInvest }}>
-            <ValuationContext.Provider
-              value={{ current: currentValuation, previous: previousValuation }}
-            >
-              <InvestDataContext.Provider value={investData}>
-                <EventContext.Provider value={{ bingo, completion }}>
-                  <PageContainer>
-                    <Outlet />
-                    <NavBar />
-                  </PageContainer>
-                </EventContext.Provider>
-              </InvestDataContext.Provider>
-            </ValuationContext.Provider>
+            <InvestDataContext.Provider value={investData}>
+              <EventContext.Provider value={{ bingo, completion }}>
+                <PageContainer>
+                  <Outlet />
+                  <NavBar />
+                </PageContainer>
+              </EventContext.Provider>
+            </InvestDataContext.Provider>
           </AccountContext.Provider>
         </CompaniesContext.Provider>
       </StatusContext.Provider>
