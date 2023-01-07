@@ -10,7 +10,7 @@ import { NumberField } from "../TextField";
 import Button from "../Button";
 import { ContentTitle } from "./Contents";
 import { formatNum } from "@/utils";
-import { useAuthData } from "@/context";
+import { useAccount } from "@/context";
 
 const Title = styled(ContentTitle)({
   marginBottom: 0,
@@ -67,12 +67,10 @@ function Invest({
   visible: boolean;
   currentInvest: number;
 }) {
-  const { team } = useAuthData();
+  const account = useAccount();
 
   const [investAmount, setInvestAmount] = useState<number | null>(0);
-
   const [[message, isErrorMessage], setMessage] = useState(["", false]);
-
   const [isPending, setIsPending] = useState(false);
 
   useEffect(() => {
@@ -112,7 +110,10 @@ function Invest({
     } else if (investResult.data === "not_investable") {
       setMessage(["현재는 투자 시간이 아닙니다.", true]);
     } else {
-      setMessage([`오류가 발생했습니다. (${investResult.data}) 스태프에게 문의해주세요.`, true]);
+      setMessage([
+        `오류가 발생했습니다. (${investResult.data}) 스태프에게 문의해주세요.`,
+        true,
+      ]);
     }
 
     console.log(investResult);
@@ -121,7 +122,7 @@ function Invest({
   return (
     <>
       <Title as="h2">투자</Title>
-      <Account>남은 자본금 {formatNum(team.account)}</Account>
+      <Account>남은 자본금 {formatNum(account)}</Account>
       <InputContainer>
         <InvestAmountField
           value={investAmount}
