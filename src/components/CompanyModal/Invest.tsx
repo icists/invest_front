@@ -10,7 +10,7 @@ import { NumberField } from "../TextField";
 import Button from "../Button";
 import { ContentTitle } from "./Contents";
 import { formatNum } from "@/utils";
-import { useAccount } from "@/context";
+import { useAccount, useStatus } from "@/context";
 
 const Title = styled(ContentTitle)({
   marginBottom: 0,
@@ -60,15 +60,15 @@ function Invest({
   teamUID,
   visible,
   currentInvest,
+  leftOver,
 }: {
   round: number;
   companyUID: CompanyUID;
   teamUID: TeamUID;
   visible: boolean;
   currentInvest: number;
+  leftOver: number,
 }) {
-  const { account, totalInvest } = useAccount();
-
   const [investAmount, setInvestAmount] = useState<number | null>(0);
   const [[message, isErrorMessage], setMessage] = useState(["", false]);
   const [isPending, setIsPending] = useState(false);
@@ -122,7 +122,7 @@ function Invest({
   return (
     <>
       <Title as="h2">투자</Title>
-      <Account>남은 자본금 {formatNum(account - totalInvest)}</Account>
+      <Account>남은 자본금 {formatNum(leftOver)}</Account>
       <InputContainer>
         <InvestAmountField
           value={investAmount}

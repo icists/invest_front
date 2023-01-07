@@ -1,7 +1,13 @@
 import styled from "@emotion/styled";
 import { colors } from "@/styles";
 
-import { useAuthData, useCompanies, useStatus, useInvestData } from "@/context";
+import {
+  useAuthData,
+  useCompanies,
+  useStatus,
+  useInvestData,
+  useAccount,
+} from "@/context";
 import { CompanyUID } from "@/schemes";
 
 import CompanyLogo from "../CompanyLogo";
@@ -46,6 +52,7 @@ type CompanyModalProps = {
 
 function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
   const { user } = useAuthData();
+  const { account, totalInvest } = useAccount();
   const { currentRound, investable } = useStatus();
   const companies = useCompanies();
   const investData = useInvestData();
@@ -68,6 +75,7 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
               teamUID={user.teamUID}
               currentInvest={investData[currentRound].amount[companyUID] ?? 0}
               visible={visible}
+              leftOver={account - totalInvest}
             />
           )}
           <CompanyInfo company={companies[companyUID]} />
