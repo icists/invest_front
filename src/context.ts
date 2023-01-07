@@ -8,7 +8,7 @@ export const AuthContext = createContext<{ user: UserData; team: Team }>({
     teamUID: "",
     mail: null,
   },
-  team: { account: 0, members: {} },
+  team: { members: {} },
 });
 export function useAuthData() {
   return useContext(AuthContext);
@@ -32,10 +32,12 @@ export function useAccount() {
   return useContext(AccountContext);
 }
 
-export const InvestDataContext = createContext<{
-  amount: Record<CompanyUID, number>;
-  result: Record<CompanyUID, number>;
-}[]>([]);
+export const InvestDataContext = createContext<
+  {
+    amount: Record<CompanyUID, number>;
+    result: Record<CompanyUID, number>;
+  }[]
+>([]);
 export function useInvestData() {
   return useContext(InvestDataContext);
 }
