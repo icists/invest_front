@@ -39,14 +39,14 @@ const Title = styled(Header)({
 
 const Manual = styled.a({
   border: `1px solid ${colors.darkGray}`,
-  borderRadius: 10,
+  borderRadius: 15,
 
   color: colors.darkGray,
   backgroundColor: colors.lightGray,
 
   fontSize: "1rem",
   textDecoration: "none",
-  padding: "0.1rem 0.4rem",
+  padding: "0.1rem 0.5rem",
 });
 
 const RoundStatus = styled.div({

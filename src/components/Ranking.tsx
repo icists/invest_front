@@ -14,7 +14,7 @@ const Item = styled.li<{ me?: boolean }>(
   {
     display: "flex",
     alignItems: "center",
-    fontSize: "1.4rem",
+    fontSize: "1.3rem",
     borderRadius: 5,
     "& + &": {
       marginTop: "0.5rem",
