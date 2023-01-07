@@ -8,10 +8,11 @@ import {
   auth,
   findUser,
   useCompaniesDB,
-  useTeam,
+  useTeamDB,
   useValuationDB,
   useStatusDB,
   useInvestDataDB,
+  useAccountDB,
 } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
@@ -21,6 +22,7 @@ import {
   InvestDataContext,
   StatusContext,
   ValuationContext,
+  AccountContext,
 } from "./context";
 
 import { Status, UserData } from "./schemes";
@@ -43,29 +45,32 @@ type ContextsProps = {
 
 function Contexts({ userData, status }: ContextsProps) {
   const companies = useCompaniesDB();
-  const team = useTeam(userData.teamUID);
+  const team = useTeamDB(userData.teamUID);
+  const account = useAccountDB(status.currentRound, userData.teamUID);
 
   const investData = useInvestDataDB(userData.teamUID);
 
   const currentValuation = useValuationDB(status.currentRound - 1);
   const previousValuation = useValuationDB(status.currentRound - 2);
 
-  if (companies === null || team === null) return null;
+  if (companies === null || team === null || account === null) return null;
 
   return (
     <AuthContext.Provider value={{ user: userData, team }}>
       <StatusContext.Provider value={status}>
         <CompaniesContext.Provider value={companies}>
-          <ValuationContext.Provider
-            value={{ current: currentValuation, previous: previousValuation }}
-          >
-            <InvestDataContext.Provider value={investData}>
-              <PageContainer>
-                <Outlet />
-                <NavBar />
-              </PageContainer>
-            </InvestDataContext.Provider>
-          </ValuationContext.Provider>
+          <AccountContext.Provider value={account}>
+            <ValuationContext.Provider
+              value={{ current: currentValuation, previous: previousValuation }}
+            >
+              <InvestDataContext.Provider value={investData}>
+                <PageContainer>
+                  <Outlet />
+                  <NavBar />
+                </PageContainer>
+              </InvestDataContext.Provider>
+            </ValuationContext.Provider>
+          </AccountContext.Provider>
         </CompaniesContext.Provider>
       </StatusContext.Provider>
     </AuthContext.Provider>

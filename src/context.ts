@@ -27,6 +27,11 @@ export function useCompanies() {
   return useContext(CompaniesContext);
 }
 
+export const AccountContext = createContext<number>(0);
+export function useAccount() {
+  return useContext(AccountContext);
+}
+
 export const InvestDataContext = createContext<{
   amount: Record<CompanyUID, number>;
   result: Record<CompanyUID, number>;

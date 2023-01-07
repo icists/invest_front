@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
-import { useAuthData, useInvestData, useStatus } from "@/context";
+import { useAccount, useAuthData, useInvestData, useStatus } from "@/context";
 import { formatNum } from "@/utils";
 import InvestResult from "@/components/InvestResult";
 import { colors } from "@/styles";
@@ -63,8 +63,8 @@ const InfoValue = styled.span({
 });
 
 export default function MyPage() {
-  const { team } = useAuthData();
   const { currentRound } = useStatus();
+  const account = useAccount();
   const investData = useInvestData();
 
   const totalInvest = Object.values(investData[currentRound].amount).reduce(
@@ -80,7 +80,7 @@ export default function MyPage() {
           <AccountGrid>
             <span />
             <InfoTitle>총 자산</InfoTitle>
-            <InfoValue>{formatNum(team.account + totalInvest)}</InfoValue>
+            <InfoValue>{formatNum(account + totalInvest)}</InfoValue>
             <Minus>﹣</Minus>
             <InfoTitle>투자한 금액</InfoTitle>
             <InfoValue>{formatNum(totalInvest)}</InfoValue>
@@ -88,7 +88,7 @@ export default function MyPage() {
           <AccountGrid>
             <span />
             <InfoTitle>남은 자산</InfoTitle>
-            <InfoValue>{formatNum(team.account)}</InfoValue>
+            <InfoValue>{formatNum(account)}</InfoValue>
           </AccountGrid>
         </GridContainer>
       </Section>

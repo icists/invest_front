@@ -9,19 +9,12 @@ export type UserData = {
 };
 
 export type Team = {
-  account: number;
   members: Record<UserUID, boolean>;
 };
 
 export type Status = {
   currentRound: number;
   investable: boolean;
-};
-
-export type RoundData = {
-  valuation: Record<CompanyUID, number>;
-  investAmount: Record<TeamUID, Record<CompanyUID, number>>;
-  investResult: Record<TeamUID, Record<CompanyUID, number>>;
 };
 
 export type Company = {

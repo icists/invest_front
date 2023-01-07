@@ -6,7 +6,6 @@ import { useObjectVal } from "react-firebase-hooks/database";
 
 import {
   UserData,
-  RoundData,
   Company,
   CompanyUID,
   Team,
@@ -87,10 +86,11 @@ export function useStatusDB(): Status | null {
   return status ?? null;
 }
 
-export function useRoundDataDB(): Record<number, RoundData> | null {
-  const roundRef = db.ref(database, "/rounds");
-  const [roundData] = useObjectVal<Record<number, RoundData>>(roundRef);
-  return roundData ?? null;
+export function useAccountDB(round: number, teamUID: TeamUID): number | null {
+  const accountRef = db.ref(database, `/rounds/${round}/account/${teamUID}`);
+  const [account] = useObjectVal<number>(accountRef);
+
+  return account ?? null;
 }
 
 export function useInvestDataDB(teamUID: TeamUID): {
@@ -129,7 +129,7 @@ export function useValuationDB(
   return valuationData ?? null;
 }
 
-export function useTeam(teamUID: TeamUID): Team | null {
+export function useTeamDB(teamUID: TeamUID): Team | null {
   const teamRef = db.ref(database, `/teams/${teamUID}`);
   const [team] = useObjectVal<Team>(teamRef);
   return team ?? null;
