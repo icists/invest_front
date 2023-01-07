@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
-import { useAccount, useAuthData, useCompanies } from "@/context";
-import { formatNum } from "@/utils";
+import { useAuthData, useCompanies } from "@/context";
 import InvestResult from "@/components/InvestResult";
 import { colors } from "@/styles";
+import AccountCalc from "@/components/AccountCalc";
 
 const Main = styled.main({
   display: "flex",
@@ -62,43 +62,8 @@ const InfoValue = styled.span({
 
 const RestTime = styled.span({ color: colors.darkGray });
 
-const GridContainer = styled.div({
-  display: "inline-flex",
-  flexDirection: "column",
-});
-
-const AccountGrid = styled.div({
-  display: "inline-grid",
-  gridTemplateColumns: "50px 110px auto",
-  rowGap: "0.5rem",
-
-  fontSize: "1.2rem",
-  justifyItems: "left",
-
-  "&:first-child": {
-    borderBottom: `1px solid ${colors.gray}`,
-    paddingBottom: "0.3rem",
-    marginBottom: "0.4rem",
-  },
-});
-
-const Minus = styled.div({
-  justifySelf: "center",
-});
-
-const AccountTitle = styled.span({
-  display: "inline-block",
-  fontWeight: "bold",
-  marginRight: "1rem",
-});
-
-const AccountValue = styled.span({
-  justifySelf: "right",
-});
-
 export default function MyPage() {
   const { user, team } = useAuthData();
-  const { account, totalInvest } = useAccount();
   const companies = useCompanies();
 
   const trackComponent = [1, 2, 3, 4, 5, 6].map((v) =>
@@ -141,21 +106,7 @@ export default function MyPage() {
 
       <Section>
         <SmallTitle as="h2">{user.teamUID}팀 자산</SmallTitle>
-        <GridContainer>
-          <AccountGrid>
-            <span />
-            <AccountTitle>총 자산</AccountTitle>
-            <AccountValue>{formatNum(account)}</AccountValue>
-            <Minus>﹣</Minus>
-            <AccountTitle>투자한 금액</AccountTitle>
-            <AccountValue>{formatNum(totalInvest)}</AccountValue>
-          </AccountGrid>
-          <AccountGrid>
-            <span />
-            <AccountTitle>남은 자산</AccountTitle>
-            <AccountValue>{formatNum(account - totalInvest)}</AccountValue>
-          </AccountGrid>
-        </GridContainer>
+        <AccountCalc />
       </Section>
 
       <Section>
