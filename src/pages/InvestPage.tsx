@@ -25,9 +25,28 @@ const HeaderContainer = styled.div({
   fontSize: "1.2rem",
 });
 
+const TitleContainer = styled.div({
+  marginBottom: "0.75rem",
+
+  display: "flex",
+  alignItems: "center",
+});
+
 const Title = styled(Header)({
-  margin: "0 0 0.75rem 0",
+  margin: "0 auto 0 0",
   fontSize: "2rem",
+});
+
+const Manual = styled.a({
+  border: `1px solid ${colors.darkGray}`,
+  borderRadius: 10,
+
+  color: colors.darkGray,
+  backgroundColor: colors.lightGray,
+
+  fontSize: "1rem",
+  textDecoration: "none",
+  padding: "0.1rem 0.4rem",
 });
 
 const RoundStatus = styled.div({
@@ -71,7 +90,10 @@ function InvestPage() {
   return (
     <Main>
       <HeaderContainer>
-        <Title as="h1">투자 종목</Title>
+        <TitleContainer>
+          <Title as="h1">투자 종목</Title>
+          <Manual href="https://www.naver.com">매뉴얼</Manual>
+        </TitleContainer>
         <RoundStatus>
           <RoundNumber>{currentRound + " Round"}</RoundNumber>
           <RoundTitle>, 스타트업 첫 만남</RoundTitle>
