@@ -10,6 +10,7 @@ import Modal from "@/components/Modal";
 import BingoLogo from "@/assets/events/bingo-logo.png";
 import CompletionLogo from "@/assets/events/completion-logo.png";
 import Bingo from "@/components/events/Bingo";
+import Completion from "@/components/events/Completion";
 
 const Main = styled.main({
   display: "flex",
@@ -39,20 +40,25 @@ const EventLogo = styled.img({
 });
 
 export default function EventPage() {
-  const [showModal, setShowModal] = useState(false);
+  const [showBingo, setShowBingo] = useState(false);
+  const [showCompletion, setShowCompletion] = useState(false);
 
   return (
     <Main>
       <Title as="h1">이벤트</Title>
-      <EventButton onClick={() => setShowModal(true)}>
+      <EventButton onClick={() => setShowBingo(true)}>
         <EventLogo src={BingoLogo} />
       </EventButton>
-      <EventButton>
+      <EventButton onClick={() => setShowCompletion(true)}>
         <EventLogo src={CompletionLogo} />
       </EventButton>
 
-      <Modal visible={showModal} onClose={() => setShowModal(false)}>
-        <Bingo visible={showModal} />
+      <Modal visible={showBingo} onClose={() => setShowBingo(false)}>
+        <Bingo visible={showBingo} />
+      </Modal>
+
+      <Modal visible={showCompletion} onClose={() => setShowCompletion(false)}>
+        <Completion visible={showCompletion} />
       </Modal>
     </Main>
   );

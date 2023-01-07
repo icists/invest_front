@@ -25,3 +25,5 @@ export type Company = {
   description: string;
   video: string;
 };
+
+export type EventStatus = Record<number, boolean>;

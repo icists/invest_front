@@ -1,6 +1,13 @@
 import { createContext, useContext } from "react";
 
-import { Company, CompanyUID, Status, Team, UserData } from "./schemes";
+import {
+  Company,
+  CompanyUID,
+  EventStatus,
+  Status,
+  Team,
+  UserData,
+} from "./schemes";
 
 export const AuthContext = createContext<{ user: UserData; team: Team }>({
   user: {
@@ -49,4 +56,12 @@ export const ValuationContext = createContext<{
 }>({ previous: null, current: null });
 export function useValuation() {
   return useContext(ValuationContext);
+}
+
+export const EventContext = createContext<{
+  bingo: EventStatus;
+  completion: EventStatus;
+}>({ bingo: {}, completion: {} });
+export function useEvent() {
+  return useContext(EventContext);
 }

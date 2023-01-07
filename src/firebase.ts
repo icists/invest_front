@@ -11,6 +11,7 @@ import {
   Team,
   TeamUID,
   Status,
+  EventStatus,
 } from "./schemes";
 
 const firebaseConfig = {
@@ -133,4 +134,10 @@ export function useTeamDB(teamUID: TeamUID): Team | null {
   const teamRef = db.ref(database, `/teams/${teamUID}`);
   const [team] = useObjectVal<Team>(teamRef);
   return team ?? null;
+}
+
+export function useEventDB(uniqueNumber: number, name: string): EventStatus {
+  const eventRef = db.ref(database, `/events/${name}/${uniqueNumber}`);
+  const [event] = useObjectVal<EventStatus>(eventRef);
+  return event ?? {};
 }

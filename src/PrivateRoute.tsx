@@ -13,6 +13,7 @@ import {
   useStatusDB,
   useInvestDataDB,
   useAccountDB,
+  useEventDB,
 } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
@@ -23,6 +24,7 @@ import {
   StatusContext,
   ValuationContext,
   AccountContext,
+  EventContext,
 } from "./context";
 
 import { Status, UserData } from "./schemes";
@@ -53,7 +55,15 @@ function Contexts({ userData, status }: ContextsProps) {
   const currentValuation = useValuationDB(status.currentRound - 1);
   const previousValuation = useValuationDB(status.currentRound - 2);
 
-  if (companies === null || team === null || account === null) return null;
+  const bingo = useEventDB(userData.uniqueNumber, "bingo");
+  const completion = useEventDB(userData.uniqueNumber, "completion");
+
+  if (
+    companies === null ||
+    team === null ||
+    account === null
+  )
+    return null;
 
   return (
     <AuthContext.Provider value={{ user: userData, team }}>
@@ -64,10 +74,12 @@ function Contexts({ userData, status }: ContextsProps) {
               value={{ current: currentValuation, previous: previousValuation }}
             >
               <InvestDataContext.Provider value={investData}>
-                <PageContainer>
-                  <Outlet />
-                  <NavBar />
-                </PageContainer>
+                <EventContext.Provider value={{ bingo, completion }}>
+                  <PageContainer>
+                    <Outlet />
+                    <NavBar />
+                  </PageContainer>
+                </EventContext.Provider>
               </InvestDataContext.Provider>
             </ValuationContext.Provider>
           </AccountContext.Provider>

@@ -2,11 +2,9 @@ import styled from "@emotion/styled";
 
 import BingoImage from "@/assets/events/bingo.png";
 import StampImage from "@/assets/events/stamp.svg";
-import { useEffect, useRef, useState } from "react";
 
-const Container = styled.div({ position: "relative" });
-
-const Image = styled.img({ position: "relative", width: "100%" });
+import Event from "./Event";
+import { useEvent } from "@/context";
 
 const Stamp = styled.img<{ top: number; left: number }>(
   {
@@ -22,39 +20,20 @@ type BingoProps = {
 };
 
 export default function Bingo({ visible }: BingoProps) {
-  const backgroundRef = useRef<HTMLImageElement | null>(null);
-  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
-
-  function handleResize() {
-    if (backgroundRef.current === null) return;
-    setImageSize({
-      width: backgroundRef.current?.width,
-      height: backgroundRef.current?.height,
-    });
-  }
-
-  useEffect(() => {
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [visible]);
-
-  const stamps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-
+  const { bingo } = useEvent();
   return (
-    <>
-      <Image ref={backgroundRef} src={BingoImage} />
-      {stamps.map((n) => (
+    <Event
+      visible={visible}
+      image={BingoImage}
+      status={bingo}
+      getStamp={(n, width, height) => (
         <Stamp
           key={n}
           src={StampImage}
-          top={imageSize.height * (0.365 + 0.092 * Math.floor((n - 1) / 4))}
-          left={imageSize.width * (0.09 + 0.215 * ((n - 1) % 4))}
+          top={height * (0.365 + 0.092 * Math.floor((n - 1) / 4))}
+          left={width * (0.09 + 0.215 * ((n - 1) % 4))}
         />
-      ))}
-    </>
+      )}
+    />
   );
 }
