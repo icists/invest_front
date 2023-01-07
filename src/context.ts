@@ -30,7 +30,7 @@ export function useStatus() {
   return useContext(StatusContext);
 }
 
-export const CompaniesContext = createContext<Record<string, Company>>({});
+export const CompaniesContext = createContext<Record<CompanyUID, Company>>({} as any);
 export function useCompanies() {
   return useContext(CompaniesContext);
 }

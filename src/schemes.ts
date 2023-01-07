@@ -1,6 +1,14 @@
 export type UserUID = string;
 export type TeamUID = string;
-export type CompanyUID = string;
+export type CompanyUID =
+  | "AET"
+  | "INB"
+  | "NUT"
+  | "NUV"
+  | "QTC"
+  | "RFY"
+  | "SHZ"
+  | "SWT";
 
 export type UserData = {
   name: string;
@@ -11,6 +19,8 @@ export type UserData = {
 
 export type Team = {
   members: Record<UserUID, boolean>;
+  track?: Record<number, CompanyUID>;
+  matchTeam?: CompanyUID;
 };
 
 export type Status = {

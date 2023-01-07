@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
-import { useAccount } from "@/context";
+import { useAccount, useAuthData, useCompanies } from "@/context";
 import { formatNum } from "@/utils";
 import InvestResult from "@/components/InvestResult";
 import { colors } from "@/styles";
@@ -23,6 +23,45 @@ const Section = styled.section({
   marginBottom: "2rem",
 });
 
+const Title = styled(Header)({
+  marginBottom: "1rem",
+  fontSize: "2rem",
+});
+
+const SmallTitle = styled(Header)({
+  marginBottom: "1rem",
+  fontSize: "1.5rem",
+  fontWeight: 600,
+});
+
+const InfoContainer = styled.div({
+  display: "grid",
+  gridTemplateColumns: "80px 1fr",
+  rowGap: "0.75rem",
+  padding: "1rem 0",
+
+  borderRadius: 5,
+  backgroundColor: colors.lightGray,
+
+  fontSize: "1.2rem",
+
+  "& + &": {
+    marginTop: "1rem",
+  },
+});
+
+const InfoTitle = styled.span({
+  fontWeight: "bold",
+  marginRight: "1rem",
+  justifySelf: "right",
+});
+
+const InfoValue = styled.span({
+  justifySelf: "left",
+});
+
+const RestTime = styled.span({ color: colors.darkGray });
+
 const GridContainer = styled.div({
   display: "inline-flex",
   flexDirection: "column",
@@ -43,51 +82,84 @@ const AccountGrid = styled.div({
   },
 });
 
-const Title = styled(Header)({
-  marginBottom: "1rem",
-  fontSize: "2rem",
-});
-
 const Minus = styled.div({
   justifySelf: "center",
 });
 
-const InfoTitle = styled.span({
+const AccountTitle = styled.span({
   display: "inline-block",
   fontWeight: "bold",
   marginRight: "1rem",
 });
 
-const InfoValue = styled.span({
+const AccountValue = styled.span({
   justifySelf: "right",
 });
 
 export default function MyPage() {
+  const { user, team } = useAuthData();
   const { account, totalInvest } = useAccount();
+  const companies = useCompanies();
 
+  const trackComponent = [1, 2, 3, 4, 5, 6].map((v) =>
+    team.track === undefined ? null : (
+      <>
+        <InfoTitle>{v}타임</InfoTitle>
+        <InfoValue>
+          {team.track[v] === undefined ? (
+            <RestTime>(쉬는시간)</RestTime>
+          ) : (
+            companies[team.track[v]].name
+          )}
+        </InfoValue>
+      </>
+    )
+  );
   return (
     <Main>
+      <Title as="h1">내 정보</Title>
       <Section>
-        <Title as="h1">팀 현황</Title>
+        <InfoContainer>
+          <InfoTitle>이름</InfoTitle>
+          <InfoValue>{user.name}</InfoValue>
+          <InfoTitle>메일</InfoTitle>
+          <InfoValue>{user.mail}</InfoValue>
+          <InfoTitle>팀</InfoTitle>
+          <InfoValue>{user.teamUID}</InfoValue>
+          {team.matchTeam !== undefined && (
+            <>
+              <InfoTitle>배정</InfoTitle>
+              <InfoValue>{companies[team.matchTeam].name}</InfoValue>
+            </>
+          )}
+        </InfoContainer>
+
+        {team.track !== undefined && (
+          <InfoContainer>{trackComponent}</InfoContainer>
+        )}
+      </Section>
+
+      <Section>
+        <SmallTitle as="h2">{user.teamUID}팀 자산</SmallTitle>
         <GridContainer>
           <AccountGrid>
             <span />
-            <InfoTitle>총 자산</InfoTitle>
-            <InfoValue>{formatNum(account)}</InfoValue>
+            <AccountTitle>총 자산</AccountTitle>
+            <AccountValue>{formatNum(account)}</AccountValue>
             <Minus>﹣</Minus>
-            <InfoTitle>투자한 금액</InfoTitle>
-            <InfoValue>{formatNum(totalInvest)}</InfoValue>
+            <AccountTitle>투자한 금액</AccountTitle>
+            <AccountValue>{formatNum(totalInvest)}</AccountValue>
           </AccountGrid>
           <AccountGrid>
             <span />
-            <InfoTitle>남은 자산</InfoTitle>
-            <InfoValue>{formatNum(account - totalInvest)}</InfoValue>
+            <AccountTitle>남은 자산</AccountTitle>
+            <AccountValue>{formatNum(account - totalInvest)}</AccountValue>
           </AccountGrid>
         </GridContainer>
       </Section>
 
       <Section>
-        <Title as="h1">투자 결과</Title>
+        <SmallTitle as="h2">투자 결과</SmallTitle>
         <InvestResult />
       </Section>
     </Main>
