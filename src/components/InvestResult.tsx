@@ -95,9 +95,9 @@ export default function InvestResult() {
         <List>
           {companiesList.map(([companyUID, company]) => {
             const investAmount =
-              investData[selectedRound.value].amount[companyUID];
+              investData[selectedRound.value].amount[companyUID] ?? 0;
             const investResult =
-              investData[selectedRound.value].result[companyUID];
+              investData[selectedRound.value].result[companyUID] ?? 0;
             const change = (investResult / investAmount - 1) * 100;
 
             if (investAmount < 10000) return null;
@@ -111,7 +111,8 @@ export default function InvestResult() {
                       {formatNum(investAmount)} → {formatNum(investResult)}
                     </AbsoluteChange>
                     <PercentageChange isNegative={change < 0}>
-                      ({change > 0 ? "+" : ""}{change.toPrecision(3)}%)
+                      ({change > 0 ? "+" : ""}
+                      {change.toPrecision(3)}%)
                     </PercentageChange>
                   </ChangeContainer>
                 </Container>

@@ -41,7 +41,9 @@ export const invest = functions.https.onCall(
     const investAmountSnapshot = await investAmountRef.get();
     const currentInvestAmount = investAmountSnapshot.val();
 
-    const accountRef = db.ref(`/teams/${userData.teamUID}/account`);
+    const accountRef = db.ref(
+      `/rounds/${data.round}/account/${userData.teamUID}`
+    );
     const accountSnapshot = await accountRef.get();
     const account: number = accountSnapshot.val();
 
