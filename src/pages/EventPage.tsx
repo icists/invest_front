@@ -31,7 +31,7 @@ const Title = styled(Header)({
 
 const EventButton = styled(Button)({
   backgroundColor: colors.lightGray,
-  border: `2px solid ${colors.gray}`,
+  border: `1px solid ${colors.gray}`,
   marginBottom: "1rem",
 });
 

@@ -5,6 +5,7 @@ import { useAuthData, useCompanies } from "@/context";
 import InvestResult from "@/components/InvestResult";
 import { colors } from "@/styles";
 import AccountCalc from "@/components/AccountCalc";
+import Ranking from "@/components/Ranking";
 
 const Main = styled.main({
   display: "flex",
@@ -52,7 +53,6 @@ const InfoContainer = styled.div({
 
 const InfoTitle = styled.span({
   fontWeight: "bold",
-  marginRight: "0.5rem",
   justifySelf: "left",
 });
 
@@ -99,7 +99,7 @@ export default function MyPage() {
           )}
         </InfoContainer>
 
-        {team.track !== undefined && (
+        {team.matchTeam === undefined && team.track !== undefined && (
           <InfoContainer>{trackComponent}</InfoContainer>
         )}
       </Section>
@@ -107,6 +107,11 @@ export default function MyPage() {
       <Section>
         <SmallTitle as="h2">{user.teamUID}팀 자산</SmallTitle>
         <AccountCalc />
+      </Section>
+
+      <Section>
+        <SmallTitle as="h2">총 자산 순위</SmallTitle>
+        <Ranking />
       </Section>
 
       <Section>

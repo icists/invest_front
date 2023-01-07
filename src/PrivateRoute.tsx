@@ -52,7 +52,7 @@ function Contexts({ userData, status }: ContextsProps) {
     investData[status.currentRound].amount
   ).reduce((a, b) => a + b, 0);
 
-  const account = useAccountDB(status.currentRound, userData.teamUID);
+  const account = useAccountDB(status.currentRound);
 
   const bingo = useEventDB(userData.uniqueNumber, "bingo");
   const completion = useEventDB(userData.uniqueNumber, "completion");

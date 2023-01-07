@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import { useAccount } from "@/context";
+import { useAccount, useAuthData } from "@/context";
 import { formatNum } from "@/utils";
 import { colors } from "@/styles";
 
@@ -39,6 +39,7 @@ const AccountValue = styled.span({
 });
 
 export default function AccountCalc() {
+  const { user } = useAuthData();
   const { account, totalInvest } = useAccount();
 
   return (
@@ -46,7 +47,7 @@ export default function AccountCalc() {
       <AccountGrid>
         <span />
         <AccountTitle>총 자산</AccountTitle>
-        <AccountValue>{formatNum(account)}</AccountValue>
+        <AccountValue>{formatNum(account[user.teamUID])}</AccountValue>
         <Minus>﹣</Minus>
         <AccountTitle>투자한 금액</AccountTitle>
         <AccountValue>{formatNum(totalInvest)}</AccountValue>
@@ -54,7 +55,9 @@ export default function AccountCalc() {
       <AccountGrid>
         <span />
         <AccountTitle>남은 자산</AccountTitle>
-        <AccountValue>{formatNum(account - totalInvest)}</AccountValue>
+        <AccountValue>
+          {formatNum(account[user.teamUID] - totalInvest)}
+        </AccountValue>
       </AccountGrid>
     </GridContainer>
   );

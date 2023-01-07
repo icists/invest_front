@@ -87,9 +87,9 @@ export function useStatusDB(): Status | null {
   return status ?? null;
 }
 
-export function useAccountDB(round: number, teamUID: TeamUID): number | null {
-  const accountRef = db.ref(database, `/rounds/${round}/account/${teamUID}`);
-  const [account] = useObjectVal<number>(accountRef);
+export function useAccountDB(round: number): Record<TeamUID, number> | null {
+  const accountRef = db.ref(database, `/rounds/${round}/account`);
+  const [account] = useObjectVal<Record<TeamUID, number>>(accountRef);
 
   return account ?? null;
 }

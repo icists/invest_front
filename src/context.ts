@@ -6,6 +6,7 @@ import {
   EventStatus,
   Status,
   Team,
+  TeamUID,
   UserData,
 } from "./schemes";
 
@@ -30,15 +31,17 @@ export function useStatus() {
   return useContext(StatusContext);
 }
 
-export const CompaniesContext = createContext<Record<CompanyUID, Company>>({} as any);
+export const CompaniesContext = createContext<Record<CompanyUID, Company>>(
+  {} as any
+);
 export function useCompanies() {
   return useContext(CompaniesContext);
 }
 
 export const AccountContext = createContext<{
-  account: number;
+  account: Record<TeamUID, number>;
   totalInvest: number;
-}>({ account: 0, totalInvest: 0 });
+}>({ account: {}, totalInvest: 0 });
 export function useAccount() {
   return useContext(AccountContext);
 }

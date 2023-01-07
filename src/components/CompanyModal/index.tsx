@@ -75,7 +75,7 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
               teamUID={user.teamUID}
               currentInvest={investData[currentRound].amount[companyUID] ?? 0}
               visible={visible}
-              leftOver={account - totalInvest}
+              leftOver={account[user.teamUID] - totalInvest}
             />
           )}
           <CompanyInfo company={companies[companyUID]} />
