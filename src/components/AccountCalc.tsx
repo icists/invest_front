@@ -11,10 +11,10 @@ const GridContainer = styled.div({
 
 const AccountGrid = styled.div({
   display: "inline-grid",
-  gridTemplateColumns: "50px 110px auto",
+  gridTemplateColumns: "50px 120px auto",
   rowGap: "0.5rem",
 
-  fontSize: "1.2rem",
+  fontSize: "1.3rem",
   justifyItems: "left",
 
   "&:first-child": {

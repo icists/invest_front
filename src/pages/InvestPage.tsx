@@ -44,9 +44,9 @@ const Manual = styled.a({
   color: colors.darkGray,
   backgroundColor: colors.lightGray,
 
-  fontSize: "1rem",
+  fontSize: "0.9rem",
   textDecoration: "none",
-  padding: "0.1rem 0.5rem",
+  padding: "0.2rem 0.5rem",
 });
 
 const RoundStatus = styled.div({

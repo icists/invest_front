@@ -50,6 +50,7 @@ const LoginButton = styled(Button)({
 
 function LoginPage() {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
+  
 
   const navigate = useNavigate();
   const [name, setName] = useState("");
