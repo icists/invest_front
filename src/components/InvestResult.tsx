@@ -8,7 +8,6 @@ import { useCompanies, useInvestData, useStatus } from "@/context";
 
 import CompanyLogo from "./CompanyLogo";
 import { formatNum } from "@/utils";
-import { Company, CompanyUID } from "@/schemes";
 
 const EmptyMessage = styled.div({
   fontSize: "1.25rem",
@@ -65,12 +64,9 @@ export default function InvestResult() {
   const investData = useInvestData();
 
   const companies = useCompanies();
-  const companiesList = Object.entries(companies)
-    .sort(([, a], [, b]) => a.name.localeCompare(b.name))
-    .map(
-      ([companyUID, company]) =>
-        [companyUID as CompanyUID, company] as [CompanyUID, Company]
-    );
+  const companiesList = [...companies.entries()].sort(([, a], [, b]) =>
+    a.name.localeCompare(b.name)
+  );
 
   const options =
     currentRound > 0
@@ -99,9 +95,9 @@ export default function InvestResult() {
         <List>
           {companiesList.map(([companyUID, company]) => {
             const investAmount =
-              investData[selectedRound.value].amount[companyUID] ?? 0;
+              investData[selectedRound.value].amount.get(companyUID) ?? 0;
             const investResult =
-              investData[selectedRound.value].result[companyUID] ?? 0;
+              investData[selectedRound.value].result.get(companyUID) ?? 0;
             const change = (investResult / investAmount - 1) * 100;
 
             if (investAmount < 10000) return null;

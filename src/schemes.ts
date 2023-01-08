@@ -18,8 +18,8 @@ export type UserData = {
 };
 
 export type Team = {
-  members: Record<UserUID, boolean>;
-  track?: Record<number, CompanyUID>;
+  members: Map<UserUID, boolean>;
+  track?: Map<number, CompanyUID>;
   matchTeam?: CompanyUID;
 };
 
@@ -36,4 +36,4 @@ export type Company = {
   video: string;
 };
 
-export type EventStatus = Record<number, boolean>;
+export type EventStatus = Map<number, boolean>;

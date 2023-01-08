@@ -17,7 +17,7 @@ export const AuthContext = createContext<{ user: UserData; team: Team }>({
     mail: null,
     uniqueNumber: 0,
   },
-  team: { members: {} },
+  team: { members: new Map() },
 });
 export function useAuthData() {
   return useContext(AuthContext);
@@ -31,7 +31,7 @@ export function useStatus() {
   return useContext(StatusContext);
 }
 
-export const CompaniesContext = createContext<Record<CompanyUID, Company>>(
+export const CompaniesContext = createContext<Map<CompanyUID, Company>>(
   {} as any
 );
 export function useCompanies() {
@@ -39,17 +39,17 @@ export function useCompanies() {
 }
 
 export const AccountContext = createContext<{
-  account: Record<TeamUID, number>;
+  account: Map<TeamUID, number>;
   totalInvest: number;
-}>({ account: {}, totalInvest: 0 });
+}>({ account: new Map(), totalInvest: 0 });
 export function useAccount() {
   return useContext(AccountContext);
 }
 
 export const InvestDataContext = createContext<
   {
-    amount: Record<CompanyUID, number>;
-    result: Record<CompanyUID, number>;
+    amount: Map<CompanyUID, number>;
+    result: Map<CompanyUID, number>;
   }[]
 >([]);
 export function useInvestData() {
@@ -59,7 +59,7 @@ export function useInvestData() {
 export const EventContext = createContext<{
   bingo: EventStatus;
   completion: EventStatus;
-}>({ bingo: {}, completion: {} });
+}>({ bingo: new Map(), completion: new Map() });
 export function useEvent() {
   return useContext(EventContext);
 }

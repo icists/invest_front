@@ -59,12 +59,9 @@ function CompanyList({ className }: CompanyListProps) {
   const investData = useInvestData();
 
   const companies = useCompanies();
-  const companiesList = Object.entries(companies)
-    .sort(([, a], [, b]) => a.name.localeCompare(b.name))
-    .map(
-      ([companyUID, company]) =>
-        [companyUID as CompanyUID, company] as [CompanyUID, Company]
-    );
+  const companiesList = [...companies.entries()].sort(([, a], [, b]) =>
+    a.name.localeCompare(b.name)
+  );
 
   const [selectedCompanyUID, setSelectedCompanyUID] =
     useState<CompanyUID | null>(null);
@@ -82,7 +79,7 @@ function CompanyList({ className }: CompanyListProps) {
     companyUID: CompanyUID;
     company: Company;
   }) => {
-    const amount = investData[currentRound].amount[companyUID];
+    const amount = investData[currentRound].amount.get(companyUID);
 
     return (
       <Container>

@@ -12,7 +12,12 @@ type EventProps = {
   getStamp: (n: number, w: number, h: number) => React.ReactNode;
 };
 
-export default function Event({ visible, image, status, getStamp }: EventProps) {
+export default function Event({
+  visible,
+  image,
+  status,
+  getStamp,
+}: EventProps) {
   const backgroundRef = useRef<HTMLImageElement | null>(null);
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
@@ -36,7 +41,7 @@ export default function Event({ visible, image, status, getStamp }: EventProps) 
   return (
     <>
       <Image ref={backgroundRef} src={image} />
-      {Object.entries(status)
+      {[...status.entries()]
         .filter(([, v]) => v)
         .map(([k]) => getStamp(Number(k), imageSize.width, imageSize.height))}
     </>

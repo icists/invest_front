@@ -66,20 +66,22 @@ export default function MyPage() {
   const { user, team } = useAuthData();
   const companies = useCompanies();
 
-  const trackComponent = [1, 2, 3, 4, 5, 6].map((v) =>
-    team.track === undefined ? null : (
+  const trackComponent = [1, 2, 3, 4, 5, 6].map((v) => {
+    if (team.track === undefined) return null;
+    const companyUID = team.track.get(v);
+    return (
       <>
         <InfoTitle>{v}타임</InfoTitle>
         <InfoValue>
-          {team.track[v] === undefined ? (
+          {companyUID === undefined ? (
             <RestTime>(쉬는시간)</RestTime>
           ) : (
-            companies[team.track[v]].name
+            companies.get(companyUID)!.name
           )}
         </InfoValue>
       </>
-    )
-  );
+    );
+  });
   return (
     <Main>
       <Title as="h1">내 정보</Title>
@@ -94,7 +96,7 @@ export default function MyPage() {
           {team.matchTeam !== undefined && (
             <>
               <InfoTitle>배정</InfoTitle>
-              <InfoValue>{companies[team.matchTeam].name}</InfoValue>
+              <InfoValue>{companies.get(team.matchTeam)!.name}</InfoValue>
             </>
           )}
         </InfoContainer>

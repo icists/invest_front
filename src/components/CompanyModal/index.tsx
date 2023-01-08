@@ -62,10 +62,14 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
       {companyUID !== null && (
         <Container>
           <HeaderContainer>
-            <CompanyLogo src={companies[companyUID].logo} width={60} />
+            <CompanyLogo src={companies.get(companyUID)!.logo} width={60} />
             <TitleContainer>
-              <CompanyTitle as="h1">{companies[companyUID].name}</CompanyTitle>
-              <CompanySubtitle>{companies[companyUID].engName}</CompanySubtitle>
+              <CompanyTitle as="h1">
+                {companies.get(companyUID)!.name}
+              </CompanyTitle>
+              <CompanySubtitle>
+                {companies.get(companyUID)!.engName}
+              </CompanySubtitle>
             </TitleContainer>
           </HeaderContainer>
           {investable && (
@@ -73,12 +77,14 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
               round={currentRound}
               companyUID={companyUID}
               teamUID={user.teamUID}
-              currentInvest={investData[currentRound].amount[companyUID] ?? 0}
+              currentInvest={
+                investData[currentRound].amount.get(companyUID) ?? 0
+              }
               visible={visible}
-              leftOver={account[user.teamUID] - totalInvest}
+              leftOver={account.get(user.teamUID)! - totalInvest}
             />
           )}
-          <CompanyInfo company={companies[companyUID]} />
+          <CompanyInfo company={companies.get(companyUID)!} />
         </Container>
       )}
     </Modal>

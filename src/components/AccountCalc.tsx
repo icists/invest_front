@@ -47,7 +47,7 @@ export default function AccountCalc() {
       <AccountGrid>
         <span />
         <AccountTitle>총 자산</AccountTitle>
-        <AccountValue>{formatNum(account[user.teamUID])}</AccountValue>
+        <AccountValue>{formatNum(account.get(user.teamUID)!)}</AccountValue>
         <Minus>﹣</Minus>
         <AccountTitle>투자한 금액</AccountTitle>
         <AccountValue>{formatNum(totalInvest)}</AccountValue>
@@ -56,7 +56,7 @@ export default function AccountCalc() {
         <span />
         <AccountTitle>남은 자산</AccountTitle>
         <AccountValue>
-          {formatNum(account[user.teamUID] - totalInvest)}
+          {formatNum(account.get(user.teamUID)! - totalInvest)}
         </AccountValue>
       </AccountGrid>
     </GridContainer>

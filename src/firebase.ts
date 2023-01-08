@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import * as db from "firebase/database";
 import { getFunctions, httpsCallable } from "firebase/functions";
-import { useObjectVal } from "react-firebase-hooks/database";
+import { useObjectVal as useObjectValLib } from "react-firebase-hooks/database";
 
 import {
   UserData,
@@ -59,8 +59,8 @@ export const registerUser = httpsCallable<RegisterParams, RegisterResult>(
 
 export type InvestParams = {
   round: number;
-  teamUID: string;
-  companyUID: string;
+  teamUID: TeamUID;
+  companyUID: CompanyUID;
   investAmount: number;
 };
 export type InvestResult =
@@ -75,28 +75,44 @@ export const invest = httpsCallable<InvestParams, InvestResult>(
   "invest"
 );
 
-export function useCompaniesDB(): Record<CompanyUID, Company> | null {
+function recordToMap<K extends string | number | symbol, V>(
+  r: Record<K, V> | null
+): Map<K, V> | null {
+  if (r === null) return null;
+
+  const result = new Map<K, V>();
+  for (const [key, value] of Object.entries(r)) {
+    result.set(key as K, value as V);
+  }
+  return result;
+}
+
+function useObjectVal<T>(query: db.Query): T | null {
+  const [value] = useObjectValLib<T>(query);
+  return value ?? null;
+}
+
+export function useCompaniesDB(): Map<CompanyUID, Company> | null {
   const companiesRef = db.ref(database, "/companies");
-  const [record] = useObjectVal<Record<CompanyUID, Company>>(companiesRef);
-  return record ?? null;
+  const companies = useObjectVal<Record<CompanyUID, Company>>(companiesRef);
+  return recordToMap(companies);
 }
 
 export function useStatusDB(): Status | null {
   const statusRef = db.ref(database, "/status");
-  const [status] = useObjectVal<Status>(statusRef);
+  const status = useObjectVal<Status>(statusRef);
   return status ?? null;
 }
 
-export function useAccountDB(round: number): Record<TeamUID, number> | null {
+export function useAccountDB(round: number): Map<TeamUID, number> | null {
   const accountRef = db.ref(database, `/rounds/${round}/account`);
-  const [account] = useObjectVal<Record<TeamUID, number>>(accountRef);
-
-  return account ?? null;
+  const account = useObjectVal<Record<TeamUID, number>>(accountRef);
+  return recordToMap(account);
 }
 
 export function useInvestDataDB(teamUID: TeamUID): {
-  amount: Record<CompanyUID, number>;
-  result: Record<CompanyUID, number>;
+  amount: Map<CompanyUID, number>;
+  result: Map<CompanyUID, number>;
 }[] {
   const final = [];
 
@@ -105,17 +121,20 @@ export function useInvestDataDB(teamUID: TeamUID): {
       database,
       `/rounds/${round}/investAmount/${teamUID}`
     );
-    const [investAmount] =
+    const investAmount =
       useObjectVal<Record<CompanyUID, number>>(investAmountRef);
 
     const investResultRef = db.ref(
       database,
       `/rounds/${round}/investResult/${teamUID}`
     );
-    const [investResult] =
+    const investResult =
       useObjectVal<Record<CompanyUID, number>>(investResultRef);
 
-    final.push({ amount: investAmount ?? {}, result: investResult ?? {} });
+    final.push({
+      amount: recordToMap(investAmount) ?? new Map(),
+      result: recordToMap(investResult) ?? new Map(),
+    });
   }
 
   return final;
@@ -123,12 +142,12 @@ export function useInvestDataDB(teamUID: TeamUID): {
 
 export function useTeamDB(teamUID: TeamUID): Team | null {
   const teamRef = db.ref(database, `/teams/${teamUID}`);
-  const [team] = useObjectVal<Team>(teamRef);
+  const team = useObjectVal<Team>(teamRef);
   return team ?? null;
 }
 
 export function useEventDB(uniqueNumber: number, name: string): EventStatus {
   const eventRef = db.ref(database, `/events/${name}/${uniqueNumber}`);
-  const [event] = useObjectVal<EventStatus>(eventRef);
-  return event ?? {};
+  const event = useObjectVal<EventStatus>(eventRef);
+  return recordToMap(event) ?? new Map();
 }
