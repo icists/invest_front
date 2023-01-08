@@ -17,7 +17,7 @@ const AccountGrid = styled.div({
   fontSize: "1.3rem",
   justifyItems: "left",
 
-  "&:first-child": {
+  "&:first-of-type": {
     borderBottom: `1px solid ${colors.gray}`,
     paddingBottom: "0.3rem",
     marginBottom: "0.4rem",
