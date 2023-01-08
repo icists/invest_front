@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styled from "@emotion/styled";
@@ -11,7 +11,7 @@ import Header from "../components/Header";
 import TextField from "../components/TextField";
 
 import { UserData } from "../schemes";
-import participants from "@/assets/participants.json";
+import participants, { Participant } from "@/participant";
 
 const Main = styled.main({
   display: "flex",
@@ -50,18 +50,23 @@ const LoginButton = styled(Button)({
 
 function LoginPage() {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
-  
 
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [participantData, setParticipanData] = useState<Participant | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setParticipanData(participants.find((p) => p.name === name) ?? null);
+  }, [name]);
 
   async function confirm() {
     const trimmedName = name.trim();
     if (trimmedName.length < 2) return;
 
-    const result = participants.find((v) => v.name === trimmedName);
-    if (result === undefined) {
+    if (participantData === null) {
       console.log("no such user");
       return;
     }
@@ -76,9 +81,9 @@ function LoginPage() {
     const user = userCredential.user;
     const userData: UserData = {
       name: trimmedName,
-      teamUID: result.team.toString(),
+      teamUID: participantData.team.toString(),
       mail: user.email,
-      uniqueNumber: result.uniqueNumber,
+      uniqueNumber: participantData.uniqueNumber,
     };
 
     await registerUser({ uid: user.uid, data: userData });

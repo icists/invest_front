@@ -8,6 +8,7 @@ import { useCompanies, useInvestData, useStatus } from "@/context";
 
 import CompanyLogo from "./CompanyLogo";
 import { formatNum } from "@/utils";
+import { Company, CompanyUID } from "@/schemes";
 
 const EmptyMessage = styled.div({
   fontSize: "1.25rem",
@@ -64,9 +65,12 @@ export default function InvestResult() {
   const investData = useInvestData();
 
   const companies = useCompanies();
-  const companiesList = Object.entries(companies).sort(([, a], [, b]) =>
-    a.name.localeCompare(b.name)
-  );
+  const companiesList = Object.entries(companies)
+    .sort(([, a], [, b]) => a.name.localeCompare(b.name))
+    .map(
+      ([companyUID, company]) =>
+        [companyUID as CompanyUID, company] as [CompanyUID, Company]
+    );
 
   const options =
     currentRound > 0

@@ -59,9 +59,12 @@ function CompanyList({ className }: CompanyListProps) {
   const investData = useInvestData();
 
   const companies = useCompanies();
-  const companiesList = Object.entries(companies).sort(([, a], [, b]) =>
-    a.name.localeCompare(b.name)
-  );
+  const companiesList = Object.entries(companies)
+    .sort(([, a], [, b]) => a.name.localeCompare(b.name))
+    .map(
+      ([companyUID, company]) =>
+        [companyUID as CompanyUID, company] as [CompanyUID, Company]
+    );
 
   const [selectedCompanyUID, setSelectedCompanyUID] =
     useState<CompanyUID | null>(null);
@@ -73,13 +76,13 @@ function CompanyList({ className }: CompanyListProps) {
   }
 
   const DetailedContainer = ({
-    companyID,
+    companyUID,
     company,
   }: {
-    companyID: string;
+    companyUID: CompanyUID;
     company: Company;
   }) => {
-    const amount = investData[currentRound].amount[companyID];
+    const amount = investData[currentRound].amount[companyUID];
 
     return (
       <Container>
@@ -96,10 +99,10 @@ function CompanyList({ className }: CompanyListProps) {
   return (
     <>
       <List className={className}>
-        {companiesList.map(([companyID, company]) => (
-          <Item key={companyID} onClick={() => handleClickItem(companyID)}>
+        {companiesList.map(([companyUID, company]) => (
+          <Item key={companyUID} onClick={() => handleClickItem(companyUID)}>
             <CompanyLogo src={company.logo} width={56} />
-            <DetailedContainer companyID={companyID} company={company} />
+            <DetailedContainer companyUID={companyUID} company={company} />
           </Item>
         ))}
       </List>

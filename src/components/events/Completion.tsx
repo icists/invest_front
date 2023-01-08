@@ -17,7 +17,7 @@ import { useEvent } from "@/context";
 const Stamp = styled.img<{ top: number; left: number }>(
   {
     position: "absolute",
-    width: "28%",
+    width: "27.4%",
     zIndex: 1,
   },
   ({ top, left }) => ({ top, left })
@@ -38,9 +38,9 @@ export default function Completion({ visible }: CompletionProps) {
         <Stamp
           key={n}
           src={stamps[n - 1]}
-          top={height * (0.34 + 0.235 * Math.floor((n - 1) / 2))}
+          top={height * (0.341 + 0.2363 * Math.floor((n - 1) / 2))}
           left={
-            width * (0.185 + 0.376 * (n === 1 || n === 4 || n === 5 ? 0 : 1))
+            width * (0.189 + 0.374 * (n === 1 || n === 4 || n === 5 ? 0 : 1))
           }
         />
       )}
