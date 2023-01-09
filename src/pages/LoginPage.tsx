@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 
 import { auth, registerUser } from "../firebase";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { useSignInWithGoogle, useSignOut } from "react-firebase-hooks/auth";
 
 import Button from "../components/Button";
 import Header from "../components/Header";
@@ -51,6 +51,7 @@ const LoginButton = styled(Button)({
 
 function LoginPage() {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
+  const [signOut] = useSignOut(auth);
 
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -65,7 +66,7 @@ function LoginPage() {
 
   async function confirm() {
     const trimmedName = name.trim();
-    if (trimmedName.length < 2) return;
+    if (trimmedName.length === 0) return;
 
     if (participantData === null) {
       console.log("no such user");
@@ -87,7 +88,17 @@ function LoginPage() {
       uniqueNumber: participantData.uniqueNumber,
     };
 
-    await registerUser({ uid: user.uid, data: userData });
+    console.log(user.uid);
+    const registerResult = await registerUser({
+      uid: user.uid,
+      data: userData,
+    });
+
+    console.log(registerResult.data);
+    if (!registerResult.data) {
+      await signOut();
+      alert("스태프 문의 ㄲ");
+    }
     navigate("/");
   }
 

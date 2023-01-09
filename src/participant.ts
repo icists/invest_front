@@ -542,4 +542,8 @@ const data: Participant[] = [
   },
 ];
 
+for (let i = 1; i <= 24; i++) {
+  data.push({ name: i.toString(), uniqueNumber: 0, team: i });
+}
+
 export default data;

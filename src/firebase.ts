@@ -51,7 +51,7 @@ export type RegisterParams = {
   uid: string;
   data: UserData;
 };
-export type RegisterResult = void;
+export type RegisterResult = boolean;
 export const registerUser = httpsCallable<RegisterParams, RegisterResult>(
   functions,
   "registerUser"
