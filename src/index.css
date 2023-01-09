@@ -1,5 +1,5 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
-@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap");
 
 :root {
   font-family: "Pretendard", Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -14,7 +14,7 @@
 
   color: #212529;
 
-   --vh: 100%;
+  --vh: 100%;
 }
 
 * {
@@ -25,3 +25,6 @@ body {
   margin: 0;
 }
 
+video::-webkit-media-controls {
+  display: none !important;
+}

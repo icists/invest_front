@@ -56,6 +56,16 @@ type ContextsProps = {
   status: Status;
 };
 
+function LoadingScreen() {
+  return (
+    <LoadingContainer>
+      <LoadingVideo autoPlay muted>
+        <source src={loadingVideo} type="video/mp4" />
+      </LoadingVideo>
+    </LoadingContainer>
+  );
+}
+
 function Contexts({ userData, status }: ContextsProps) {
   const companies = useCompaniesDB();
   const team = useTeamDB(userData.teamUID);
@@ -131,14 +141,7 @@ export default function PrivateRoute() {
   }
 
   if (user === null || user === undefined) return <Navigate to="/login" />;
-  if (userData === null || status === null)
-    return (
-      <LoadingContainer>
-        <LoadingVideo autoPlay muted>
-          <source src={loadingVideo} type="video/mp4" />
-        </LoadingVideo>
-      </LoadingContainer>
-    );
+  if (userData === null || status === null) return <LoadingScreen />;
 
   return <Contexts userData={userData} status={status} />;
 }
