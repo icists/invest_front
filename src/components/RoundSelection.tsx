@@ -39,6 +39,8 @@ export default function RoundSelection({
   roundNumber,
   onChange,
 }: RoundSelectionProps) {
+  const round = roundsData[roundNumber];
+
   function handlePrev() {
     if (roundNumber !== 0) onChange(roundNumber - 1);
   }
@@ -52,7 +54,7 @@ export default function RoundSelection({
       <NextPrev enable={0 < roundNumber} onClick={handlePrev}>
         <FaChevronLeft />
       </NextPrev>
-      <CurrentRound>Round {roundsData[roundNumber].name[0]}</CurrentRound>
+      <CurrentRound>Round {round.name[0]}</CurrentRound>
       <NextPrev enable={roundNumber < 3} onClick={handleNext}>
         <FaChevronRight />
       </NextPrev>

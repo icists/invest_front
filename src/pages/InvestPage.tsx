@@ -87,6 +87,7 @@ const Circle = styled.span<{ on: boolean }>(
 
 function InvestPage() {
   const { currentRound, investable } = useStatus();
+  const round = roundsData[currentRound];
 
   return (
     <Main>
@@ -96,9 +97,7 @@ function InvestPage() {
           <Manual href="https://www.naver.com">매뉴얼</Manual>
         </TitleContainer>
         <RoundStatus>
-          <RoundNumber>
-            {"Round " + roundsData[currentRound].name[0]}
-          </RoundNumber>
+          <RoundNumber>{`Round ${round.name[0]} : ${round.name}`}</RoundNumber>
         </RoundStatus>
         <Indicator on={investable}>
           <Circle on={investable} />
