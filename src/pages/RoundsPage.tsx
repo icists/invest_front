@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
+import RoundSelection from "@/components/RoundSelection";
+import { useState } from "react";
 
 const Main = styled.main({
   display: "flex",
@@ -16,9 +18,15 @@ const Main = styled.main({
 });
 
 export default function RoundsPage() {
+  const [roundNumber, setRoundNumber] = useState(0);
+
   return (
     <Main>
       <Header as="h1">라운드</Header>
+      <RoundSelection
+        roundNumber={roundNumber}
+        onChange={(r) => setRoundNumber(r)}
+      />
     </Main>
   );
 }

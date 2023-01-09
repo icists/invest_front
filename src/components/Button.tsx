@@ -5,6 +5,10 @@ import PulseLoader from "react-spinners/PulseLoader";
 
 const ButtonElem = styled.button<{ isLoading: boolean }>(
   {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
     appearance: "none",
     cursor: "pointer",
     border: "none",

@@ -5,6 +5,7 @@ import { colors } from "../styles";
 import Header from "../components/Header";
 import CompanyList from "../components/CompanyList";
 import { useStatus } from "../context";
+import roundsData from "@/rounds";
 
 const Main = styled.main({
   display: "flex",
@@ -95,8 +96,9 @@ function InvestPage() {
           <Manual href="https://www.naver.com">매뉴얼</Manual>
         </TitleContainer>
         <RoundStatus>
-          <RoundNumber>{currentRound + " Round"}</RoundNumber>
-          <RoundTitle>, 스타트업 첫 만남</RoundTitle>
+          <RoundNumber>
+            {"Round " + roundsData[currentRound].name[0]}
+          </RoundNumber>
         </RoundStatus>
         <Indicator on={investable}>
           <Circle on={investable} />
