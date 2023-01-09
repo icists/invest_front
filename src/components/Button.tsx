@@ -12,7 +12,7 @@ const ButtonElem = styled.button<{ isLoading: boolean }>(
     appearance: "none",
     cursor: "pointer",
     border: "none",
-    borderRadius: 5,
+    borderRadius: 10,
 
     color: "white",
     fontFamily: "inherit",

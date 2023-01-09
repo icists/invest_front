@@ -21,7 +21,6 @@ const Item = styled.li({
   padding: "1rem 0.75rem",
 
   cursor: "pointer",
-  borderRadius: 5,
   "&:hover": {
     backgroundColor: colors.lightGray,
   },

@@ -9,7 +9,7 @@ const getInputStyle = ({ isError }: { isError: boolean }) =>
   css({
     appearance: "none",
     border: "none",
-    borderRadius: 5,
+    borderRadius: 10,
     outline: isError ? `2px solid ${colors.red}` : "none",
 
     fontSize: "1.3rem",

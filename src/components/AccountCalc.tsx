@@ -30,7 +30,7 @@ const Minus = styled.div({
 
 const AccountTitle = styled.span({
   display: "inline-block",
-  fontWeight: "bold",
+  fontWeight: 600,
   marginRight: "1rem",
 });
 

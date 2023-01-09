@@ -41,7 +41,7 @@ const InfoContainer = styled.div({
   rowGap: "0.75rem",
   padding: "1rem",
 
-  borderRadius: 5,
+  borderRadius: 10,
   backgroundColor: colors.lightGray,
 
   fontSize: "1.2rem",

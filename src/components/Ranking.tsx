@@ -15,13 +15,14 @@ const Item = styled.li<{ me?: boolean }>(
     display: "flex",
     alignItems: "center",
     fontSize: "1.3rem",
-    borderRadius: 5,
+    borderRadius: 10,
     "& + &": {
       marginTop: "0.5rem",
     },
   },
   ({ me }) => ({
-    backgroundColor: me ? colors.lightGray : "white",
+    backgroundColor: me ? colors.lightKey : "white",
+    color: me ? colors.darkKey : colors.black,
     // color: me ? "white" : colors.black,
     fontWeight: me ? 700 : 400,
   })
