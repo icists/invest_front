@@ -136,12 +136,14 @@ export default function PrivateRoute() {
     };
   }, []);
 
+  const loadingScreen = <LoadingScreen />;
+
   if (loading) {
-    return null;
+    return loadingScreen;
   }
 
   if (user === null || user === undefined) return <Navigate to="/login" />;
-  if (userData === null || status === null) return <LoadingScreen />;
+  if (userData === null || status === null) return loadingScreen;
 
-  return <Contexts userData={userData} status={status} />;
+  return <Contexts userData={userData} status={status} /> ?? loadingScreen;
 }
