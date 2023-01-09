@@ -15,7 +15,7 @@ const db = admin.database();
 export const registerUser = functions.https.onCall(
   async ({ uid, data }: RegisterParams): Promise<RegisterResult> => {
     const usersSnapshot = await db.ref("/users").get();
-    const users: Record<string, UserData> = usersSnapshot.val();
+    const users: Record<string, UserData> = usersSnapshot.val() ?? {};
     for (const [currentUID, userData] of Object.entries(users)) {
       console.log(currentUID, userData);
       if (
