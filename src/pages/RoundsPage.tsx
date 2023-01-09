@@ -33,14 +33,18 @@ const RoundSubtitle = styled.small({
   color: colors.darkGray,
 });
 
-const RoundDescription = styled.p({
-  fontSize: "1.2rem",
+const RoundParagraph = styled.p({
+  fontSize: "1rem",
+  margin: "1rem 0 0 0",
+  "& + &": {
+    margin: "0.5rem 0 0 0",
+  },
 });
 
 const SmallTitle = styled(Header)({
-  margin: "0.5rem 0 0.75rem 0",
   fontSize: "1.5rem",
   fontWeight: 600,
+  margin: "1.5rem 0 0.5rem 0",
 });
 
 export default function RoundsPage() {
@@ -58,11 +62,10 @@ export default function RoundsPage() {
         <strong>{round.name[0]}</strong>
         {round.name.slice(1)}
       </RoundTitle>
-      <RoundSubtitle>{round.description}</RoundSubtitle>
-      <RoundDescription>
-        asdfioajweiofjawioefjawiojefioawejf awiejfaowi faw ef awef awe fawef
-      </RoundDescription>
-
+      <RoundSubtitle>{round.subtitle}</RoundSubtitle>
+      {round.description.split("\n").map((p, i) => (
+        <RoundParagraph key={i}>{p}</RoundParagraph>
+      ))}
       <SmallTitle as="h2">투자 결과</SmallTitle>
       <InvestResult roundNumber={roundNumber} />
     </Main>

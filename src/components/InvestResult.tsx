@@ -7,7 +7,7 @@ import CompanyLogo from "./CompanyLogo";
 import { formatNum } from "@/utils";
 
 const EmptyMessage = styled.div({
-  fontSize: "1.25rem",
+  fontSize: "1rem",
   color: colors.darkGray,
 });
 
