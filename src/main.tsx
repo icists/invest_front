@@ -29,14 +29,14 @@ const router = createBrowserRouter([
         path: "/rounds",
         element: <RoundsPage />,
       },
+      {
+        path: "/event",
+        element: <EventPage />,
+      },
+    ],
+  },
   {
-    path: "/event",
-    element: <EventPage />,
-  },
-],
-  },
-{
-  path: "/login",
+    path: "/login",
     element: <LoginPage />,
   },
 ]);

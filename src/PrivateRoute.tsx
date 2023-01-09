@@ -16,6 +16,8 @@ import {
 } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
+import loadingVideo from "@/assets/loading.mp4";
+
 import {
   CompaniesContext,
   AuthContext,
@@ -38,6 +40,17 @@ const PageContainer = styled.div({
   height: "var(--vh)",
 });
 
+const LoadingContainer = styled.main({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "var(--vh)",
+});
+
+const LoadingVideo = styled.video({
+  width: 80,
+});
+
 type ContextsProps = {
   userData: UserData;
   status: Status;
@@ -57,7 +70,9 @@ function Contexts({ userData, status }: ContextsProps) {
   const bingo = useEventDB(userData.uniqueNumber, "bingo");
   const completion = useEventDB(userData.uniqueNumber, "completion");
 
-  if (companies === null || team === null || account === null) return null;
+  if (companies === null || team === null || account === null) {
+    return null;
+  }
 
   return (
     <AuthContext.Provider value={{ user: userData, team }}>
@@ -116,7 +131,14 @@ export default function PrivateRoute() {
   }
 
   if (user === null || user === undefined) return <Navigate to="/login" />;
-  if (userData === null || status === null) return null;
+  if (userData === null || status === null)
+    return (
+      <LoadingContainer>
+        <LoadingVideo autoPlay muted>
+          <source src={loadingVideo} type="video/mp4" />
+        </LoadingVideo>
+      </LoadingContainer>
+    );
 
   return <Contexts userData={userData} status={status} />;
 }
