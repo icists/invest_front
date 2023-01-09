@@ -14,7 +14,7 @@ const AccountGrid = styled.div({
   gridTemplateColumns: "50px 120px auto",
   rowGap: "0.5rem",
 
-  fontSize: "1.3rem",
+  fontSize: "1.2rem",
   justifyItems: "left",
 
   "&:first-of-type": {

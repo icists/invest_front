@@ -46,6 +46,7 @@ const InputBox = styled.div({
 
 const LoginButton = styled(Button)({
   margin: "auto 0 0 0",
+  height: 60,
 });
 
 function LoginPage() {
