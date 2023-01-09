@@ -40,13 +40,13 @@ const InputBox = styled.div({
   display: "flex",
   flexDirection: "column",
 
-  margin: "0 0 2rem 0",
+  margin: "0 0 1.5rem 0",
   width: "100%",
 });
 
 const LoginButton = styled(Button)({
   margin: "auto 0 0 0",
-  height: 60,
+  height: 55,
 });
 
 function LoginPage() {

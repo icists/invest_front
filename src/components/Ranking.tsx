@@ -62,7 +62,7 @@ export default function Ranking() {
         <Place>{index + 1}위</Place>
         <Account>우리 팀 ({formatNum(sorted[index][1])})</Account>
       </Item>
-      {index < sorted.length && (
+      {index < sorted.length - 1 && (
         <Item>
           <Place>{index + 2}위</Place>
           <Account>

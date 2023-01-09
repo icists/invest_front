@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
 import { useAuthData, useCompanies } from "@/context";
-import InvestResult from "@/components/InvestResult";
 import { colors } from "@/styles";
 import AccountCalc from "@/components/AccountCalc";
 import Ranking from "@/components/Ranking";
@@ -114,11 +113,6 @@ export default function MyPage() {
       <Section>
         <SmallTitle as="h2">총 자산 순위</SmallTitle>
         <Ranking />
-      </Section>
-
-      <Section>
-        <SmallTitle as="h2">투자 결과</SmallTitle>
-        <InvestResult />
       </Section>
     </Main>
   );

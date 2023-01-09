@@ -1,8 +1,5 @@
-import { useState } from "react";
 import styled from "@emotion/styled";
 import { colors } from "@/styles";
-
-import Select from "react-select";
 
 import { useCompanies, useInvestData, useStatus } from "@/context";
 
@@ -57,9 +54,11 @@ const PercentageChange = styled.span<{ isNegative: boolean }>(
   ({ isNegative }) => ({ color: isNegative ? colors.red : colors.green })
 );
 
-type OptionType = { value: number; label: string };
+type InvestResultProps = {
+  roundNumber: number;
+};
 
-export default function InvestResult() {
+export default function InvestResult({ roundNumber }: InvestResultProps) {
   const { currentRound } = useStatus();
   const investData = useInvestData();
 
@@ -68,59 +67,36 @@ export default function InvestResult() {
     a.name.localeCompare(b.name)
   );
 
-  const options =
-    currentRound > 0
-      ? [...Array(currentRound).keys()].map((v) => ({
-          value: v,
-          label: `Round ${v}`,
-        }))
-      : [];
+  return currentRound <= roundNumber ? (
+    <EmptyMessage>(아직 투자 결과가 나오지 않았습니다.)</EmptyMessage>
+  ) : (
+    <List>
+      {companiesList.map(([companyUID, company]) => {
+        const investAmount =
+          investData[roundNumber].amount.get(companyUID) ?? 0;
+        const investResult =
+          investData[roundNumber].result.get(companyUID) ?? 0;
+        const change = (investResult / investAmount - 1) * 100;
 
-  const [selectedRound, setSelectedRound] = useState<OptionType | null>(
-    options[currentRound - 1]
-  );
-
-  if (currentRound === 0)
-    return <EmptyMessage>(아직 투자 결과가 나오지 않았습니다.)</EmptyMessage>;
-
-  return (
-    <>
-      <Select
-        value={selectedRound}
-        onChange={(v) => setSelectedRound(v)}
-        options={options}
-        getOptionLabel={(v) => `Round ${v.value}`}
-      />
-      {selectedRound !== null && (
-        <List>
-          {companiesList.map(([companyUID, company]) => {
-            const investAmount =
-              investData[selectedRound.value].amount.get(companyUID) ?? 0;
-            const investResult =
-              investData[selectedRound.value].result.get(companyUID) ?? 0;
-            const change = (investResult / investAmount - 1) * 100;
-
-            if (investAmount < 10000) return null;
-            return (
-              <Item key={companyUID}>
-                <CompanyLogo src={company.logo} width={56} />
-                <Container>
-                  <CompanyTitle>{company.name}</CompanyTitle>
-                  <ChangeContainer>
-                    <AbsoluteChange>
-                      {formatNum(investAmount)} → {formatNum(investResult)}
-                    </AbsoluteChange>
-                    <PercentageChange isNegative={change < 0}>
-                      ({change > 0 ? "+" : ""}
-                      {change.toPrecision(3)}%)
-                    </PercentageChange>
-                  </ChangeContainer>
-                </Container>
-              </Item>
-            );
-          })}
-        </List>
-      )}
-    </>
+        if (investAmount < 10000) return null;
+        return (
+          <Item key={companyUID}>
+            <CompanyLogo src={company.logo} width={56} />
+            <Container>
+              <CompanyTitle>{company.name}</CompanyTitle>
+              <ChangeContainer>
+                <AbsoluteChange>
+                  {formatNum(investAmount)} → {formatNum(investResult)}
+                </AbsoluteChange>
+                <PercentageChange isNegative={change < 0}>
+                  ({change > 0 ? "+" : ""}
+                  {change.toPrecision(3)}%)
+                </PercentageChange>
+              </ChangeContainer>
+            </Container>
+          </Item>
+        );
+      })}
+    </List>
   );
 }
