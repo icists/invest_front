@@ -25,10 +25,6 @@ const Main = styled.main({
   overflowY: "scroll",
 });
 
-const Title = styled(Header)({
-  marginBottom: "1.5rem",
-});
-
 const EventButton = styled(Button)({
   backgroundColor: colors.lightGray,
   border: `1px solid ${colors.gray}`,
@@ -45,7 +41,7 @@ export default function EventPage() {
 
   return (
     <Main>
-      <Title as="h1">이벤트</Title>
+      <Header as="h1">이벤트</Header>
       <EventButton onClick={() => setShowBingo(true)}>
         <EventLogo src={BingoLogo} />
       </EventButton>

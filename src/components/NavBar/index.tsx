@@ -3,7 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { colors } from "@/styles";
 
-import { balanceIcon, investmentIcon, eventIcon } from "./icons";
+import { balanceIcon, investmentIcon, eventIcon, roundsIcon } from "./icons";
 
 const Nav = styled.nav({
   width: "100%",
@@ -55,7 +55,7 @@ export default function NavBar() {
       to: "/me",
     },
     { icon: investmentIcon, name: "투자", to: "/" },
-    // { icon: rulesIcon, name: "규칙", to: "/rules" },
+    { icon: roundsIcon, name: "라운드", to: "/rounds" },
     { icon: eventIcon, name: "이벤트", to: "/event" },
   ];
 
