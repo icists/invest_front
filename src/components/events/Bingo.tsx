@@ -6,13 +6,17 @@ import StampImage from "@/assets/events/stamp.svg";
 import Event from "./Event";
 import { useEvent } from "@/context";
 
-const Stamp = styled.img<{ top: number; left: number }>(
+const Stamp = styled.img<{ top: number; left: number; rotate: number }>(
   {
     position: "absolute",
     width: "17%",
     zIndex: 1,
   },
-  ({ top, left }) => ({ top, left })
+  ({ top, left, rotate }) => ({
+    top,
+    left,
+    transform: `rotate(${rotate}deg)`,
+  })
 );
 
 type BingoProps = {
@@ -32,6 +36,7 @@ export default function Bingo({ visible }: BingoProps) {
           src={StampImage}
           top={height * (0.365 + 0.092 * Math.floor((n - 1) / 4))}
           left={width * (0.09 + 0.215 * ((n - 1) % 4))}
+          rotate={Math.random() * 90 - 45}
         />
       )}
     />
