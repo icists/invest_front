@@ -10,6 +10,7 @@ import { NumberField } from "../TextField";
 import Button from "../Button";
 import { ContentTitle } from "./Contents";
 import { formatNum } from "@/utils";
+import { useAccount } from "@/context";
 
 const Title = styled(ContentTitle)({
   marginBottom: 0,
@@ -66,11 +67,12 @@ function Invest({
   teamUID: TeamUID;
   visible: boolean;
   currentInvest: number;
-  leftOver: number,
+  leftOver: number;
 }) {
   const [investAmount, setInvestAmount] = useState<number | null>(0);
   const [[message, isErrorMessage], setMessage] = useState(["", false]);
   const [isPending, setIsPending] = useState(false);
+  const { account } = useAccount();
 
   useEffect(() => {
     setMessage(["", false]);
@@ -106,6 +108,8 @@ function Invest({
       setMessage(["투자가 완료되었습니다.", false]);
     } else if (investResult.data === "insufficient_cash") {
       setMessage(["자본금이 부족합니다.", true]);
+    } else if (investResult.data === "excess_ratio") {
+      setMessage(["최대 투자 비율을 초과했습니다.", true]);
     } else if (investResult.data === "not_investable") {
       setMessage(["현재는 투자 시간이 아닙니다.", true]);
     } else {
@@ -121,7 +125,10 @@ function Invest({
   return (
     <>
       <Title as="h2">투자</Title>
-      <Account>남은 자본금 {formatNum(leftOver)}</Account>
+      <Account>
+        남은 자본금 {formatNum(leftOver)}, 최대 투자액{" "}
+        {formatNum(account.get(teamUID)! * 0.7)}
+      </Account>
       <InputContainer>
         <InvestAmountField
           value={investAmount}
