@@ -93,26 +93,24 @@ function CompanyList({ className }: CompanyListProps) {
             subtitleText = `투자액 ${formatNum(amount)}`;
           }
 
+          const isCurrent = currentRound !== 4 && currentPitching === companyUID;
+
           return (
             <Item
               key={companyUID}
               onClick={() => handleClickItem(companyUID)}
-              current={currentPitching === companyUID}
+              current={isCurrent}
             >
               <CompanyLogo
                 src={company.logo}
                 width={56}
-                backgroundColor={
-                  currentPitching === companyUID
-                    ? colors.lightKey
-                    : colors.lightGray
-                }
+                backgroundColor={isCurrent ? colors.lightKey : colors.lightGray}
               />
               <CompanyTitleContainer>
                 <CompanyTitle>{company.name}</CompanyTitle>
                 <CompanySubtitle>{subtitleText}</CompanySubtitle>
               </CompanyTitleContainer>
-              {currentPitching === companyUID && <PitchingIcon />}
+              {isCurrent && <PitchingIcon />}
             </Item>
           );
         })}
