@@ -59,7 +59,7 @@ type ContextsProps = {
 function LoadingScreen() {
   return (
     <LoadingContainer>
-      <LoadingVideo autoPlay muted>
+      <LoadingVideo autoPlay muted playsInline>
         <source src={loadingVideo} type="video/mp4" />
       </LoadingVideo>
     </LoadingContainer>
