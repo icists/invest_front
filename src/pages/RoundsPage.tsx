@@ -6,6 +6,7 @@ import { useState } from "react";
 import roundsData from "@/rounds";
 import { colors } from "@/styles";
 import InvestResult from "@/components/InvestResult";
+import { useStatus } from "@/context";
 
 const Main = styled.main({
   display: "flex",
@@ -48,7 +49,8 @@ const SmallTitle = styled(Header)({
 });
 
 export default function RoundsPage() {
-  const [roundNumber, setRoundNumber] = useState(0);
+  const { currentRound } = useStatus();
+  const [roundNumber, setRoundNumber] = useState(currentRound);
   const round = roundsData[roundNumber];
 
   return (
