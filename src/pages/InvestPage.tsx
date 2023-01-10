@@ -37,18 +37,26 @@ const RoundNumber = styled.div({
   marginBottom: "0.5rem",
 });
 
-const Indicator = styled.div<{ on: boolean }>(
+const Indicator = styled.div<{ status: "on" | "off" | "end" }>(
   {
     display: "flex",
     alignItems: "center",
     fontSize: "1.1rem",
   },
-  ({ on }) => ({
-    color: on ? colors.green : colors.red,
-    span: {
-      backgroundColor: on ? colors.green : colors.red,
-    },
-  })
+  ({ status }) => {
+    const color =
+      status === "on"
+        ? colors.green
+        : status === "off"
+        ? colors.red
+        : colors.darkGray;
+    return {
+      color,
+      span: {
+        backgroundColor: color,
+      },
+    };
+  }
 );
 
 const Circle = styled.span({
@@ -68,13 +76,16 @@ function InvestPage() {
       <HeaderContainer>
         <Title as="h1">투자 종목</Title>
         {round === null ? (
-          <RoundNumber>투자 게임이 종료되었습니다.</RoundNumber>
+          <Indicator status="end">
+            <Circle />
+            투자 게임이 종료되었습니다.
+          </Indicator>
         ) : (
           <>
             <RoundNumber>
               {`Round ${round.name[0]} : ${round.name}`}
             </RoundNumber>
-            <Indicator on={investable}>
+            <Indicator status={investable ? "on" : "off"}>
               <Circle />
               {investable
                 ? "투자가 가능한 시간입니다."
