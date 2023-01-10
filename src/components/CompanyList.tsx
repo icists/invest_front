@@ -93,7 +93,8 @@ function CompanyList({ className }: CompanyListProps) {
             subtitleText = `투자액 ${formatNum(amount)}`;
           }
 
-          const isCurrent = currentRound !== 4 && currentPitching === companyUID;
+          const isCurrent =
+            currentRound !== 4 && currentPitching === companyUID;
 
           return (
             <Item

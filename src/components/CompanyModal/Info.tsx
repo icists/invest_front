@@ -4,7 +4,7 @@ import { CompanyUID } from "@/schemes";
 import { ContentParagraph, ContentTitle, Video } from "./Contents";
 import articlesData from "@/assets/articles";
 
-function Info({ companyUID }: { companyUID: CompanyUID }) {
+export default function Info({ companyUID }: { companyUID: CompanyUID }) {
   const companies = useCompanies();
   const company = companies.get(companyUID)!;
 
@@ -26,4 +26,3 @@ function Info({ companyUID }: { companyUID: CompanyUID }) {
   );
 }
 
-export default Info;

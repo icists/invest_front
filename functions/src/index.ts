@@ -50,6 +50,14 @@ export const invest = functions.https.onCall(
     const userData: UserData = userSnapshot.val();
     if (userData.teamUID !== data.teamUID) return "team_mismatch";
 
+    const accountRef = db.ref(
+      `/rounds/${data.round}/account/${userData.teamUID}`
+    );
+    const accountSnapshot = await accountRef.get();
+    const account: number = accountSnapshot.val();
+
+    if (data.investAmount > account * 0.7) return "excess_ratio";
+
     const investAmountRef = db.ref(
       `/rounds/${data.round}/investAmount/${userData.teamUID}`
     );
@@ -61,12 +69,6 @@ export const invest = functions.https.onCall(
       (a, b) => a + b,
       0
     );
-
-    const accountRef = db.ref(
-      `/rounds/${data.round}/account/${userData.teamUID}`
-    );
-    const accountSnapshot = await accountRef.get();
-    const account: number = accountSnapshot.val();
 
     if (totalSpending > account) return "insufficient_cash";
 
