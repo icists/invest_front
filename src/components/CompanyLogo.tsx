@@ -1,10 +1,8 @@
+import { colors } from "@/styles";
 import styled from "@emotion/styled";
 
-import { colors } from "../styles";
-
-const LogoContainer = styled.div<{ width: number }>(
+const LogoContainer = styled.div<{ width: number; backgroundColor?: string }>(
   {
-    backgroundColor: colors.lightGray,
     borderRadius: "100%",
 
     flex: "0 0 auto",
@@ -13,6 +11,7 @@ const LogoContainer = styled.div<{ width: number }>(
   (props) => ({
     height: props.width,
     width: props.width,
+    backgroundColor: props.backgroundColor ?? colors.lightGray,
   })
 );
 
@@ -23,13 +22,14 @@ const Logo = styled.img({
 });
 
 type CompanyLogoProps = {
+  backgroundColor?: string;
   src: string;
   width: number;
 };
 
-function CompanyLogo({ src, width }: CompanyLogoProps) {
+function CompanyLogo({ src, width, backgroundColor }: CompanyLogoProps) {
   return (
-    <LogoContainer width={width}>
+    <LogoContainer width={width} backgroundColor={backgroundColor}>
       <Logo src={src} key={src} />
     </LogoContainer>
   );

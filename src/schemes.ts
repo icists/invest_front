@@ -24,6 +24,7 @@ export type Team = {
 };
 
 export type Status = {
+  currentPitching: CompanyUID | "";
   currentRound: number;
   investable: boolean;
 };
