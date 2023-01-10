@@ -13,14 +13,14 @@ function Info({ companyUID }: { companyUID: CompanyUID }) {
       <ContentTitle as="h2">소개 영상</ContentTitle>
       <Video src={company.video} key={company.video} allowFullScreen />
       {articlesData[companyUID].map((article, i) => (
-        <>
+        <div key={i}>
           <ContentTitle as="h2">
             {i + 1}. {article.title}
           </ContentTitle>
           {article.body.split("\n").map((p, i) => (
             <ContentParagraph key={i}>{p}</ContentParagraph>
           ))}
-        </>
+        </div>
       ))}
     </>
   );
