@@ -5,6 +5,7 @@ import { useCompanies, useInvestData, useStatus } from "@/context";
 
 import CompanyLogo from "./CompanyLogo";
 import { formatNum } from "@/utils";
+import { ValidRoundNumber } from "@/schemes";
 
 const EmptyMessage = styled.div({
   fontSize: "1rem",
@@ -55,7 +56,7 @@ const PercentageChange = styled.span<{ isNegative: boolean }>(
 );
 
 type InvestResultProps = {
-  roundNumber: number;
+  roundNumber: ValidRoundNumber;
 };
 
 export default function InvestResult({ roundNumber }: InvestResultProps) {

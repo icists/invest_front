@@ -1,9 +1,9 @@
-import styled from "@emotion/styled";
 import { useState } from "react";
+import styled from "@emotion/styled";
+import { colors } from "../styles";
 
 import { formatNum } from "@/utils";
 
-import { colors } from "../styles";
 import CompanyModal from "./CompanyModal";
 import CompanyLogo from "./CompanyLogo";
 import { CompanyUID } from "../schemes";

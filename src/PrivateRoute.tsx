@@ -72,12 +72,13 @@ function Contexts({ userData, status }: ContextsProps) {
 
   const investData = useInvestDataDB(userData.teamUID);
   const totalInvest =
-    investData[status.currentRound] === undefined
+    status.currentRound === 4
       ? null
-      : [...investData[status.currentRound].amount.values()].reduce(
-          (a, b) => a + b,
-          0
-        );
+      : [
+          ...investData[
+            status.currentRound
+          ].amount.values(),
+        ].reduce((a, b) => a + b, 0);
 
   const account = useAccountDB(status.currentRound);
 

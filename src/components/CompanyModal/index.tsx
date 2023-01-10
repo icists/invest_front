@@ -72,7 +72,7 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
               </CompanySubtitle>
             </TitleContainer>
           </HeaderContainer>
-          {investable && totalInvest !== null && (
+          {investable && totalInvest !== null && currentRound !== 4 && (
             <CompanyInvest
               round={currentRound}
               companyUID={companyUID}

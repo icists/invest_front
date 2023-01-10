@@ -48,15 +48,11 @@ export function useAccount() {
   return useContext(AccountContext);
 }
 
-export const InvestDataContext = createContext<
-  Record<
-    ValidRoundNumber,
-    {
-      amount: Map<CompanyUID, number>;
-      result: Map<CompanyUID, number>;
-    }
-  >
->({} as any);
+export type InvestDataType = Record<
+  ValidRoundNumber,
+  { amount: Map<CompanyUID, number>; result: Map<CompanyUID, number> }
+>;
+export const InvestDataContext = createContext<InvestDataType>({} as any);
 export function useInvestData() {
   return useContext(InvestDataContext);
 }

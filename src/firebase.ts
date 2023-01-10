@@ -12,6 +12,7 @@ import {
   TeamUID,
   Status,
   EventStatus,
+  ValidRoundNumber,
 } from "./schemes";
 
 const firebaseConfig = {
@@ -110,11 +111,14 @@ export function useAccountDB(round: number): Map<TeamUID, number> | null {
   return recordToMap(account);
 }
 
-export function useInvestDataDB(teamUID: TeamUID): {
-  amount: Map<CompanyUID, number>;
-  result: Map<CompanyUID, number>;
-}[] {
-  const final = [];
+export function useInvestDataDB(teamUID: TeamUID): Record<
+  ValidRoundNumber,
+  {
+    amount: Map<CompanyUID, number>;
+    result: Map<CompanyUID, number>;
+  }
+> {
+  const final: any = {};
 
   for (let round = 0; round <= 3; round++) {
     const investAmountRef = db.ref(
@@ -131,10 +135,10 @@ export function useInvestDataDB(teamUID: TeamUID): {
     const investResult =
       useObjectVal<Record<CompanyUID, number>>(investResultRef);
 
-    final.push({
+    final[round] = {
       amount: recordToMap(investAmount) ?? new Map(),
       result: recordToMap(investResult) ?? new Map(),
-    });
+    };
   }
 
   return final;
