@@ -10,7 +10,7 @@ export const ContentTitle = styled(Header)({
 });
 
 export const ContentParagraph = styled.p({
-  lineHeight: "1.4rem",
+  lineHeight: "1.5rem",
   wordBreak: "keep-all",
   fontSize: "1.1rem",
 });
