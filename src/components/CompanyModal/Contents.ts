@@ -10,9 +10,9 @@ export const ContentTitle = styled(Header)({
 });
 
 export const ContentParagraph = styled.p({
-  lineHeight: "1.5rem",
+  lineHeight: "1.4rem",
   wordBreak: "keep-all",
-  fontSize: "1.1rem",
+  fontSize: "1rem",
 });
 
 export const Video = styled.iframe({
