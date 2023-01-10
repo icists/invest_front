@@ -8,6 +8,7 @@ import {
   Team,
   TeamUID,
   UserData,
+  ValidRoundNumber,
 } from "./schemes";
 
 export const AuthContext = createContext<{ user: UserData; team: Team }>({
@@ -41,18 +42,21 @@ export function useCompanies() {
 
 export const AccountContext = createContext<{
   account: Map<TeamUID, number>;
-  totalInvest: number;
-}>({ account: new Map(), totalInvest: 0 });
+  totalInvest: number | null;
+}>({ account: new Map(), totalInvest: null });
 export function useAccount() {
   return useContext(AccountContext);
 }
 
 export const InvestDataContext = createContext<
-  {
-    amount: Map<CompanyUID, number>;
-    result: Map<CompanyUID, number>;
-  }[]
->([]);
+  Record<
+    ValidRoundNumber,
+    {
+      amount: Map<CompanyUID, number>;
+      result: Map<CompanyUID, number>;
+    }
+  >
+>({} as any);
 export function useInvestData() {
   return useContext(InvestDataContext);
 }

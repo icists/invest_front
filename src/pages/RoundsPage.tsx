@@ -8,7 +8,7 @@ import RoundSelection from "@/components/RoundSelection";
 import roundsData from "@/rounds";
 import InvestResult from "@/components/InvestResult";
 import { useStatus } from "@/context";
-import { RoundNumber } from "@/schemes";
+import { ValidRoundNumber } from "@/schemes";
 
 const Main = styled.main({
   display: "flex",
@@ -52,7 +52,9 @@ const SmallTitle = styled(Header)({
 
 export default function RoundsPage() {
   const { currentRound } = useStatus();
-  const [roundNumber, setRoundNumber] = useState<RoundNumber>(currentRound);
+  const [roundNumber, setRoundNumber] = useState<ValidRoundNumber>(
+    currentRound === 4 ? 0 : currentRound
+  );
   const round = roundsData[roundNumber];
 
   return (

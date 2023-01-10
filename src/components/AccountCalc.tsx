@@ -38,9 +38,14 @@ const AccountValue = styled.span({
   justifySelf: "right",
 });
 
-export default function AccountCalc() {
+
+type AccountCalc = {
+  totalInvest: number;
+}
+
+export default function AccountCalc({ totalInvest }: AccountCalc) {
   const { user } = useAuthData();
-  const { account, totalInvest } = useAccount();
+  const { account } = useAccount();
 
   return (
     <GridContainer>

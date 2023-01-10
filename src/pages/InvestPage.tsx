@@ -31,13 +31,10 @@ const Title = styled(Header)({
   fontSize: "2rem",
 });
 
-const RoundStatus = styled.div({
+const RoundNumber = styled.div({
+  display: "inline-block",
   color: colors.darkGray,
   marginBottom: "0.5rem",
-});
-
-const RoundNumber = styled.span({
-  display: "inline-block",
 });
 
 const Indicator = styled.div<{ on: boolean }>(
@@ -48,37 +45,43 @@ const Indicator = styled.div<{ on: boolean }>(
   },
   ({ on }) => ({
     color: on ? colors.green : colors.red,
+    span: {
+      backgroundColor: on ? colors.green : colors.red,
+    },
   })
 );
 
-const Circle = styled.span<{ on: boolean }>(
-  {
-    display: "inline-block",
-    width: 5,
-    height: 5,
-    borderRadius: "100%",
-    marginRight: 7,
-  },
-  ({ on }) => ({
-    backgroundColor: on ? colors.green : colors.red,
-  })
-);
+const Circle = styled.span({
+  display: "inline-block",
+  width: 6,
+  height: 6,
+  borderRadius: "100%",
+  marginRight: 8,
+});
 
 function InvestPage() {
   const { currentRound, investable } = useStatus();
-  const round = roundsData[currentRound];
+  const round = currentRound === 4 ? null : roundsData[currentRound];
 
   return (
     <Main>
       <HeaderContainer>
         <Title as="h1">투자 종목</Title>
-        <RoundStatus>
-          <RoundNumber>{`Round ${round.name[0]} : ${round.name}`}</RoundNumber>
-        </RoundStatus>
-        <Indicator on={investable}>
-          <Circle on={investable} />
-          {investable ? "투자가 가능한 시간입니다." : "투자 시간이 아닙니다."}
-        </Indicator>
+        {round === null ? (
+          <RoundNumber>투자 게임이 종료되었습니다.</RoundNumber>
+        ) : (
+          <>
+            <RoundNumber>
+              {`Round ${round.name[0]} : ${round.name}`}
+            </RoundNumber>
+            <Indicator on={investable}>
+              <Circle />
+              {investable
+                ? "투자가 가능한 시간입니다."
+                : "투자 시간이 아닙니다."}
+            </Indicator>
+          </>
+        )}
       </HeaderContainer>
 
       <CompanyList />

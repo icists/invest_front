@@ -23,7 +23,8 @@ export type Team = {
   matchTeam?: CompanyUID;
 };
 
-export type RoundNumber = 0 | 1 | 2 | 3 | 4;
+export type ValidRoundNumber = 0 | 1 | 2 | 3;
+export type RoundNumber = ValidRoundNumber | 4;
 
 export type Status = {
   currentPitching: CompanyUID | "";

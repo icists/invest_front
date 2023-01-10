@@ -79,7 +79,20 @@ function CompanyList({ className }: CompanyListProps) {
     <>
       <List className={className}>
         {companiesList.map(([companyUID, company]) => {
-          const amount = investData[currentRound].amount.get(companyUID);
+          const amount =
+            currentRound === 4
+              ? null
+              : investData[currentRound].amount.get(companyUID);
+
+          let subtitleText;
+          if (amount === null) {
+            subtitleText = company.engName;
+          } else if (amount === 0 || amount === undefined) {
+            subtitleText = "투자하지 않음";
+          } else {
+            subtitleText = `투자액 ${formatNum(amount)}`;
+          }
+
           return (
             <Item
               key={companyUID}
@@ -97,11 +110,7 @@ function CompanyList({ className }: CompanyListProps) {
               />
               <CompanyTitleContainer>
                 <CompanyTitle>{company.name}</CompanyTitle>
-                <CompanySubtitle>
-                  {amount === 0 || amount === undefined
-                    ? "투자하지 않음"
-                    : `투자액 ${formatNum(amount)}`}
-                </CompanySubtitle>
+                <CompanySubtitle>{subtitleText}</CompanySubtitle>
               </CompanyTitleContainer>
               {currentPitching === companyUID && <PitchingIcon />}
             </Item>

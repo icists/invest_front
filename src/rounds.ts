@@ -1,10 +1,12 @@
-export type Round = {
+import { ValidRoundNumber } from "./schemes";
+
+export type RoundData = {
   name: string;
   subtitle: string;
   description: string;
 };
 
-const roundsData: Round[] = [
+const roundsData: Record<ValidRoundNumber, RoundData> = [
   {
     name: "Approach",
     subtitle: "스타트업에 다가가세요",
