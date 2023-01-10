@@ -109,9 +109,9 @@ function LoginPage() {
       </Title>
 
       <InputBox>
-        <Label as="h2">이름</Label>
+        <Label as="h2">팀 번호</Label>
         <TextField
-          placeholder="실명을 입력해주세요."
+          placeholder="1~24 사이의 번호를 입력해주세요."
           onChange={setName}
           value={name}
         />
