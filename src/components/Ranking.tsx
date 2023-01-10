@@ -45,6 +45,7 @@ export default function Ranking() {
   const { account } = useAccount();
   const sorted = [...account.entries()].sort(([, a], [, b]) => b - a);
   const index = sorted.findIndex(([teamUID]) => teamUID === user.teamUID);
+  console.log(sorted, index);
 
   if (index === -1) return null;
 
@@ -61,7 +62,7 @@ export default function Ranking() {
       <Item me>
         <Place>{index + 1}위</Place>
         <Account>
-          {sorted[index][0]}팀 ({formatNum(sorted[index - 1][1])})
+          {sorted[index][0]}팀 ({formatNum(sorted[index][1])})
         </Account>
       </Item>
       {index < sorted.length - 1 && (
