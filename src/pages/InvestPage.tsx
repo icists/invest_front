@@ -44,7 +44,7 @@ const Indicator = styled.div<{ on: boolean }>(
   {
     display: "flex",
     alignItems: "center",
-    fontSize: "1rem",
+    fontSize: "1.1rem",
   },
   ({ on }) => ({
     color: on ? colors.green : colors.red,
@@ -57,7 +57,7 @@ const Circle = styled.span<{ on: boolean }>(
     width: 5,
     height: 5,
     borderRadius: "100%",
-    marginRight: 6,
+    marginRight: 7,
   },
   ({ on }) => ({
     backgroundColor: on ? colors.green : colors.red,
