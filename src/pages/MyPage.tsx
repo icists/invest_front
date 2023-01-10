@@ -65,7 +65,7 @@ const RestTime = styled.span({ color: colors.darkGray });
 export default function MyPage() {
   const { user, team } = useAuthData();
   const companies = useCompanies();
-  const {totalInvest} = useAccount();
+  const { totalInvest } = useAccount();
 
   const trackComponent = [1, 2, 3, 4, 5, 6].map((v) => {
     if (team.track === undefined) return null;
@@ -109,10 +109,12 @@ export default function MyPage() {
         )}
       </Section>
 
-      <Section>
-        <SmallTitle as="h2">{user.teamUID}팀 자산</SmallTitle>
-        {totalInvest !== null && <AccountCalc totalInvest={totalInvest} />}
-      </Section>
+      {totalInvest !== null && (
+        <Section>
+          <SmallTitle as="h2">{user.teamUID}팀 자산</SmallTitle>
+          <AccountCalc totalInvest={totalInvest} />
+        </Section>
+      )}
 
       <Section>
         <SmallTitle as="h2">자산 순위 (총 24팀)</SmallTitle>
