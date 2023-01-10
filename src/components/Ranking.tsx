@@ -44,7 +44,6 @@ export default function Ranking() {
   const { account } = useAccount();
   const sorted = [...account.entries()].sort(([, a], [, b]) => b - a);
   const index = sorted.findIndex(([teamUID]) => teamUID === user.teamUID);
-  console.log(sorted, index);
 
   if (index === -1) return null;
 
