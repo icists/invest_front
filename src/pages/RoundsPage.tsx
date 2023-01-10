@@ -1,12 +1,14 @@
+import { useState } from "react";
+
 import styled from "@emotion/styled";
+import { colors } from "@/styles";
 
 import Header from "@/components/Header";
 import RoundSelection from "@/components/RoundSelection";
-import { useState } from "react";
 import roundsData from "@/rounds";
-import { colors } from "@/styles";
 import InvestResult from "@/components/InvestResult";
 import { useStatus } from "@/context";
+import { RoundNumber } from "@/schemes";
 
 const Main = styled.main({
   display: "flex",
@@ -50,7 +52,7 @@ const SmallTitle = styled(Header)({
 
 export default function RoundsPage() {
   const { currentRound } = useStatus();
-  const [roundNumber, setRoundNumber] = useState(currentRound);
+  const [roundNumber, setRoundNumber] = useState<RoundNumber>(currentRound);
   const round = roundsData[roundNumber];
 
   return (

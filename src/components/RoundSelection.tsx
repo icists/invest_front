@@ -1,12 +1,11 @@
-import { useState } from "react";
 import { colors } from "@/styles";
 import styled from "@emotion/styled";
 
 import Button from "./Button";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-import { useStatus } from "@/context";
-import roundsData, { Round } from "@/rounds";
+import roundsData from "@/rounds";
+import { RoundNumber } from "@/schemes";
 
 const Container = styled.div({
   display: "flex",
@@ -31,8 +30,8 @@ const CurrentRound = styled.div({
 });
 
 type RoundSelectionProps = {
-  roundNumber: number;
-  onChange: (round: number) => void;
+  roundNumber: RoundNumber;
+  onChange: (r: RoundNumber) => void;
 };
 
 export default function RoundSelection({
@@ -42,11 +41,11 @@ export default function RoundSelection({
   const round = roundsData[roundNumber];
 
   function handlePrev() {
-    if (roundNumber !== 0) onChange(roundNumber - 1);
+    if (roundNumber !== 0) onChange((roundNumber - 1) as RoundNumber);
   }
 
   function handleNext() {
-    if (roundNumber !== 3) onChange(roundNumber + 1);
+    if (roundNumber !== 3) onChange((roundNumber + 1) as RoundNumber);
   }
 
   return (

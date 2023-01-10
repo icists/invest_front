@@ -24,6 +24,7 @@ export function useAuthData() {
 }
 
 export const StatusContext = createContext<Status>({
+  currentPitching: "",
   currentRound: 0,
   investable: false,
 });
