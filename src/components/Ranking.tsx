@@ -16,12 +16,11 @@ const Item = styled.li<{ me?: boolean }>(
     alignItems: "center",
     fontSize: "1.2rem",
     borderRadius: 10,
-    "& + &": {
-      marginTop: "0.5rem",
-    },
+    marginTop: "0.5rem",
+    "& + &": {},
   },
   ({ me }) => ({
-    backgroundColor: me ? colors.lightKey : "white",
+    backgroundColor: me ? colors.lightKey : colors.lightGray,
     color: me ? colors.darkKey : colors.black,
     // color: me ? "white" : colors.black,
     fontWeight: me ? 700 : 400,
@@ -36,6 +35,7 @@ const Place = styled.div<{ me?: boolean }>({
   width: 50,
   height: 40,
   margin: "0.5rem 1rem",
+  fontWeight: "bold",
 });
 
 const Account = styled.div({});
@@ -60,7 +60,9 @@ export default function Ranking() {
       )}
       <Item me>
         <Place>{index + 1}위</Place>
-        <Account>우리 팀 ({formatNum(sorted[index][1])})</Account>
+        <Account>
+          {sorted[index][0]}팀 ({formatNum(sorted[index - 1][1])})
+        </Account>
       </Item>
       {index < sorted.length - 1 && (
         <Item>

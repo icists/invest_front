@@ -36,9 +36,10 @@ const SmallTitle = styled(Header)({
 
 const InfoContainer = styled.div({
   display: "grid",
-  gridTemplateColumns: "60px 1fr",
+  gridTemplateColumns: "80px 1fr",
   rowGap: "0.75rem",
-  padding: "1rem",
+  padding: "1.25rem 1rem",
+  columnGap: "1rem",
 
   borderRadius: 10,
   backgroundColor: colors.lightGray,
@@ -52,7 +53,7 @@ const InfoContainer = styled.div({
 
 const InfoTitle = styled.span({
   fontWeight: "bold",
-  justifySelf: "left",
+  justifySelf: "right",
 });
 
 const InfoValue = styled.span({
@@ -88,10 +89,12 @@ export default function MyPage() {
         <InfoContainer>
           <InfoTitle>이름</InfoTitle>
           <InfoValue>{user.name}</InfoValue>
-          <InfoTitle>메일</InfoTitle>
+          <InfoTitle>이메일</InfoTitle>
           <InfoValue>{user.mail}</InfoValue>
-          <InfoTitle>팀</InfoTitle>
+          <InfoTitle>팀 번호</InfoTitle>
           <InfoValue>{user.teamUID}</InfoValue>
+          <InfoTitle>고유 번호</InfoTitle>
+          <InfoValue>{user.uniqueNumber}</InfoValue>
           {team.matchTeam !== undefined && (
             <>
               <InfoTitle>배정</InfoTitle>
@@ -111,7 +114,7 @@ export default function MyPage() {
       </Section>
 
       <Section>
-        <SmallTitle as="h2">총 자산 순위</SmallTitle>
+        <SmallTitle as="h2">자산 순위 (총 24팀)</SmallTitle>
         <Ranking />
       </Section>
     </Main>

@@ -10,7 +10,6 @@ import { NumberField } from "../TextField";
 import Button from "../Button";
 import { ContentTitle } from "./Contents";
 import { formatNum } from "@/utils";
-import { useAccount, useStatus } from "@/context";
 
 const Title = styled(ContentTitle)({
   marginBottom: 0,
