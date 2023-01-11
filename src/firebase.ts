@@ -67,6 +67,7 @@ export type InvestParams = {
 };
 export type InvestResult =
   | "auth_fail"
+  | "simultaneous_action"
   | "team_mismatch"
   | "invalid_param"
   | "insufficient_cash"

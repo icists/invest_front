@@ -8,6 +8,7 @@ import type {
   RegisterParams,
   RegisterResult,
 } from "../../src/firebase";
+import { AuthData } from "firebase-functions/lib/common/providers/tasks";
 
 /* admin.initializeApp({
   databaseURL: "https://investment-game-test.asia-southeast1.firebasedatabase.app/"
@@ -41,41 +42,56 @@ export const invest = functions.https.onCall(
   async (data: InvestParams, context): Promise<InvestResult> => {
     if (!context.auth) return "auth_fail";
 
-    const investableSnapshot = await db.ref("/status/investable").get();
-    if ((investableSnapshot.val() as boolean) === false)
-      return "not_investable";
+    const investingPath = `/teams/${data.teamUID}/investing`;
+    const investingRef = db.ref(investingPath);
+    const investingSnapshot = await investingRef.get();
 
-    const userSnapshot = await db.ref(`/users/${context.auth.uid}`).get();
+    if ((investingSnapshot.val() as boolean) === true)
+      return "simultaneous_action";
 
-    if (data.investAmount < 0 || !Number.isSafeInteger(data.investAmount))
-      return "invalid_param";
+    await investingRef.set(true);
 
-    const userData: UserData = userSnapshot.val();
-    if (userData.teamUID !== data.teamUID) return "team_mismatch";
+    async function process(auth: AuthData) {
+      const investableSnapshot = await db.ref("/status/investable").get();
+      if ((investableSnapshot.val() as boolean) === false)
+        return "not_investable";
 
-    const accountRef = db.ref(
-      `/rounds/${data.round}/account/${userData.teamUID}`
-    );
-    const accountSnapshot = await accountRef.get();
-    const account: number = accountSnapshot.val();
+      const userSnapshot = await db.ref(`/users/${auth.uid}`).get();
 
-    if (data.investAmount > account * 0.7) return "excess_ratio";
+      if (data.investAmount < 0 || !Number.isSafeInteger(data.investAmount))
+        return "invalid_param";
 
-    const investAmountRef = db.ref(
-      `/rounds/${data.round}/investAmount/${userData.teamUID}`
-    );
-    const investAmountSnapshot = await investAmountRef.get();
-    const currentInvestAmount: Record<CompanyUID, number> =
-      investAmountSnapshot.val() ?? {};
-    currentInvestAmount[data.companyUID] = data.investAmount;
-    const totalSpending = Object.values(currentInvestAmount).reduce(
-      (a, b) => a + b,
-      0
-    );
+      const userData: UserData = userSnapshot.val();
+      if (userData.teamUID !== data.teamUID) return "team_mismatch";
 
-    if (totalSpending > account) return "insufficient_cash";
+      const accountRef = db.ref(
+        `/rounds/${data.round}/account/${userData.teamUID}`
+      );
+      const accountSnapshot = await accountRef.get();
+      const account: number = accountSnapshot.val();
 
-    await investAmountRef.child(data.companyUID).set(data.investAmount);
-    return "success";
+      if (data.investAmount > account * 0.7) return "excess_ratio";
+
+      const investAmountRef = db.ref(
+        `/rounds/${data.round}/investAmount/${userData.teamUID}`
+      );
+      const investAmountSnapshot = await investAmountRef.get();
+      const currentInvestAmount: Record<CompanyUID, number> =
+        investAmountSnapshot.val() ?? {};
+      currentInvestAmount[data.companyUID] = data.investAmount;
+      const totalSpending = Object.values(currentInvestAmount).reduce(
+        (a, b) => a + b,
+        0
+      );
+
+      if (totalSpending > account) return "insufficient_cash";
+
+      await investAmountRef.child(data.companyUID).set(data.investAmount);
+      return "success";
+    }
+
+    const result = process(context.auth);
+    await investingRef.set(false);
+    return result;
   }
 );
