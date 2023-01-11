@@ -18,9 +18,8 @@ import {
 const firebaseConfig = {
   apiKey: "AIzaSyDMZh9vXL5Ga8T-ZAw9WpNBGOd_EF7jWKU",
   authDomain: "investment-game-e04fb.firebaseapp.com",
-  databaseURL: import.meta.env.PROD
-    ? "https://investment-game-test.asia-southeast1.firebasedatabase.app/"
-    : "https://investment-game-e04fb-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL:
+    "https://investment-game-e04fb-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "investment-game-e04fb",
   storageBucket: "investment-game-e04fb.appspot.com",
   messagingSenderId: "726265075186",
