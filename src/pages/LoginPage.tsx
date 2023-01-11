@@ -97,7 +97,7 @@ function LoginPage() {
     console.log(registerResult.data);
     if (!registerResult.data) {
       await signOut();
-      alert("스태프 문의 ㄲ");
+      alert("이미 등록된 정보입니다. 스태프에게 문의해주세요.");
     }
     navigate("/");
   }
