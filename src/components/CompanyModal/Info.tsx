@@ -18,7 +18,7 @@ export default function Info({
     <>
       <ContentTitle as="h2">소개 영상</ContentTitle>
       <Video
-        src={visible ? company.video : null}
+        src={visible ? company.video : undefined}
         key={company.video}
         allowFullScreen
       />
