@@ -9,6 +9,9 @@ import type {
   RegisterResult,
 } from "../../src/firebase";
 
+/* admin.initializeApp({
+  databaseURL: "https://investment-game-test.asia-southeast1.firebasedatabase.app/"
+}); */
 admin.initializeApp();
 const db = admin.database();
 

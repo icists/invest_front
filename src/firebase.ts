@@ -20,6 +20,7 @@ const firebaseConfig = {
   authDomain: "investment-game-e04fb.firebaseapp.com",
   databaseURL:
     "https://investment-game-e04fb-default-rtdb.asia-southeast1.firebasedatabase.app",
+  // "https://investment-game-test.asia-southeast1.firebasedatabase.app/",
   projectId: "investment-game-e04fb",
   storageBucket: "investment-game-e04fb.appspot.com",
   messagingSenderId: "726265075186",
