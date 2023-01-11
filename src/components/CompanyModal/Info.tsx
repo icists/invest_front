@@ -18,7 +18,9 @@ export default function Info({
     <>
       <ContentTitle as="h2">소개 영상</ContentTitle>
       <Video
-        src={visible ? company.video : undefined}
+        src={
+          visible ? `https://www.youtube.com/embed/${company.video}` : undefined
+        }
         key={company.video}
         allowFullScreen
       />
