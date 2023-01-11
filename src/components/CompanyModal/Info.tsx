@@ -4,13 +4,7 @@ import { CompanyUID } from "@/schemes";
 import { ContentParagraph, ContentTitle, Video } from "./Contents";
 import articlesData from "@/assets/articles";
 
-export default function Info({
-  companyUID,
-  visible,
-}: {
-  companyUID: CompanyUID;
-  visible: boolean;
-}) {
+export default function Info({ companyUID }: { companyUID: CompanyUID }) {
   const companies = useCompanies();
   const company = companies.get(companyUID)!;
 
@@ -18,9 +12,7 @@ export default function Info({
     <>
       <ContentTitle as="h2">소개 영상</ContentTitle>
       <Video
-        src={
-          visible ? `https://www.youtube.com/embed/${company.video}` : undefined
-        }
+        src={`https://www.youtube.com/embed/${company.video}`}
         key={company.video}
         allowFullScreen
       />
