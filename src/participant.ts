@@ -418,7 +418,7 @@ const data: Participant[] = [
   {
     name: "이우주",
     uniqueNumber: 82,
-    team: 19,
+    team: 16,
   },
   {
     name: "이현진",
