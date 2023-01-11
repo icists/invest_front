@@ -33,10 +33,10 @@ export const auth = getAuth(app);
 const database = db.getDatabase(app);
 
 export async function findUser(uid: string): Promise<UserData> {
-  const usersRef = db.ref(database, "/users");
-  const snapshot = await db.get(usersRef);
+  const userRef = db.ref(database, `/users/${uid}`);
+  const snapshot = await db.get(userRef);
 
-  return snapshot.val()[uid];
+  return snapshot.val();
 }
 
 export async function findTeam(teamUID: TeamUID): Promise<Team> {
