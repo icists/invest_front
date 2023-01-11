@@ -42,6 +42,7 @@ const Account = styled.div({});
 export default function Ranking() {
   const { user } = useAuthData();
   const { account } = useAccount();
+  account.delete("0");
   const sorted = [...account.entries()].sort(([, a], [, b]) => b - a);
   const index = sorted.findIndex(([teamUID]) => teamUID === user.teamUID);
 
