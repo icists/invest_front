@@ -84,7 +84,7 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
               leftOver={account.get(user.teamUID)! - totalInvest}
             />
           )}
-          <CompanyInfo companyUID={companyUID} />
+          <CompanyInfo companyUID={companyUID} visible={visible} />
         </Container>
       )}
     </Modal>
