@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import Header from "@/components/Header";
-import { useAccount, useAuthData, useCompanies } from "@/context";
+import { useAccount, useAuthData, useCompanies, useStatus } from "@/context";
 import { colors } from "@/styles";
 import AccountCalc from "@/components/AccountCalc";
 import Ranking from "@/components/Ranking";
@@ -66,6 +66,7 @@ export default function MyPage() {
   const { user, team } = useAuthData();
   const companies = useCompanies();
   const { totalInvest } = useAccount();
+  const { currentRound } = useStatus();
 
   const trackComponent = [1, 2, 3, 4, 5, 6].map((v) => {
     if (team.track === undefined) return null;
@@ -104,9 +105,9 @@ export default function MyPage() {
           )}
         </InfoContainer>
 
-        {team.matchTeam === undefined && team.track !== undefined && (
-          <InfoContainer>{trackComponent}</InfoContainer>
-        )}
+        {team.matchTeam === undefined &&
+          team.track !== undefined &&
+          currentRound >= 3 && <InfoContainer>{trackComponent}</InfoContainer>}
       </Section>
 
       {totalInvest !== null && (
