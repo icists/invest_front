@@ -16,7 +16,7 @@ import {
 } from "./firebase";
 import { useIdToken } from "react-firebase-hooks/auth";
 
-import loadingVideo from "@/assets/loading.mp4";
+import loadingVideo from "@/assets/loading.gif";
 
 import {
   CompaniesContext,
@@ -47,7 +47,7 @@ const LoadingContainer = styled.main({
   height: "var(--vh)",
 });
 
-const LoadingVideo = styled.video({
+const LoadingVideo = styled.img({
   width: 80,
 });
 
@@ -59,9 +59,7 @@ type ContextsProps = {
 function LoadingScreen() {
   return (
     <LoadingContainer>
-      <LoadingVideo width="80" autoPlay muted playsInline loop>
-        <source src={loadingVideo} type="video/mp4" />
-      </LoadingVideo>
+      <LoadingVideo src={loadingVideo} />
     </LoadingContainer>
   );
 }
