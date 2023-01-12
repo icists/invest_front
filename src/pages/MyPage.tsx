@@ -107,7 +107,7 @@ export default function MyPage() {
 
         {team.matchTeam === undefined &&
           team.track !== undefined &&
-          <InfoContainer>{trackComponent}</InfoContainer>}
+          currentRound >= 3 && <InfoContainer>{trackComponent}</InfoContainer>}
       </Section>
 
       {totalInvest !== null && (
