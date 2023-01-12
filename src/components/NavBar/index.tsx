@@ -54,9 +54,8 @@ export default function NavBar() {
       name: "내 정보",
       to: "/me",
     },
-    { icon: investmentIcon, name: "투자", to: "/" },
-    { icon: roundsIcon, name: "라운드", to: "/rounds" },
-    { icon: eventIcon, name: "이벤트", to: "/event" },
+    { icon: eventIcon, name: "이벤트", to: "/" },
+    { icon: investmentIcon, name: "투자", to: "/invest" },
   ];
 
   return (

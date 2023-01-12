@@ -10,7 +10,6 @@ import LoginPage from "./pages/LoginPage";
 import InvestPage from "./pages/InvestPage";
 import MyPage from "./pages/MyPage";
 import EventPage from "./pages/EventPage";
-import RoundsPage from "./pages/RoundsPage";
 
 const router = createBrowserRouter([
   {
@@ -19,19 +18,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <InvestPage />,
+        element: <EventPage />,
       },
       {
         path: "/me",
         element: <MyPage />,
       },
       {
-        path: "/rounds",
-        element: <RoundsPage />,
-      },
-      {
-        path: "/event",
-        element: <EventPage />,
+        path: "/invest",
+        element: <InvestPage />,
       },
     ],
   },
