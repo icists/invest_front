@@ -150,9 +150,15 @@ export function useInvestDataDB(teamUID: TeamUID): Record<
 export function useTeamDB(teamUID: TeamUID): Team | null {
   const teamRef = db.ref(database, `/teams/${teamUID}`);
   const team = useObjectVal<Team>(teamRef);
-  if (team !== null && team.track !== undefined) {
-    team.track =
-      recordToMap<number, CompanyUID>(team.track as any) ?? undefined;
+
+  console.log(team?.track);
+  if (team !== null && team.track !== undefined && !(team.track instanceof Map)) {
+     const result = new Map<number, CompanyUID>;
+     for (const [key, value] of Object.entries(team.track as any)) {
+       result.set(Number(key), value as CompanyUID);
+     }
+     team.track = result;
+     // team.track = recordToMap<number, CompanyUID>(team.track as any) ?? undefined;
   }
   return team ?? null;
 }
