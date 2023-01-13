@@ -25,11 +25,21 @@ type CompanyLogoProps = {
   backgroundColor?: string;
   src: string;
   width: number;
+  onClick?: () => void;
 };
 
-function CompanyLogo({ src, width, backgroundColor }: CompanyLogoProps) {
+function CompanyLogo({
+  src,
+  width,
+  backgroundColor,
+  onClick,
+}: CompanyLogoProps) {
   return (
-    <LogoContainer width={width} backgroundColor={backgroundColor}>
+    <LogoContainer
+      width={width}
+      backgroundColor={backgroundColor}
+      onClick={onClick}
+    >
       <Logo src={src} key={src} />
     </LogoContainer>
   );

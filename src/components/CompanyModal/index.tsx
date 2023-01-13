@@ -16,6 +16,9 @@ import CompanyInfo from "./Info";
 import CompanyInvest from "./Invest";
 import Modal from "../Modal";
 
+import { useState } from "react";
+import Swal from "sweetalert2";
+
 const Container = styled.div({
   width: "90%",
   margin: "0 auto",
@@ -57,12 +60,30 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
   const companies = useCompanies();
   const investData = useInvestData();
 
+  const [clickCount, setClickCount] = useState(0);
+
+  function handleLogoClick() {
+    if (clickCount >= 1) {
+      Swal.fire({
+        icon: "question",
+        title: "이스터에그",
+        text: "투자게임 Round D가 진행된 방의 이름은 무엇일까요? 담당 STAFF에게 정답을 말해주세요!",
+      });
+    }
+
+    setClickCount((v) => v + 1);
+  }
+
   return (
     <Modal visible={visible} onClose={onClose}>
       {companyUID !== null && (
         <Container>
           <HeaderContainer>
-            <CompanyLogo src={companies.get(companyUID)!.logo} width={60} />
+            <CompanyLogo
+              src={companies.get(companyUID)!.logo}
+              width={60}
+              onClick={handleLogoClick}
+            />
             <TitleContainer>
               <CompanyTitle as="h1">
                 {companies.get(companyUID)!.name}
