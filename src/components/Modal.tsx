@@ -46,7 +46,7 @@ type ModalProps = {
   children?: React.ReactNode;
 };
 
-function Modal({ onClose, visible, children }: ModalProps) {
+export default function Modal({ onClose, visible, children }: ModalProps) {
   return (
     <>
       <Overlay visible={visible} onClick={onClose} />
@@ -54,5 +54,3 @@ function Modal({ onClose, visible, children }: ModalProps) {
     </>
   );
 }
-
-export default Modal;

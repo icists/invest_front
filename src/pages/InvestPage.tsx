@@ -67,7 +67,7 @@ const Circle = styled.span({
   marginRight: 8,
 });
 
-function InvestPage() {
+export default function InvestPage() {
   const { currentRound, investable } = useStatus();
   const round = currentRound === 4 ? null : roundsData[currentRound];
 
@@ -99,5 +99,3 @@ function InvestPage() {
     </Main>
   );
 }
-
-export default InvestPage;

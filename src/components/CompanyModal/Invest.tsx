@@ -54,7 +54,7 @@ const Message = styled.small<{ isError: boolean }>(
   })
 );
 
-function Invest({
+export default function Invest({
   round,
   companyUID,
   teamUID,
@@ -143,5 +143,3 @@ function Invest({
     </>
   );
 }
-
-export default Invest;

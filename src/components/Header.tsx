@@ -10,12 +10,10 @@ type HeaderProps = {
   children?: React.ReactNode;
 };
 
-function Header({ className, as, children }: HeaderProps) {
+export default function Header({ className, as, children }: HeaderProps) {
   return (
     <HeaderElem className={className} as={as}>
       {children}
     </HeaderElem>
   );
 }
-
-export default Header;

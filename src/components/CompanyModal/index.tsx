@@ -53,7 +53,11 @@ type CompanyModalProps = {
   visible: boolean;
 };
 
-function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
+export default function CompanyModal({
+  onClose,
+  companyUID,
+  visible,
+}: CompanyModalProps) {
   const { user } = useAuthData();
   const { account, totalInvest } = useAccount();
   const { currentRound, investable } = useStatus();
@@ -111,5 +115,3 @@ function CompanyModal({ onClose, companyUID, visible }: CompanyModalProps) {
     </Modal>
   );
 }
-
-export default CompanyModal;

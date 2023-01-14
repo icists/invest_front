@@ -34,7 +34,7 @@ type ButtonProps = {
   isLoading?: boolean;
 };
 
-function Button({ className, children, onClick, isLoading }: ButtonProps) {
+export default function Button({ className, children, onClick, isLoading }: ButtonProps) {
   return (
     <ButtonElem
       className={className}
@@ -45,5 +45,3 @@ function Button({ className, children, onClick, isLoading }: ButtonProps) {
     </ButtonElem>
   );
 }
-
-export default Button;

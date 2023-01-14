@@ -57,7 +57,7 @@ type CompanyListProps = {
   className?: string;
 };
 
-function CompanyList({ className }: CompanyListProps) {
+export default function CompanyList({ className }: CompanyListProps) {
   const { currentRound, currentPitching } = useStatus();
   const investData = useInvestData();
 
@@ -125,5 +125,3 @@ function CompanyList({ className }: CompanyListProps) {
     </>
   );
 }
-
-export default CompanyList;

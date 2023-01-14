@@ -49,7 +49,7 @@ const LoginButton = styled(Button)({
   height: 55,
 });
 
-function LoginPage() {
+export default function LoginPage() {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
   const [signOut] = useSignOut(auth);
 
@@ -123,5 +123,3 @@ function LoginPage() {
     </Main>
   );
 }
-
-export default LoginPage;

@@ -28,7 +28,7 @@ type CompanyLogoProps = {
   onClick?: () => void;
 };
 
-function CompanyLogo({
+export default function CompanyLogo({
   src,
   width,
   backgroundColor,
@@ -44,5 +44,3 @@ function CompanyLogo({
     </LogoContainer>
   );
 }
-
-export default CompanyLogo;
