@@ -3,7 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { colors } from "@/styles";
 
-import { balanceIcon, investmentIcon, eventIcon, roundsIcon } from "./icons";
+import { balanceIcon, investmentIcon, eventIcon } from "./icons";
 
 const Nav = styled.nav({
   width: "100%",
